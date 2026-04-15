@@ -11,7 +11,18 @@ fi
 # shellcheck source=/dev/null
 source "$ROOT_DIR/config/app.env"
 
-# Normalizza percorsi
+# --- Dipendenze esterne ---
+if ! command -v parallel >/dev/null 2>&1; then
+  echo "Errore: GNU parallel non trovato. Installalo con: sudo apt install parallel" >&2
+  exit 1
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "Errore: python3 non trovato nel PATH." >&2
+  exit 1
+fi
+
+# --- Normalizza percorsi ---
 if [[ "$DB_PATH" != /* ]]; then
   DB_FILE="$ROOT_DIR/$DB_PATH"
 else
@@ -41,6 +52,9 @@ if [ -z "$PHOTO_ROOT_ABS" ]; then
   exit 1
 fi
 
+# Default AI_WORKERS se non impostato nel config
+AI_WORKERS="${AI_WORKERS:-4}"
+
 mkdir -p "$THUMB_DIR_ABS"
 touch "$LOG_FILE_ABS"
 
@@ -50,7 +64,6 @@ log() {
 }
 
 sql_escape() {
-  # Escapa solo gli apici singoli raddoppiandoli
   sed "s/'/''/g"
 }
 
@@ -85,10 +98,13 @@ generate_thumb() {
     fi
   fi
 
-  # Nessuna thumbnail generata
   echo ""
 }
 
+# ---------------------------------------------------------------------------
+# process_file: gestisce insert/update di asset e asset_files nel DB.
+# NON chiama più Ollama direttamente: l'elaborazione IA è delegata ai worker.
+# ---------------------------------------------------------------------------
 process_file() {
   local file="$1"
 
@@ -120,12 +136,11 @@ process_file() {
   local metadata_json
   metadata_json="$("$ROOT_DIR/bin/extract_metadata.sh" "$file" || echo '{}')"
 
-  # Escaping per SQL
   local ep er ef esha em
-  ep=$(printf '%s' "$abs_path" | sql_escape)
-  er=$(printf '%s' "$rel_path" | sql_escape)
-  ef=$(printf '%s' "$filename" | sql_escape)
-  esha=$(printf '%s' "$sha256" | sql_escape)
+  ep=$(printf '%s' "$abs_path"      | sql_escape)
+  er=$(printf '%s' "$rel_path"      | sql_escape)
+  ef=$(printf '%s' "$filename"      | sql_escape)
+  esha=$(printf '%s' "$sha256"      | sql_escape)
   em=$(printf '%s' "$metadata_json" | sql_escape)
 
   local row
@@ -133,88 +148,103 @@ process_file() {
 
   if [ -z "$row" ]; then
     log "Nuovo file: $abs_path"
-    # Nuovo asset
-    local asset_id
-    asset_id=$(sqlite3 "$DB_FILE" "INSERT INTO assets (title, created_at, updated_at) VALUES ('$ef', strftime('%s','now'), strftime('%s','now')); SELECT last_insert_rowid();")
 
-    # Thumbnail opzionale
+    local asset_id
+    asset_id=$(sqlite3 "$DB_FILE" \
+      "INSERT INTO assets (title, created_at, updated_at) \
+       VALUES ('$ef', strftime('%s','now'), strftime('%s','now')); \
+       SELECT last_insert_rowid();")
+
     local thumb_rel
     thumb_rel="$(generate_thumb "$file" "$asset_id")"
     local ethumb
     ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
-    sqlite3 "$DB_FILE" "INSERT INTO asset_files (asset_id, absolute_path, relative_path, filename, sha256, metadata_json, size_bytes, mtime, thumb_path, created_at, updated_at)
-      VALUES ($asset_id, '$ep', '$er', '$ef', '$esha', '$em', $size_bytes, $mtime, '$ethumb', strftime('%s','now'), strftime('%s','now'));"
+    sqlite3 "$DB_FILE" \
+      "INSERT INTO asset_files \
+         (asset_id, absolute_path, relative_path, filename, sha256, \
+          metadata_json, size_bytes, mtime, thumb_path, created_at, updated_at) \
+       VALUES \
+         ($asset_id, '$ep', '$er', '$ef', '$esha', \
+          '$em', $size_bytes, $mtime, '$ethumb', \
+          strftime('%s','now'), strftime('%s','now'));"
 
-    # Descrizione AI
-    local desc
-    desc="$("$ROOT_DIR/bin/generate_description.sh" "$file" || echo '')"
-    if [ -n "$desc" ]; then
-      local edesc emodel elang
-      edesc=$(printf '%s' "$desc" | sql_escape)
-      emodel=$(printf '%s' "$OLLAMA_MODEL" | sql_escape)
-      elang=$(printf '%s' "$LANGUAGE" | sql_escape)
+    # L'asset_id viene accodato per l'elaborazione IA parallela
+    echo "$asset_id"
 
-      sqlite3 "$DB_FILE" "INSERT INTO ai_descriptions (asset_id, model, language, description, created_at)
-        VALUES ($asset_id, '$emodel', '$elang', '$edesc', strftime('%s','now'));"
-
-      sqlite3 "$DB_FILE" "UPDATE assets
-        SET ai_description_id = (SELECT id FROM ai_descriptions WHERE asset_id = $asset_id ORDER BY created_at DESC LIMIT 1),
-            updated_at = strftime('%s','now')
-        WHERE id = $asset_id;"
-    fi
   else
     local file_id old_sha old_mtime asset_id
-    file_id=$(echo "$row" | awk -F'|' '{print $1}')
-    old_sha=$(echo "$row" | awk -F'|' '{print $2}')
+    file_id=$(echo "$row"   | awk -F'|' '{print $1}')
+    old_sha=$(echo "$row"   | awk -F'|' '{print $2}')
     old_mtime=$(echo "$row" | awk -F'|' '{print $3}')
-    asset_id=$(echo "$row" | awk -F'|' '{print $4}')
+    asset_id=$(echo "$row"  | awk -F'|' '{print $4}')
 
     if [ "$old_sha" != "$sha256" ] || [ "$old_mtime" != "$mtime" ]; then
       log "File modificato: $abs_path"
-      # Thumbnail aggiornata
+
       local thumb_rel
       thumb_rel="$(generate_thumb "$file" "$asset_id")"
       local ethumb
       ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
-      sqlite3 "$DB_FILE" "UPDATE asset_files
-        SET sha256 = '$esha',
-            metadata_json = '$em',
-            size_bytes = $size_bytes,
-            mtime = $mtime,
-            thumb_path = '$ethumb',
-            updated_at = strftime('%s','now')
-        WHERE id = $file_id;"
+      sqlite3 "$DB_FILE" \
+        "UPDATE asset_files \
+         SET sha256='$esha', metadata_json='$em', size_bytes=$size_bytes, \
+             mtime=$mtime, thumb_path='$ethumb', updated_at=strftime('%s','now') \
+         WHERE id=$file_id;"
 
-      local desc
-      desc="$("$ROOT_DIR/bin/generate_description.sh" "$file" || echo '')"
-      if [ -n "$desc" ]; then
-        local edesc emodel elang
-        edesc=$(printf '%s' "$desc" | sql_escape)
-        emodel=$(printf '%s' "$OLLAMA_MODEL" | sql_escape)
-        elang=$(printf '%s' "$LANGUAGE" | sql_escape)
+      # Azzera il puntatore alla descrizione per forzare rigenerazione
+      sqlite3 "$DB_FILE" \
+        "UPDATE assets SET ai_description_id=NULL, updated_at=strftime('%s','now') \
+         WHERE id=$asset_id;"
 
-        sqlite3 "$DB_FILE" "INSERT INTO ai_descriptions (asset_id, model, language, description, created_at)
-          VALUES ($asset_id, '$emodel', '$elang', '$edesc', strftime('%s','now'));"
-
-        sqlite3 "$DB_FILE" "UPDATE assets
-          SET ai_description_id = (SELECT id FROM ai_descriptions WHERE asset_id = $asset_id ORDER BY created_at DESC LIMIT 1),
-              updated_at = strftime('%s','now')
-          WHERE id = $asset_id;"
-      fi
-    else
-      # Nessuna modifica
-      :
+      # Stampa l'asset_id per la coda IA
+      echo "$asset_id"
     fi
   fi
 }
 
+# ---------------------------------------------------------------------------
+# FASE 1: scansione sequenziale (DB writes safe, nessuna chiamata Ollama)
+# ---------------------------------------------------------------------------
 log "Scansione libreria in $PHOTO_ROOT_ABS"
 
-# Trova tutti i file e filtra per estensioni supportate nello script
+PENDING_IDS_FILE="$(mktemp)"
+trap 'rm -f "$PENDING_IDS_FILE"' EXIT
+
 while IFS= read -r f; do
   process_file "$f"
-done < <(find "$PHOTO_ROOT_ABS" -type f 2>/dev/null)
+done < <(find "$PHOTO_ROOT_ABS" -type f 2>/dev/null) > "$PENDING_IDS_FILE"
 
-log "Scansione completata."
+log "Scansione filesystem completata."
+
+# ---------------------------------------------------------------------------
+# FASE 2: elaborazione IA parallela sui nuovi/modificati + asset senza descrizione
+# ---------------------------------------------------------------------------
+# Aggiunge alla lista anche asset già in DB ma privi di descrizione (es. primo avvio)
+SALVATI_SENZA_DESC=$(sqlite3 "$DB_FILE" \
+  "SELECT id FROM assets WHERE ai_description_id IS NULL;")
+
+# Unisce i due insiemi e deduplicA
+ALL_PENDING=$(
+  { cat "$PENDING_IDS_FILE"; echo "$SALVATI_SENZA_DESC"; } \
+  | grep -v '^$' \
+  | sort -un
+)
+
+COUNT=$(echo "$ALL_PENDING" | grep -c '[0-9]' || true)
+
+if [ "$COUNT" -eq 0 ]; then
+  log "Nessun asset da elaborare con l'IA."
+else
+  log "Avvio $AI_WORKERS worker IA su $COUNT asset..."
+  echo "$ALL_PENDING" | \
+    parallel \
+      --jobs "$AI_WORKERS" \
+      --line-buffer \
+      --halt now,fail=1 \
+      python3 "$ROOT_DIR/bin/worker_ai.py" {}
+  log "Elaborazione IA completata ($COUNT asset processati)."
+fi
+
+log "Update DB completato."

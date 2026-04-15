@@ -48,5 +48,9 @@ else
   echo "Database già presente in $DB_FILE"
 fi
 
+# Abilita WAL per permettere accessi concorrenti da più worker
+sqlite3 "$DB_FILE" "PRAGMA journal_mode=WAL;"
+sqlite3 "$DB_FILE" "PRAGMA synchronous=NORMAL;"
+
 touch "$LOG_FILE_ABS"
 echo "[$(date '+%Y-%m-%d %H:%M:%S')] init_db: database pronto in $DB_FILE" >> "$LOG_FILE_ABS"
