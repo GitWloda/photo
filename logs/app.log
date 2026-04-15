@@ -1,0 +1,413 @@
+[2026-04-15 16:34:59] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:35:17] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:35:17] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:35:18] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
+[2026-04-15 16:35:47] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
+[2026-04-15 16:36:11] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
+[2026-04-15 16:36:15] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
+[2026-04-15 16:36:20] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
+[2026-04-15 16:36:24] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
+[2026-04-15 16:36:28] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
+[2026-04-15 16:36:33] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
+[2026-04-15 16:36:36] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 16:36:39] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
+[2026-04-15 16:36:42] update_db: Scansione completata.
+[2026-04-15 16:36:42] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:36:43] cleanup_deleted: Pulizia completata.
+[2026-04-15 16:40:22] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:40:22] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:40:26] update_db: Scansione completata.
+[2026-04-15 16:40:26] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:40:26] cleanup_deleted: Pulizia completata.
+[2026-04-15 16:45:44] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:45:44] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:45:47] update_db: Scansione completata.
+[2026-04-15 16:45:47] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:45:48] cleanup_deleted: Pulizia completata.
+[2026-04-15 16:46:14] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:46:14] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:46:14] update_db: Scansione completata.
+[2026-04-15 16:46:14] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=1 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=2 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=3 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=4 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=5 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=6 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=7 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=8 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f113901536.png)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=9 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-15 16:46:14] cleanup_deleted: Rimuovo asset id=10 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg)
+[2026-04-15 16:46:15] cleanup_deleted: Pulizia completata.
+[2026-04-15 16:46:26] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:46:26] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:46:30] update_db: Scansione completata.
+[2026-04-15 16:46:30] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:46:30] cleanup_deleted: Pulizia completata.
+[2026-04-15 16:46:41] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:46:41] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:46:46] update_db: Scansione completata.
+[2026-04-15 16:46:46] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:46:46] cleanup_deleted: Pulizia completata.
+[2026-04-15 16:46:51] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:46:51] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:46:55] update_db: Scansione completata.
+[2026-04-15 16:46:55] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:46:55] cleanup_deleted: Pulizia completata.
+[2026-04-15 16:47:40] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 16:47:40] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 16:47:41] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/da.jpg
+[2026-04-15 16:47:44] update_db: Scansione completata.
+[2026-04-15 16:47:44] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 16:47:44] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:32:26] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:32:26] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:32:27] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 17:32:59] update_db: Scansione completata.
+[2026-04-15 17:33:00] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 17:33:00] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:34:18] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:34:18] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:34:19] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 17:34:21] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 17:34:26] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 17:34:28] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg
+[2026-04-15 17:34:29] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg
+[2026-04-15 17:34:31] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/qwsdcv .jpg
+[2026-04-15 17:34:32] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/sx.jpg
+[2026-04-15 17:34:39] update_db: Scansione completata.
+[2026-04-15 17:34:39] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 17:34:39] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:39:57] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:39:57] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:40:01] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg
+[2026-04-15 17:40:02] update_db: Scansione completata.
+[2026-04-15 17:40:02] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 17:40:03] cleanup_deleted: Rimuovo asset id=18 (file mancante: /mnt/d/projects/newRDMD5IA/foto/qwsdcv .jpg)
+[2026-04-15 17:40:03] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:40:11] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:40:11] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:40:15] update_db: Scansione completata.
+[2026-04-15 17:40:15] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 17:40:16] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:40:39] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:40:39] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:40:43] update_db: Scansione completata.
+[2026-04-15 17:40:43] cleanup_deleted: Pulizia asset eliminati...
+[2026-04-15 17:40:43] cleanup_deleted: Rimuovo asset id=11 (file mancante: /mnt/d/projects/newRDMD5IA/foto/da.jpg)
+[2026-04-15 17:40:43] cleanup_deleted: Rimuovo asset id=12 (file mancante: /mnt/d/projects/newRDMD5IA/foto/af.png)
+[2026-04-15 17:40:43] cleanup_deleted: Rimuovo asset id=13 (file mancante: /mnt/d/projects/newRDMD5IA/foto/ags.jpg)
+[2026-04-15 17:40:44] cleanup_deleted: Rimuovo asset id=14 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg)
+[2026-04-15 17:40:44] cleanup_deleted: Rimuovo asset id=15 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg)
+[2026-04-15 17:40:44] cleanup_deleted: Rimuovo asset id=16 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg)
+[2026-04-15 17:40:44] cleanup_deleted: Rimuovo asset id=17 (file mancante: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg)
+[2026-04-15 17:40:44] cleanup_deleted: Rimuovo asset id=19 (file mancante: /mnt/d/projects/newRDMD5IA/foto/sx.jpg)
+[2026-04-15 17:40:44] cleanup_deleted: Rimuovo asset id=20 (file mancante: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg)
+[2026-04-15 17:40:44] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:43:30] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:43:30] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:43:34] update_db: Scansione completata.
+[2026-04-15 17:43:34] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 17:43:34] cleanup_deleted: Rimuovo asset_files id=11 (file mancante: /mnt/d/projects/newRDMD5IA/foto/da.jpg)
+[2026-04-15 17:43:34] cleanup_deleted: Rimuovo asset_files id=12 (file mancante: /mnt/d/projects/newRDMD5IA/foto/af.png)
+[2026-04-15 17:43:34] cleanup_deleted: Rimuovo asset_files id=13 (file mancante: /mnt/d/projects/newRDMD5IA/foto/ags.jpg)
+[2026-04-15 17:43:34] cleanup_deleted: Rimuovo asset_files id=14 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg)
+[2026-04-15 17:43:35] cleanup_deleted: Rimuovo asset_files id=15 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg)
+[2026-04-15 17:43:35] cleanup_deleted: Rimuovo asset_files id=16 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg)
+[2026-04-15 17:43:35] cleanup_deleted: Rimuovo asset_files id=17 (file mancante: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg)
+[2026-04-15 17:43:35] cleanup_deleted: Rimuovo asset_files id=18 (file mancante: /mnt/d/projects/newRDMD5IA/foto/qwsdcv .jpg)
+[2026-04-15 17:43:35] cleanup_deleted: Rimuovo asset_files id=19 (file mancante: /mnt/d/projects/newRDMD5IA/foto/sx.jpg)
+[2026-04-15 17:43:35] cleanup_deleted: Rimuovo asset_files id=20 (file mancante: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg)
+[2026-04-15 17:43:35] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 17:43:35] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:43:38] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:43:38] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:43:42] update_db: Scansione completata.
+[2026-04-15 17:43:42] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 17:43:42] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 17:43:42] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:43:49] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:43:49] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:43:49] update_db: Scansione completata.
+[2026-04-15 17:43:49] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=1 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=2 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=3 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=4 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=5 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=6 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=7 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=8 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f113901536.png)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=9 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-15 17:43:50] cleanup_deleted: Rimuovo asset_files id=10 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg)
+[2026-04-15 17:43:50] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 17:43:50] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:44:05] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:44:05] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:44:06] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
+[2026-04-15 17:44:07] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
+[2026-04-15 17:44:09] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
+[2026-04-15 17:45:01] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
+[2026-04-15 17:45:03] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
+[2026-04-15 17:45:04] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
+[2026-04-15 17:45:05] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
+[2026-04-15 17:45:40] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
+[2026-04-15 17:46:07] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 17:46:08] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
+[2026-04-15 17:46:39] update_db: Scansione completata.
+[2026-04-15 17:46:39] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 17:46:39] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 17:46:39] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:50:22] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:50:23] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:50:23] update_db: Scansione completata.
+[2026-04-15 17:50:23] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=21 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=22 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=23 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=24 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=25 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=26 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=27 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=28 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f113901536.png)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=29 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-15 17:50:23] cleanup_deleted: Rimuovo asset_files id=30 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg)
+[2026-04-15 17:50:23] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 17:50:24] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:50:26] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:50:26] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:50:27] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
+[2026-04-15 17:50:29] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
+[2026-04-15 17:50:30] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
+[2026-04-15 17:51:01] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
+[2026-04-15 17:51:03] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
+[2026-04-15 17:51:04] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
+[2026-04-15 17:51:05] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
+[2026-04-15 17:51:44] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
+[2026-04-15 17:52:15] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:52:15] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:52:19] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 17:52:55] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
+[2026-04-15 17:53:24] update_db: Scansione completata.
+[2026-04-15 17:53:24] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 17:53:24] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 17:53:24] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:55:29] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:55:29] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:55:37] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:55:37] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:55:37] update_db: Scansione completata.
+[2026-04-15 17:55:37] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 17:55:37] cleanup_deleted: Rimuovo asset_files id=31 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg)
+[2026-04-15 17:55:37] cleanup_deleted: Rimuovo asset_files id=32 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg)
+[2026-04-15 17:55:37] cleanup_deleted: Rimuovo asset_files id=33 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg)
+[2026-04-15 17:55:38] cleanup_deleted: Rimuovo asset_files id=34 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg)
+[2026-04-15 17:55:38] cleanup_deleted: Rimuovo asset_files id=35 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg)
+[2026-04-15 17:55:38] cleanup_deleted: Rimuovo asset_files id=36 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg)
+[2026-04-15 17:55:38] cleanup_deleted: Rimuovo asset_files id=37 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg)
+[2026-04-15 17:55:38] cleanup_deleted: Rimuovo asset_files id=38 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f113901536.png)
+[2026-04-15 17:55:38] cleanup_deleted: Rimuovo asset_files id=39 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-15 17:55:38] cleanup_deleted: Rimuovo asset_files id=40 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg)
+[2026-04-15 17:55:38] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 17:55:38] cleanup_deleted: Pulizia completata.
+[2026-04-15 17:55:44] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 17:55:44] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 17:55:45] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
+[2026-04-15 17:56:02] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
+[2026-04-15 17:56:19] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
+[2026-04-15 17:56:34] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
+[2026-04-15 17:56:51] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
+[2026-04-15 18:10:15] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:10:15] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:10:16] update_db: Scansione completata.
+[2026-04-15 18:10:16] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:10:16] cleanup_deleted: Rimuovo asset_files id=44 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg)
+[2026-04-15 18:10:17] cleanup_deleted: Rimuovo asset_files id=45 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg)
+[2026-04-15 18:10:17] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:10:17] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:10:28] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:10:28] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:10:29] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:11:08] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 18:11:48] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 18:12:40] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 18:13:36] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg
+[2026-04-15 18:14:29] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg
+[2026-04-15 18:15:10] update_db: Scansione completata.
+[2026-04-15 18:15:10] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:15:10] cleanup_deleted: Rimuovo asset_files id=46 (file mancante: /mnt/d/projects/newRDMD5IA/foto/af.png)
+[2026-04-15 18:15:10] cleanup_deleted: Rimuovo asset_files id=47 (file mancante: /mnt/d/projects/newRDMD5IA/foto/ags.jpg)
+[2026-04-15 18:15:10] cleanup_deleted: Rimuovo asset_files id=51 (file mancante: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg)
+[2026-04-15 18:15:10] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:15:10] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:15:11] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:15:11] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:15:13] update_db: Scansione completata.
+[2026-04-15 18:15:13] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:15:13] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:15:13] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:15:33] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:15:33] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:15:36] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
+[2026-04-15 18:16:06] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
+[2026-04-15 18:16:31] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
+[2026-04-15 18:17:02] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
+[2026-04-15 18:17:31] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
+[2026-04-15 18:17:52] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 18:18:17] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
+[2026-04-15 18:19:38] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:19:38] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:19:38] update_db: Scansione completata.
+[2026-04-15 18:19:38] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=41 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=42 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=43 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=48 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=49 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=50 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=52 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=53 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=54 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=55 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg)
+[2026-04-15 18:19:38] cleanup_deleted: Rimuovo asset_files id=56 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f113901536.png)
+[2026-04-15 18:19:39] cleanup_deleted: Rimuovo asset_files id=57 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-15 18:19:39] cleanup_deleted: Rimuovo asset_files id=58 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg)
+[2026-04-15 18:19:39] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:19:39] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:19:50] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:19:50] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:19:51] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:20:00] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 18:20:04] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 18:20:07] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 18:22:35] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:22:35] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:22:37] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg
+[2026-04-15 18:22:38] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg
+[2026-04-15 18:22:39] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/da.jpg
+[2026-04-15 18:22:40] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 18:22:40] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg
+[2026-04-15 18:22:41] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/sx.jpg
+[2026-04-15 18:22:42] update_db: Scansione completata.
+[2026-04-15 18:22:42] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:22:42] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:22:42] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:22:54] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:22:54] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:22:54] update_db: Scansione completata.
+[2026-04-15 18:22:54] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=59 (file mancante: /mnt/d/projects/newRDMD5IA/foto/af.png)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=60 (file mancante: /mnt/d/projects/newRDMD5IA/foto/ags.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=61 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=62 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=63 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=64 (file mancante: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=65 (file mancante: /mnt/d/projects/newRDMD5IA/foto/da.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=66 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=67 (file mancante: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Rimuovo asset_files id=68 (file mancante: /mnt/d/projects/newRDMD5IA/foto/sx.jpg)
+[2026-04-15 18:22:54] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:22:54] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:22:59] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:22:59] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:23:00] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:24:04] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 18:24:49] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 18:25:23] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 18:25:43] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:25:43] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:25:43] update_db: Scansione completata.
+[2026-04-15 18:25:43] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:25:43] cleanup_deleted: Rimuovo asset_files id=69 (file mancante: /mnt/d/projects/newRDMD5IA/foto/af.png)
+[2026-04-15 18:25:43] cleanup_deleted: Rimuovo asset_files id=70 (file mancante: /mnt/d/projects/newRDMD5IA/foto/ags.jpg)
+[2026-04-15 18:25:43] cleanup_deleted: Rimuovo asset_files id=71 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg)
+[2026-04-15 18:25:43] cleanup_deleted: Rimuovo asset_files id=72 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg)
+[2026-04-15 18:25:44] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:25:44] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:26:00] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:26:00] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:26:01] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:26:34] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 18:27:05] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 18:27:38] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 18:28:18] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg
+[2026-04-15 18:28:53] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg
+[2026-04-15 18:29:21] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/da.jpg
+[2026-04-15 18:29:53] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 18:30:34] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg
+[2026-04-15 18:31:07] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/sx.jpg
+[2026-04-15 18:31:48] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:31:48] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:31:49] update_db: Scansione completata.
+[2026-04-15 18:31:49] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=73 (file mancante: /mnt/d/projects/newRDMD5IA/foto/af.png)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=74 (file mancante: /mnt/d/projects/newRDMD5IA/foto/ags.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=75 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=76 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=77 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=78 (file mancante: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=79 (file mancante: /mnt/d/projects/newRDMD5IA/foto/da.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=80 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=81 (file mancante: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Rimuovo asset_files id=82 (file mancante: /mnt/d/projects/newRDMD5IA/foto/sx.jpg)
+[2026-04-15 18:31:49] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:31:49] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:31:54] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:31:54] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:31:55] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:32:08] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 18:32:20] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 18:32:36] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 18:32:55] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg
+[2026-04-15 18:35:57] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:35:57] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:35:57] update_db: Scansione completata.
+[2026-04-15 18:35:57] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:35:57] cleanup_deleted: Rimuovo asset_files id=83 (file mancante: /mnt/d/projects/newRDMD5IA/foto/af.png)
+[2026-04-15 18:35:57] cleanup_deleted: Rimuovo asset_files id=84 (file mancante: /mnt/d/projects/newRDMD5IA/foto/ags.jpg)
+[2026-04-15 18:35:57] cleanup_deleted: Rimuovo asset_files id=85 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg)
+[2026-04-15 18:35:57] cleanup_deleted: Rimuovo asset_files id=86 (file mancante: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg)
+[2026-04-15 18:35:57] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:35:57] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:36:17] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:36:17] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:36:17] update_db: File modificato: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:36:58] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:36:58] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:36:59] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:37:12] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 18:37:26] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 18:37:38] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 18:37:55] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg
+[2026-04-15 18:38:10] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg
+[2026-04-15 18:38:21] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/da.jpg
+[2026-04-15 18:38:32] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 18:38:46] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg
+[2026-04-15 18:38:58] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/sx.jpg
+[2026-04-15 18:39:10] update_db: Scansione completata.
+[2026-04-15 18:39:10] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:39:10] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:39:10] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:39:27] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:39:27] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:39:31] update_db: Scansione completata.
+[2026-04-15 18:39:31] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:39:31] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:39:31] cleanup_deleted: Pulizia completata.
+[2026-04-15 18:42:07] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:42:13] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo-gallery/db/gallery.db
+[2026-04-15 18:42:13] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-15 18:42:13] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/af.png
+[2026-04-15 18:42:26] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/ags.jpg
+[2026-04-15 18:42:38] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asbcvs.jpg
+[2026-04-15 18:42:50] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/asdcv.jpg
+[2026-04-15 18:43:04] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/sbdnbv.jpg
+[2026-04-15 18:43:15] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/bsv.jpg
+[2026-04-15 18:43:23] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/da.jpg
+[2026-04-15 18:43:32] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-15 18:43:44] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/qwsdcv.jpg
+[2026-04-15 18:43:54] update_db: Nuovo file: /mnt/d/projects/newRDMD5IA/foto/sx.jpg
+[2026-04-15 18:44:06] update_db: Scansione completata.
+[2026-04-15 18:44:06] cleanup_deleted: Pulizia file mancanti...
+[2026-04-15 18:44:06] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-15 18:44:06] cleanup_deleted: Pulizia completata.
