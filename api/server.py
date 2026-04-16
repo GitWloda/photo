@@ -22,8 +22,10 @@ THUMB_DIR = os.path.abspath(THUMB_DIR)
 
 
 def get_db_connection():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, timeout=15)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA busy_timeout=15000")
     return conn
 
 
@@ -74,7 +76,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self._send_file(css_path, "text/css; charset=utf-8")
 
         if path.startswith("/files/"):
-            rel = path[len("/files/") :]
+            rel = urllib.parse.unquote(path[len("/files/"):])
             safe_rel = os.path.normpath(rel)
             file_path = os.path.abspath(os.path.join(PHOTO_ROOT, safe_rel))
             if not file_path.startswith(PHOTO_ROOT):
@@ -83,7 +85,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self._send_file(file_path)
 
         if path.startswith("/thumbs/"):
-            rel = path[len("/thumbs/") :]
+            rel = urllib.parse.unquote(path[len("/thumbs/"):])
             safe_rel = os.path.normpath(rel)
             file_path = os.path.abspath(os.path.join(THUMB_DIR, safe_rel))
             if not file_path.startswith(THUMB_DIR):
@@ -95,7 +97,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self.handle_media_list()
 
         if path.startswith("/media/"):
-            # /media/{id}
             parts = path.strip("/").split("/")
             if len(parts) == 2 and parts[0] == "media":
                 return self.handle_media_detail(parts[1])
@@ -129,11 +130,11 @@ class GalleryHandler(BaseHTTPRequestHandler):
 
         items = []
         for r in rows:
-            rel_path = r["relative_path"]
+            rel_path = urllib.parse.quote(r["relative_path"], safe="/")
             thumb_path = r["thumb_path"]
             file_url = f"/files/{rel_path}"
             if thumb_path:
-                thumb_url = f"/thumbs/{thumb_path}"
+                thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}"
             else:
                 thumb_url = file_url
             items.append(
@@ -188,11 +189,11 @@ class GalleryHandler(BaseHTTPRequestHandler):
             self.send_error(404, "Media not found")
             return
 
-        rel_path = row["relative_path"]
+        rel_path = urllib.parse.quote(row["relative_path"], safe="/")
         thumb_path = row["thumb_path"]
         file_url = f"/files/{rel_path}"
         if thumb_path:
-            thumb_url = f"/thumbs/{thumb_path}"
+            thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}"
         else:
             thumb_url = file_url
 
@@ -253,11 +254,11 @@ class GalleryHandler(BaseHTTPRequestHandler):
 
         items = []
         for r in rows:
-            rel_path = r["relative_path"]
+            rel_path = urllib.parse.quote(r["relative_path"], safe="/")
             thumb_path = r["thumb_path"]
             file_url = f"/files/{rel_path}"
             if thumb_path:
-                thumb_url = f"/thumbs/{thumb_path}"
+                thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}"
             else:
                 thumb_url = file_url
             items.append(

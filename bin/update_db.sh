@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.."; pwd)"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." ; pwd)"
 
 if [ ! -f "$ROOT_DIR/config/app.env" ]; then
   echo "config/app.env non trovato." >&2
@@ -67,6 +67,14 @@ sql_escape() {
   sed "s/'/''/g"
 }
 
+sqlite_query() {
+  sqlite3 -cmd ".timeout 15000" "$DB_FILE" "$1"
+}
+
+sqlite_batch() {
+  sqlite3 -cmd ".timeout 15000" "$DB_FILE"
+}
+
 get_stat_linux() {
   local file="$1"
   stat -c '%s %Y' "$file"
@@ -118,24 +126,20 @@ process_file() {
     return 0
   fi
 
-  local abs_path
+  local abs_path rel_path filename stat_out size_bytes mtime sha256 metadata_json
   abs_path="$(realpath "$file")"
-  local rel_path="${abs_path#$PHOTO_ROOT_ABS/}"
-  local filename
+  rel_path="${abs_path#$PHOTO_ROOT_ABS/}"
   filename="$(basename "$file")"
 
-  local stat_out
   stat_out="$(get_size_mtime "$file")"
-  local size_bytes mtime
   size_bytes="$(echo "$stat_out" | awk '{print $1}')"
   mtime="$(echo "$stat_out" | awk '{print $2}')"
 
-  local sha256
   sha256="$("$ROOT_DIR/bin/hash_file.sh" "$file")"
 
-  local metadata_json
   metadata_json="$("$ROOT_DIR/bin/extract_metadata.sh" "$file" || echo '{}')"
 
+  # Escaping per SQL
   local ep er ef esha em
   ep=$(printf '%s' "$abs_path"      | sql_escape)
   er=$(printf '%s' "$rel_path"      | sql_escape)
@@ -144,61 +148,83 @@ process_file() {
   em=$(printf '%s' "$metadata_json" | sql_escape)
 
   local row
-  row=$(sqlite3 "$DB_FILE" "SELECT id, sha256, mtime, asset_id FROM asset_files WHERE absolute_path = '$ep';")
+  row=$(sqlite_query "SELECT id, sha256, mtime, asset_id FROM asset_files WHERE absolute_path = '$ep';")
 
   if [ -z "$row" ]; then
+    # ----------------- NUOVO FILE -----------------
     log "Nuovo file: $abs_path"
 
+    # 1) crea asset in transazione corta
     local asset_id
-    asset_id=$(sqlite3 "$DB_FILE" \
-      "INSERT INTO assets (title, created_at, updated_at) \
-       VALUES ('$ef', strftime('%s','now'), strftime('%s','now')); \
-       SELECT last_insert_rowid();")
+    asset_id="$({
+      cat <<SQL
+BEGIN IMMEDIATE;
+INSERT INTO assets (title, created_at, updated_at)
+VALUES ('$ef', strftime('%s','now'), strftime('%s','now'));
+SELECT last_insert_rowid();
+COMMIT;
+SQL
+    } | sqlite_batch | tail -n 1)"
 
-    local thumb_rel
+    # 2) genera thumbnail fuori dal DB (può essere lenta)
+    local thumb_rel ethumb
     thumb_rel="$(generate_thumb "$file" "$asset_id")"
-    local ethumb
     ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
-    sqlite3 "$DB_FILE" \
-      "INSERT INTO asset_files \
-         (asset_id, absolute_path, relative_path, filename, sha256, \
-          metadata_json, size_bytes, mtime, thumb_path, created_at, updated_at) \
-       VALUES \
-         ($asset_id, '$ep', '$er', '$ef', '$esha', \
-          '$em', $size_bytes, $mtime, '$ethumb', \
-          strftime('%s','now'), strftime('%s','now'));"
+    # 3) inserisce asset_files in un'altra transazione corta
+    {
+      cat <<SQL
+BEGIN IMMEDIATE;
+INSERT INTO asset_files (
+  asset_id, absolute_path, relative_path, filename, sha256,
+  metadata_json, size_bytes, mtime, thumb_path, created_at, updated_at
+) VALUES (
+  $asset_id, '$ep', '$er', '$ef', '$esha',
+  '$em', $size_bytes, $mtime, '$ethumb',
+  strftime('%s','now'), strftime('%s','now')
+);
+COMMIT;
+SQL
+    } | sqlite_batch >/dev/null
 
-    # L'asset_id viene accodato per l'elaborazione IA parallela
+    # restituisce asset_id per la coda IA
     echo "$asset_id"
 
   else
+    # ----------------- FILE GIÀ CONOSCIUTO -----------------
     local file_id old_sha old_mtime asset_id
-    file_id=$(echo "$row"   | awk -F'|' '{print $1}')
-    old_sha=$(echo "$row"   | awk -F'|' '{print $2}')
+    file_id=$(echo "$row" | awk -F'|' '{print $1}')
+    old_sha=$(echo "$row" | awk -F'|' '{print $2}')
     old_mtime=$(echo "$row" | awk -F'|' '{print $3}')
-    asset_id=$(echo "$row"  | awk -F'|' '{print $4}')
+    asset_id=$(echo "$row" | awk -F'|' '{print $4}')
 
     if [ "$old_sha" != "$sha256" ] || [ "$old_mtime" != "$mtime" ]; then
       log "File modificato: $abs_path"
 
-      local thumb_rel
+      local thumb_rel ethumb
       thumb_rel="$(generate_thumb "$file" "$asset_id")"
-      local ethumb
       ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
-      sqlite3 "$DB_FILE" \
-        "UPDATE asset_files \
-         SET sha256='$esha', metadata_json='$em', size_bytes=$size_bytes, \
-             mtime=$mtime, thumb_path='$ethumb', updated_at=strftime('%s','now') \
-         WHERE id=$file_id;"
+      {
+        cat <<SQL
+BEGIN IMMEDIATE;
+UPDATE asset_files
+SET sha256='$esha',
+    metadata_json='$em',
+    size_bytes=$size_bytes,
+    mtime=$mtime,
+    thumb_path='$ethumb',
+    updated_at=strftime('%s','now')
+WHERE id=$file_id;
 
-      # Azzera il puntatore alla descrizione per forzare rigenerazione
-      sqlite3 "$DB_FILE" \
-        "UPDATE assets SET ai_description_id=NULL, updated_at=strftime('%s','now') \
-         WHERE id=$asset_id;"
+UPDATE assets
+SET ai_description_id=NULL,
+    updated_at=strftime('%s','now')
+WHERE id=$asset_id;
+COMMIT;
+SQL
+      } | sqlite_batch >/dev/null
 
-      # Stampa l'asset_id per la coda IA
       echo "$asset_id"
     fi
   fi
@@ -218,14 +244,9 @@ done < <(find "$PHOTO_ROOT_ABS" -type f 2>/dev/null) > "$PENDING_IDS_FILE"
 
 log "Scansione filesystem completata."
 
-# ---------------------------------------------------------------------------
-# FASE 2: elaborazione IA parallela sui nuovi/modificati + asset senza descrizione
-# ---------------------------------------------------------------------------
-# Aggiunge alla lista anche asset già in DB ma privi di descrizione (es. primo avvio)
-SALVATI_SENZA_DESC=$(sqlite3 "$DB_FILE" \
-  "SELECT id FROM assets WHERE ai_description_id IS NULL;")
+# asset già presenti ma senza descrizione
+SALVATI_SENZA_DESC=$(sqlite_query "SELECT id FROM assets WHERE ai_description_id IS NULL;")
 
-# Unisce i due insiemi e deduplicA
 ALL_PENDING=$(
   { cat "$PENDING_IDS_FILE"; echo "$SALVATI_SENZA_DESC"; } \
   | grep -v '^$' \
@@ -233,6 +254,11 @@ ALL_PENDING=$(
 )
 
 COUNT=$(echo "$ALL_PENDING" | grep -c '[0-9]' || true)
+
+# ---------------------------------------------------------------------------
+# FASE 2: elaborazione IA parallela sui nuovi/modificati + asset senza descrizione
+# ---------------------------------------------------------------------------
+WORKER_SCRIPT="$ROOT_DIR/bin/worker_ai.py"
 
 if [ "$COUNT" -eq 0 ]; then
   log "Nessun asset da elaborare con l'IA."
@@ -242,8 +268,7 @@ else
     parallel \
       --jobs "$AI_WORKERS" \
       --line-buffer \
-      --halt now,fail=1 \
-      python3 "$ROOT_DIR/bin/worker_ai.py" {}
+      python3 "\"$WORKER_SCRIPT\"" {}
   log "Elaborazione IA completata ($COUNT asset processati)."
 fi
 
