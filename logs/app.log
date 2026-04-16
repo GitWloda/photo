@@ -1476,3 +1476,100 @@
 [2026-04-16 02:53:55] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
 [2026-04-16 02:54:31] [OK]   Scansione filesystem completata.
 [2026-04-16 02:54:31] [RUN]  Avvio 8 worker IA su 7 asset...
+[2026-04-16 15:52:03] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 15:52:03] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 15:55:43] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 15:55:43] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 15:55:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
+[2026-04-16 15:55:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
+[2026-04-16 15:55:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
+[2026-04-16 15:55:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270051.JPG
+[2026-04-16 15:55:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270053.JPG
+[2026-04-16 15:55:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270056.JPG
+[2026-04-16 15:55:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270057.JPG
+[2026-04-16 15:55:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270058.JPG
+[2026-04-16 15:55:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270059.JPG
+[2026-04-16 15:55:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270060.JPG
+[2026-04-16 15:55:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280062.JPG
+[2026-04-16 15:55:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280063.JPG
+[2026-04-16 15:55:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280064.JPG
+[2026-04-16 15:55:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180054.JPG
+[2026-04-16 15:56:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180055.JPG
+[2026-04-16 15:56:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180056.JPG
+[2026-04-16 15:56:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180057.JPG
+[2026-04-16 15:56:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180058.JPG
+[2026-04-16 15:56:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180059.JPG
+[2026-04-16 15:56:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180060.JPG
+[2026-04-16 15:56:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180061.JPG
+[2026-04-16 15:56:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180063.JPG
+[2026-04-16 15:56:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180064.JPG
+[2026-04-16 15:56:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180065.JPG
+[2026-04-16 15:56:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180066.JPG
+[2026-04-16 15:56:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180067.JPG
+[2026-04-16 15:56:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270001.JPG
+[2026-04-16 15:56:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270002.JPG
+[2026-04-16 15:56:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270003.JPG
+[2026-04-16 15:56:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270004.JPG
+[2026-04-16 15:56:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270005.JPG
+[2026-04-16 15:56:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270006.JPG
+[2026-04-16 15:56:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270007.JPG
+[2026-04-16 15:56:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270008.JPG
+[2026-04-16 15:56:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270009.JPG
+[2026-04-16 15:56:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270010.JPG
+[2026-04-16 15:56:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270014.JPG
+[2026-04-16 15:56:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270015.JPG
+[2026-04-16 15:56:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270016.JPG
+[2026-04-16 15:56:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270017.JPG
+[2026-04-16 15:56:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270018.JPG
+[2026-04-16 15:56:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270019.JPG
+[2026-04-16 15:56:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270020.JPG
+[2026-04-16 15:56:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270021.JPG
+[2026-04-16 15:56:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270023.JPG
+[2026-04-16 15:56:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270024.JPG
+[2026-04-16 15:56:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270025.JPG
+[2026-04-16 15:56:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270026.JPG
+[2026-04-16 15:56:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270027.JPG
+[2026-04-16 15:56:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270028.JPG
+[2026-04-16 15:56:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270029.JPG
+[2026-04-16 15:56:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270030.JPG
+[2026-04-16 15:56:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270031.JPG
+[2026-04-16 15:56:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270032.JPG
+[2026-04-16 15:56:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270033.JPG
+[2026-04-16 15:56:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270035.JPG
+[2026-04-16 15:56:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270036.JPG
+[2026-04-16 15:56:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270037.JPG
+[2026-04-16 15:56:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270038.JPG
+[2026-04-16 15:56:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270039.JPG
+[2026-04-16 15:57:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270040.JPG
+[2026-04-16 15:57:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270041.JPG
+[2026-04-16 15:57:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270042.JPG
+[2026-04-16 15:57:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270045.JPG
+[2026-04-16 15:57:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270046.JPG
+[2026-04-16 15:57:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270047.JPG
+[2026-04-16 15:57:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270048.JPG
+[2026-04-16 15:57:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270049.JPG
+[2026-04-16 15:57:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270050.JPG
+[2026-04-16 15:57:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
+[2026-04-16 15:57:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
+[2026-04-16 15:57:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
+[2026-04-16 15:57:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
+[2026-04-16 15:57:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
+[2026-04-16 15:57:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
+[2026-04-16 15:57:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
+[2026-04-16 15:57:16] [OK]   Scansione filesystem completata.
+[2026-04-16 15:57:16] [RUN]  Avvio 8 worker IA su 76 asset...
+[2026-04-16 16:11:55] [OK]   Elaborazione IA completata (76 asset processati).
+[2026-04-16 16:11:55] [OK]   Update DB completato.
+[2026-04-16 16:11:55] cleanup_deleted: Pulizia file mancanti...
+[2026-04-16 16:11:55] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-16 16:11:55] cleanup_deleted: Pulizia completata.
+[2026-04-16 17:05:16] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 17:05:16] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 17:06:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/P4080001.JPG
+[2026-04-16 17:06:05] [OK]   Scansione filesystem completata.
+[2026-04-16 17:06:05] [RUN]  Avvio 8 worker IA su 1 asset...
+[2026-04-16 17:07:07] [OK]   Elaborazione IA completata (1 asset processati).
+[2026-04-16 17:07:07] [OK]   Update DB completato.
+[2026-04-16 17:07:07] cleanup_deleted: Pulizia file mancanti...
+[2026-04-16 17:07:07] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-16 17:07:07] cleanup_deleted: Pulizia completata.

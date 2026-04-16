@@ -3,17 +3,37 @@ import json
 import mimetypes
 import os
 import sqlite3
+import sys
 import urllib.parse
 from datetime import datetime
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ENV_FILE = os.path.join(ROOT_DIR, "config", "app.env")
+
+
+def load_env_file(path: str) -> None:
+    if not os.path.isfile(path):
+        return
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            os.environ[key.strip()] = value.strip().strip('"').strip("'")
+
+
+load_env_file(ENV_FILE)
+
 DB_PATH = os.environ.get("DB_PATH", os.path.join(ROOT_DIR, "db", "gallery.db"))
 PHOTO_ROOT = os.environ.get("PHOTO_ROOT", os.path.expanduser("~/Pictures"))
 THUMB_DIR = os.environ.get("THUMB_DIR", os.path.join(ROOT_DIR, "data", "thumbs"))
 HOST = os.environ.get("HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", "8080"))
 
+if not os.path.isabs(DB_PATH):
+    DB_PATH = os.path.abspath(os.path.join(ROOT_DIR, DB_PATH))
 PHOTO_ROOT = os.path.abspath(PHOTO_ROOT)
 if not os.path.isabs(THUMB_DIR):
     THUMB_DIR = os.path.join(ROOT_DIR, THUMB_DIR)
@@ -24,24 +44,35 @@ YELLOW = "\033[33m"
 RED = "\033[31m"
 RESET = "\033[0m"
 
+
 def _ts() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 
 def log_run(msg: str) -> None:
     print(f"{WHITE}[{_ts()}] [RUN]  server: {msg}{RESET}", flush=True)
 
+
 def log_warn(msg: str) -> None:
     print(f"{YELLOW}[{_ts()}] [WARN] server: {msg}{RESET}", flush=True)
+
 
 def log_err(msg: str) -> None:
     print(f"{RED}[{_ts()}] [ERR]  server: {msg}{RESET}", file=sys.stderr, flush=True)
 
+
 def get_db_connection():
+    db_dir = os.path.dirname(DB_PATH)
+    if db_dir and not os.path.isdir(db_dir):
+        raise sqlite3.OperationalError(f"DB directory non trovata: {db_dir}")
+    if not os.path.exists(DB_PATH):
+        raise sqlite3.OperationalError(f"DB file non trovato: {DB_PATH}")
     conn = sqlite3.connect(DB_PATH, timeout=15)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA busy_timeout=15000")
     return conn
+
 
 class GalleryHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -66,6 +97,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()
         self.wfile.write(data)
+
+    def _handle_db_error(self, exc):
+        log_err(str(exc))
+        self._send_json({"error": str(exc), "db_path": DB_PATH}, status=500)
 
     def _send_file(self, path, content_type=None, status=200):
         if not os.path.isfile(path):
@@ -93,6 +128,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
         query = urllib.parse.parse_qs(parsed.query)
+
         log_run(f"GET {self.path}")
 
         if path == "/" or path == "/index.html":
@@ -143,7 +179,11 @@ class GalleryHandler(BaseHTTPRequestHandler):
         self.send_error(404, "Not found")
 
     def handle_media_list(self):
-        conn = get_db_connection()
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
         try:
             cur = conn.cursor()
             cur.execute(
@@ -162,20 +202,26 @@ class GalleryHandler(BaseHTTPRequestHandler):
             rows = cur.fetchall()
         finally:
             conn.close()
+
         items = []
         for r in rows:
             rel_path = urllib.parse.quote(r["relative_path"], safe="/")
             thumb_path = r["thumb_path"]
             file_url = f"/files/{rel_path}"
-            thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}" if thumb_path else file_url
-            items.append({
-                "id": r["asset_id"],
-                "filename": r["filename"],
-                "file_url": file_url,
-                "thumb_url": thumb_url,
-                "description": r["description"] or "",
-            })
-        return self._send_json(items)
+            if thumb_path:
+                thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}"
+            else:
+                thumb_url = file_url
+            items.append(
+                {
+                    "id": r["asset_id"],
+                    "filename": r["filename"],
+                    "file_url": file_url,
+                    "thumb_url": thumb_url,
+                    "description": r["description"] or "",
+                }
+            )
+        self._send_json(items)
 
     def handle_media_detail(self, id_str):
         try:
@@ -184,7 +230,12 @@ class GalleryHandler(BaseHTTPRequestHandler):
             log_warn(f"id non valido: {id_str}")
             self.send_error(400, "Invalid id")
             return
-        conn = get_db_connection()
+
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
         try:
             cur = conn.cursor()
             cur.execute(
@@ -213,19 +264,26 @@ class GalleryHandler(BaseHTTPRequestHandler):
             row = cur.fetchone()
         finally:
             conn.close()
+
         if row is None:
             log_warn(f"media non trovato: asset_id={asset_id}")
             self.send_error(404, "Media not found")
             return
+
         rel_path = urllib.parse.quote(row["relative_path"], safe="/")
         thumb_path = row["thumb_path"]
         file_url = f"/files/{rel_path}"
-        thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}" if thumb_path else file_url
+        if thumb_path:
+            thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}"
+        else:
+            thumb_url = file_url
+
         try:
             metadata = json.loads(row["metadata_json"]) if row["metadata_json"] else {}
         except Exception:
             log_warn(f"metadata_json non valido per asset_id={asset_id}")
             metadata = {}
+
         result = {
             "id": row["asset_id"],
             "title": row["title"],
@@ -250,8 +308,14 @@ class GalleryHandler(BaseHTTPRequestHandler):
         q = (query_str or "").strip()
         if not q:
             return self.handle_media_list()
+
         pattern = f"%{q}%"
-        conn = get_db_connection()
+
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
         try:
             cur = conn.cursor()
             cur.execute(
@@ -273,22 +337,36 @@ class GalleryHandler(BaseHTTPRequestHandler):
             rows = cur.fetchall()
         finally:
             conn.close()
+
         items = []
         for r in rows:
             rel_path = urllib.parse.quote(r["relative_path"], safe="/")
             thumb_path = r["thumb_path"]
             file_url = f"/files/{rel_path}"
-            thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}" if thumb_path else file_url
-            items.append({
-                "id": r["asset_id"],
-                "filename": r["filename"],
-                "file_url": file_url,
-                "thumb_url": thumb_url,
-                "description": r["description"] or "",
-            })
-        return self._send_json(items)
+            if thumb_path:
+                thumb_url = f"/thumbs/{urllib.parse.quote(thumb_path, safe='/')}"
+            else:
+                thumb_url = file_url
+            items.append(
+                {
+                    "id": r["asset_id"],
+                    "filename": r["filename"],
+                    "file_url": file_url,
+                    "thumb_url": thumb_url,
+                    "description": r["description"] or "",
+                }
+            )
+        self._send_json(items)
+
 
 def run():
+    log_run(f"ROOT_DIR={ROOT_DIR}")
+    log_run(f"ENV_FILE={ENV_FILE}")
+    log_run(f"DB_PATH={DB_PATH}")
+    log_run(f"DB exists={os.path.exists(DB_PATH)}")
+    log_run(f"PHOTO_ROOT={PHOTO_ROOT}")
+    log_run(f"THUMB_DIR={THUMB_DIR}")
+
     server = HTTPServer((HOST, PORT), GalleryHandler)
     log_run(f"Server in ascolto su http://{HOST}:{PORT}")
     log_run("Ctrl+C per interrompere.")
@@ -299,6 +377,7 @@ def run():
     finally:
         server.server_close()
         log_run("Server chiuso.")
+
 
 if __name__ == "__main__":
     run()
