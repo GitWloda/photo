@@ -14,6 +14,7 @@ import sys
 import sqlite3
 import subprocess
 import time
+from datetime import datetime
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 ENV_FILE = os.path.join(ROOT_DIR, "config", "app.env")
@@ -45,6 +46,30 @@ DB_TIMEOUT = 30
 DB_RETRIES = 6
 DESC_RETRIES = int(cfg.get("DESC_RETRIES", "3"))
 DESC_SLEEP = float(cfg.get("DESC_SLEEP", "1.5"))
+
+GREEN = "\033[32m"
+WHITE = "\033[97m"
+YELLOW = "\033[33m"
+RED = "\033[31m"
+RESET = "\033[0m"
+
+def _ts() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+def log_run(msg: str) -> None:
+    print(f"{WHITE}[{_ts()}] [RUN]  {msg}{RESET}", flush=True)
+
+def log_ok(msg: str) -> None:
+    print(f"{GREEN}[{_ts()}] [OK]   {msg}{RESET}", flush=True)
+
+def log_warn(msg: str) -> None:
+    print(f"{YELLOW}[{_ts()}] [WARN] {msg}{RESET}", file=sys.stderr, flush=True)
+
+def log_err(msg: str) -> None:
+    print(f"{RED}[{_ts()}] [ERR]  {msg}{RESET}", file=sys.stderr, flush=True)
+
+def log_skip(msg: str) -> None:
+    print(f"{YELLOW}[{_ts()}] [SKIP] {msg}{RESET}", flush=True)
 
 
 def db_connect() -> sqlite3.Connection:
@@ -145,65 +170,61 @@ def call_ollama_with_retry(abs_path: str, retries: int = DESC_RETRIES) -> str:
         if rc == 0 and stdout:
             return stdout
 
-        print(
-            f"[WARN] generate_description fallita/vuota per file={abs_path} "
-            f"tentativo {attempt}/{retries} rc={rc}",
-            file=sys.stderr,
-            flush=True,
+        log_warn(
+            f"generate_description fallita/vuota per file={abs_path} "
+            f"tentativo {attempt}/{retries} rc={rc}"
         )
 
         if stdout:
-            print(f"[WARN] stdout: {stdout}", file=sys.stderr, flush=True)
+            log_warn(f"stdout: {stdout}")
 
         if stderr:
-            print(f"[WARN] stderr: {stderr}", file=sys.stderr, flush=True)
+            log_warn(f"stderr: {stderr}")
 
         if attempt < retries:
             time.sleep(DESC_SLEEP * attempt)
 
-    print(
-        f"[ERR] generate_description esauriti i retry per file={abs_path} "
-        f"(rc={last_rc})",
-        file=sys.stderr,
-        flush=True,
+    log_err(
+        f"generate_description esauriti i retry per file={abs_path} "
+        f"(rc={last_rc})"
     )
     if last_stdout:
-        print(f"[ERR] ultimo stdout: {last_stdout}", file=sys.stderr, flush=True)
+        log_err(f"ultimo stdout: {last_stdout}")
     if last_stderr:
-        print(f"[ERR] ultimo stderr: {last_stderr}", file=sys.stderr, flush=True)
+        log_err(f"ultimo stderr: {last_stderr}")
 
     return ""
 
 
 def process(asset_id: int) -> None:
     if already_has_description(asset_id):
-        print(f"[SKIP] asset_id={asset_id} ha già una descrizione.", flush=True)
+        log_skip(f"asset_id={asset_id} ha già una descrizione.")
         return
 
     abs_path = get_file_path(asset_id)
     if not abs_path:
-        print(f"[ERR] asset_id={asset_id} nessun file trovato nel DB.", file=sys.stderr, flush=True)
+        log_err(f"asset_id={asset_id} nessun file trovato nel DB.")
         return
 
     if not os.path.isfile(abs_path):
-        print(f"[ERR] asset_id={asset_id} file non esistente: {abs_path}", file=sys.stderr, flush=True)
+        log_err(f"asset_id={asset_id} file non esistente: {abs_path}")
         return
 
-    print(f"[RUN]  asset_id={asset_id} -> {os.path.basename(abs_path)}", flush=True)
+    log_run(f"asset_id={asset_id} -> {os.path.basename(abs_path)}")
 
     desc = call_ollama_with_retry(abs_path)
 
     if not desc:
-        print(f"[WARN] asset_id={asset_id} descrizione vuota, skip.", file=sys.stderr, flush=True)
+        log_warn(f"asset_id={asset_id} descrizione vuota, skip.")
         return
 
     try:
         write_description(asset_id, desc)
     except Exception as exc:
-        print(f"[ERR] asset_id={asset_id} errore salvataggio DB: {exc}", file=sys.stderr, flush=True)
+        log_err(f"asset_id={asset_id} errore salvataggio DB: {exc}")
         raise
 
-    print(f"[OK]   asset_id={asset_id} descrizione salvata ({len(desc)} caratteri).", flush=True)
+    log_ok(f"asset_id={asset_id} descrizione salvata ({len(desc)} caratteri).")
 
 
 if __name__ == "__main__":

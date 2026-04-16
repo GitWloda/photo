@@ -11,14 +11,31 @@ fi
 # shellcheck source=/dev/null
 source "$ROOT_DIR/config/app.env"
 
+# --- ANSI colors ---
+C_GREEN="\033[32m"
+C_WHITE="\033[97m"
+C_YELLOW="\033[33m"
+C_RED="\033[31m"
+C_RESET="\033[0m"
+
+_ts() { date '+%Y-%m-%d %H:%M:%S'; }
+
+log_run()  { echo -e "${C_WHITE}[$(_ts)] [RUN]  $*${C_RESET}" >&2; echo "[$(_ts)] [RUN]  $*" >> "$LOG_FILE_ABS"; }
+log_ok()   { echo -e "${C_GREEN}[$(_ts)] [OK]   $*${C_RESET}" >&2; echo "[$(_ts)] [OK]   $*" >> "$LOG_FILE_ABS"; }
+log_warn() { echo -e "${C_YELLOW}[$(_ts)] [WARN] $*${C_RESET}" >&2; echo "[$(_ts)] [WARN] $*" >> "$LOG_FILE_ABS"; }
+log_err()  { echo -e "${C_RED}[$(_ts)] [ERR]  $*${C_RESET}" >&2; echo "[$(_ts)] [ERR]  $*" >> "$LOG_FILE_ABS"; }
+
+# sostituisce la vecchia funzione log() – compatibilità interna
+log() { log_run "update_db: $*"; }
+
 # --- Dipendenze esterne ---
 if ! command -v parallel >/dev/null 2>&1; then
-  echo "Errore: GNU parallel non trovato. Installalo con: sudo apt install parallel" >&2
+  log_err "GNU parallel non trovato. Installalo con: sudo apt install parallel"
   exit 1
 fi
 
 if ! command -v python3 >/dev/null 2>&1; then
-  echo "Errore: python3 non trovato nel PATH." >&2
+  log_err "python3 non trovato nel PATH."
   exit 1
 fi
 
@@ -48,7 +65,7 @@ else
 fi
 
 if [ -z "$PHOTO_ROOT_ABS" ]; then
-  echo "Errore: PHOTO_ROOT non valido: $PHOTO_ROOT" >&2
+  log_err "PHOTO_ROOT non valido: $PHOTO_ROOT"
   exit 1
 fi
 
@@ -57,11 +74,6 @@ AI_WORKERS="${AI_WORKERS:-4}"
 
 mkdir -p "$THUMB_DIR_ABS"
 touch "$LOG_FILE_ABS"
-
-log() {
-  local msg="$1"
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] update_db: $msg" | tee -a "$LOG_FILE_ABS" >&2
-}
 
 sql_escape() {
   sed "s/'/''/g"
@@ -111,7 +123,6 @@ generate_thumb() {
 
 # ---------------------------------------------------------------------------
 # process_file: gestisce insert/update di asset e asset_files nel DB.
-# NON chiama più Ollama direttamente: l'elaborazione IA è delegata ai worker.
 # ---------------------------------------------------------------------------
 process_file() {
   local file="$1"
@@ -152,9 +163,8 @@ process_file() {
 
   if [ -z "$row" ]; then
     # ----------------- NUOVO FILE -----------------
-    log "Nuovo file: $abs_path"
+    log_ok "Nuovo file: $abs_path"
 
-    # 1) crea asset in transazione corta
     local asset_id
     asset_id="$({
       cat <<SQL
@@ -166,12 +176,10 @@ COMMIT;
 SQL
     } | sqlite_batch | tail -n 1)"
 
-    # 2) genera thumbnail fuori dal DB (può essere lenta)
     local thumb_rel ethumb
     thumb_rel="$(generate_thumb "$file" "$asset_id")"
     ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
-    # 3) inserisce asset_files in un'altra transazione corta
     {
       cat <<SQL
 BEGIN IMMEDIATE;
@@ -187,7 +195,6 @@ COMMIT;
 SQL
     } | sqlite_batch >/dev/null
 
-    # restituisce asset_id per la coda IA
     echo "$asset_id"
 
   else
@@ -199,7 +206,7 @@ SQL
     asset_id=$(echo "$row" | awk -F'|' '{print $4}')
 
     if [ "$old_sha" != "$sha256" ] || [ "$old_mtime" != "$mtime" ]; then
-      log "File modificato: $abs_path"
+      log_run "File modificato: $abs_path"
 
       local thumb_rel ethumb
       thumb_rel="$(generate_thumb "$file" "$asset_id")"
@@ -233,7 +240,7 @@ SQL
 # ---------------------------------------------------------------------------
 # FASE 1: scansione sequenziale (DB writes safe, nessuna chiamata Ollama)
 # ---------------------------------------------------------------------------
-log "Scansione libreria in $PHOTO_ROOT_ABS"
+log_run "Scansione libreria in $PHOTO_ROOT_ABS"
 
 PENDING_IDS_FILE="$(mktemp)"
 trap 'rm -f "$PENDING_IDS_FILE"' EXIT
@@ -242,7 +249,7 @@ while IFS= read -r f; do
   process_file "$f"
 done < <(find "$PHOTO_ROOT_ABS" -type f 2>/dev/null) > "$PENDING_IDS_FILE"
 
-log "Scansione filesystem completata."
+log_ok "Scansione filesystem completata."
 
 # asset già presenti ma senza descrizione
 SALVATI_SENZA_DESC=$(sqlite_query "SELECT id FROM assets WHERE ai_description_id IS NULL;")
@@ -261,15 +268,15 @@ COUNT=$(echo "$ALL_PENDING" | grep -c '[0-9]' || true)
 WORKER_SCRIPT="$ROOT_DIR/bin/worker_ai.py"
 
 if [ "$COUNT" -eq 0 ]; then
-  log "Nessun asset da elaborare con l'IA."
+  log_ok "Nessun asset da elaborare con l'IA."
 else
-  log "Avvio $AI_WORKERS worker IA su $COUNT asset..."
+  log_run "Avvio $AI_WORKERS worker IA su $COUNT asset..."
   echo "$ALL_PENDING" | \
     parallel \
       --jobs "$AI_WORKERS" \
       --line-buffer \
       python3 "\"$WORKER_SCRIPT\"" {}
-  log "Elaborazione IA completata ($COUNT asset processati)."
+  log_ok "Elaborazione IA completata ($COUNT asset processati)."
 fi
 
-log "Update DB completato."
+log_ok "Update DB completato."

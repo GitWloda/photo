@@ -1435,3 +1435,44 @@
 [2026-04-16 01:56:09] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
 [2026-04-16 01:57:08] update_db: Scansione filesystem completata.
 [2026-04-16 01:57:08] update_db: Avvio 8 worker IA su 76 asset...
+[2026-04-16 02:13:26] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:13:26] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:13:36] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:13:36] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:13:45] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:13:49] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:13:49] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:14:10] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:14:10] update_db: Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:14:50] update_db: Scansione filesystem completata.
+[2026-04-16 02:14:50] update_db: Avvio 8 worker IA su 47 asset...
+[2026-04-16 02:31:55] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:31:55] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:32:34] [OK]   Scansione filesystem completata.
+[2026-04-16 02:32:34] [RUN]  Avvio 8 worker IA su 47 asset...
+[2026-04-16 02:33:05] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:33:09] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:33:09] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:33:43] [OK]   Scansione filesystem completata.
+[2026-04-16 02:33:43] [RUN]  Avvio 8 worker IA su 47 asset...
+[2026-04-16 02:34:53] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:34:54] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:35:29] [OK]   Scansione filesystem completata.
+[2026-04-16 02:35:29] [RUN]  Avvio 8 worker IA su 47 asset...
+[2026-04-16 02:35:38] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:35:38] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:36:12] [OK]   Scansione filesystem completata.
+[2026-04-16 02:36:12] [RUN]  Avvio 8 worker IA su 47 asset...
+[2026-04-16 02:46:46] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:47:22] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:49:04] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:49:45] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:50:08] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:51:49] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:52:53] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:53:15] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:53:15] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:53:55] init_db: database pronto in /mnt/d/projects/newRDMD5IA/Nuova cartella/photo/db/gallery.db
+[2026-04-16 02:53:55] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-16 02:54:31] [OK]   Scansione filesystem completata.
+[2026-04-16 02:54:31] [RUN]  Avvio 8 worker IA su 7 asset...

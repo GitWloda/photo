@@ -63,25 +63,30 @@
     galleryEl.appendChild(fragment);
   }
 
+  // Renders ALL metadata keys (not just a fixed subset)
   function renderMetadataTable(metadata) {
     if (!metadata || typeof metadata !== "object") {
       return "";
     }
 
-    const keys = ["Make", "Model", "LensModel", "CreateDate", "ISO", "FNumber", "ExposureTime"];
-    const rows = [];
-
-    keys.forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(metadata, key)) {
-        rows.push(
-          `<tr><th>${key}</th><td>${String(metadata[key])}</td></tr>`
-        );
-      }
-    });
-
-    if (rows.length === 0) {
+    const keys = Object.keys(metadata);
+    if (keys.length === 0) {
       return "";
     }
+
+    // Sort keys: known "primary" ones first, then the rest alphabetically
+    const primary = ["Make", "Model", "LensModel", "CreateDate", "ISO", "FNumber", "ExposureTime"];
+    const sorted = [
+      ...primary.filter((k) => Object.prototype.hasOwnProperty.call(metadata, k)),
+      ...keys
+        .filter((k) => !primary.includes(k))
+        .sort((a, b) => a.localeCompare(b)),
+    ];
+
+    const rows = sorted.map(
+      (key) =>
+        `<tr><th>${key}</th><td>${String(metadata[key])}</td></tr>`
+    );
 
     return `
       <table class="meta-table">
@@ -129,7 +134,7 @@
 
         ${
           metaTable
-            ? `<h3 class="detail-section-title">Metadati principali</h3>${metaTable}`
+            ? `<h3 class="detail-section-title">Metadati</h3>${metaTable}`
             : ""
         }
       `;
