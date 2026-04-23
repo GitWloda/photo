@@ -1,12 +1,11 @@
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS assets (
-    id                INTEGER PRIMARY KEY AUTOINCREMENT,
-    title             TEXT NOT NULL,
-    media_kind        TEXT NOT NULL DEFAULT 'image',  -- 'image' | 'video'
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    title           TEXT NOT NULL,
     ai_description_id INTEGER,
-    created_at        INTEGER NOT NULL,
-    updated_at        INTEGER NOT NULL,
+    created_at      INTEGER NOT NULL,
+    updated_at      INTEGER NOT NULL,
     FOREIGN KEY (ai_description_id) REFERENCES ai_descriptions(id) ON DELETE SET NULL
 );
 
@@ -37,7 +36,6 @@ CREATE TABLE IF NOT EXISTS ai_descriptions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_asset_files_path ON asset_files(absolute_path);
-CREATE INDEX IF NOT EXISTS idx_asset_files_sha  ON asset_files(sha256);
-CREATE INDEX IF NOT EXISTS idx_ai_desc_asset    ON ai_descriptions(asset_id);
-CREATE INDEX IF NOT EXISTS idx_assets_created   ON assets(created_at);
-CREATE INDEX IF NOT EXISTS idx_assets_kind      ON assets(media_kind);
+CREATE INDEX IF NOT EXISTS idx_asset_files_sha ON asset_files(sha256);
+CREATE INDEX IF NOT EXISTS idx_ai_desc_asset ON ai_descriptions(asset_id);
+CREATE INDEX IF NOT EXISTS idx_assets_created_at ON assets(created_at);

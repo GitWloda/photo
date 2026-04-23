@@ -25,6 +25,7 @@ log_ok()   { echo -e "${C_GREEN}[$(_ts)] [OK]   $*${C_RESET}" >&2; echo "[$(_ts)
 log_warn() { echo -e "${C_YELLOW}[$(_ts)] [WARN] $*${C_RESET}" >&2; echo "[$(_ts)] [WARN] $*" >> "$LOG_FILE_ABS"; }
 log_err()  { echo -e "${C_RED}[$(_ts)] [ERR]  $*${C_RESET}" >&2; echo "[$(_ts)] [ERR]  $*" >> "$LOG_FILE_ABS"; }
 
+# sostituisce la vecchia funzione log() – compatibilità interna
 log() { log_run "update_db: $*"; }
 
 # --- Dipendenze esterne ---
@@ -37,27 +38,6 @@ if ! command -v python3 >/dev/null 2>&1; then
   log_err "python3 non trovato nel PATH."
   exit 1
 fi
-
-# --- Estensioni supportate (da config/app.env, con default) ---
-SUPPORTED_IMAGE_EXT="${SUPPORTED_IMAGE_EXT:-jpg,jpeg,png,gif,webp}"
-SUPPORTED_VIDEO_EXT="${SUPPORTED_VIDEO_EXT:-mp4,mov,m4v,avi,webm,mkv,mts,m2ts}"
-
-# Costruisce array di estensioni
-IFS=',' read -r -a _IMAGE_EXT_ARR <<< "$SUPPORTED_IMAGE_EXT"
-IFS=',' read -r -a _VIDEO_EXT_ARR <<< "$SUPPORTED_VIDEO_EXT"
-
-# Restituisce "image", "video" oppure "" se sconosciuto
-media_kind_of() {
-  local lc_ext="${1,,}"
-  local e
-  for e in "${_IMAGE_EXT_ARR[@]}"; do
-    [[ "$lc_ext" == "${e,,}" ]] && { echo "image"; return; }
-  done
-  for e in "${_VIDEO_EXT_ARR[@]}"; do
-    [[ "$lc_ext" == "${e,,}" ]] && { echo "video"; return; }
-  done
-  echo ""
-}
 
 # --- Normalizza percorsi ---
 if [[ "$DB_PATH" != /* ]]; then
@@ -89,6 +69,7 @@ if [ -z "$PHOTO_ROOT_ABS" ]; then
   exit 1
 fi
 
+# Default AI_WORKERS se non impostato nel config
 AI_WORKERS="${AI_WORKERS:-4}"
 
 mkdir -p "$THUMB_DIR_ABS"
@@ -125,20 +106,12 @@ get_size_mtime() {
   fi
 }
 
-# ---------------------------------------------------------------------------
-# generate_thumb_image: usa ImageMagick per immagini
-# ---------------------------------------------------------------------------
-generate_thumb_image() {
+generate_thumb() {
   local file="$1"
   local asset_id="$2"
   local out_file="$THUMB_DIR_ABS/${asset_id}.jpg"
 
-  if command -v magick >/dev/null 2>&1; then
-    if magick "$file" -auto-orient -thumbnail 400x400 "$out_file" >/dev/null 2>&1; then
-      echo "${asset_id}.jpg"
-      return 0
-    fi
-  elif command -v convert >/dev/null 2>&1; then
+  if command -v convert >/dev/null 2>&1; then
     if convert "$file" -auto-orient -thumbnail 400x400 "$out_file" >/dev/null 2>&1; then
       echo "${asset_id}.jpg"
       return 0
@@ -149,73 +122,16 @@ generate_thumb_image() {
 }
 
 # ---------------------------------------------------------------------------
-# generate_thumb_video: estrae il frame centrale e ne fa thumbnail.
-# Restituisce il nome relativo oppure stringa vuota in caso di errore.
-# ---------------------------------------------------------------------------
-generate_thumb_video() {
-  local file="$1"
-  local asset_id="$2"
-  local out_file="$THUMB_DIR_ABS/${asset_id}.jpg"
-
-  if ! command -v ffmpeg >/dev/null 2>&1; then
-    log_warn "ffmpeg non trovato - thumbnail video non generata per asset_id=$asset_id"
-    echo ""
-    return 0
-  fi
-
-  local duration
-  duration="$(ffprobe -v error -show_entries format=duration \
-    -of default=noprint_wrappers=1:nokey=1 "$file" 2>/dev/null || echo "0")"
-
-  local seek_ts
-  seek_ts="$(awk -v d="$duration" 'BEGIN { t=d/2; if(t<0) t=0; printf "%.3f", t }')"
-
-  if ffmpeg -y -ss "$seek_ts" -i "$file" \
-       -vf "scale=400:-1" -vframes 1 -q:v 3 "$out_file" \
-       >/dev/null 2>&1; then
-    echo "${asset_id}.jpg"
-    return 0
-  fi
-
-  if ffmpeg -y -i "$file" \
-       -vf "select=eq(n\\,0),scale=400:-1" -vframes 1 -q:v 3 "$out_file" \
-       >/dev/null 2>&1; then
-    echo "${asset_id}.jpg"
-    return 0
-  fi
-
-  log_warn "Impossibile generare thumbnail per video asset_id=$asset_id"
-  echo ""
-}
-
-# ---------------------------------------------------------------------------
-# generate_thumb: dispatcher immagine/video
-# ---------------------------------------------------------------------------
-generate_thumb() {
-  local file="$1"
-  local asset_id="$2"
-  local kind="$3"
-
-  case "$kind" in
-    image) generate_thumb_image "$file" "$asset_id" ;;
-    video) generate_thumb_video "$file" "$asset_id" ;;
-    *)     echo "" ;;
-  esac
-}
-
-# ---------------------------------------------------------------------------
 # process_file: gestisce insert/update di asset e asset_files nel DB.
 # ---------------------------------------------------------------------------
 process_file() {
   local file="$1"
 
-  local ext="${file##*.}"
-  local kind
-  kind="$(media_kind_of "$ext")"
-
-  if [ -z "$kind" ]; then
-    return 0
-  fi
+  local lc_file="${file,,}"
+  case "$lc_file" in
+    *.jpg|*.jpeg|*.png|*.gif|*.webp) ;;
+    *) return 0 ;;
+  esac
 
   if [ ! -f "$file" ]; then
     return 0
@@ -234,33 +150,34 @@ process_file() {
 
   metadata_json="$("$ROOT_DIR/bin/extract_metadata.sh" "$file" || echo '{}')"
 
-  local ep er ef esha em ekind
+  # Escaping per SQL
+  local ep er ef esha em
   ep=$(printf '%s' "$abs_path"      | sql_escape)
   er=$(printf '%s' "$rel_path"      | sql_escape)
   ef=$(printf '%s' "$filename"      | sql_escape)
   esha=$(printf '%s' "$sha256"      | sql_escape)
   em=$(printf '%s' "$metadata_json" | sql_escape)
-  ekind=$(printf '%s' "$kind"       | sql_escape)
 
   local row
   row=$(sqlite_query "SELECT id, sha256, mtime, asset_id FROM asset_files WHERE absolute_path = '$ep';")
 
   if [ -z "$row" ]; then
-    log_ok "Nuovo $kind: $abs_path"
+    # ----------------- NUOVO FILE -----------------
+    log_ok "Nuovo file: $abs_path"
 
     local asset_id
     asset_id="$({
       cat <<SQL
 BEGIN IMMEDIATE;
-INSERT INTO assets (title, media_kind, created_at, updated_at)
-VALUES ('$ef', '$ekind', strftime('%s','now'), strftime('%s','now'));
+INSERT INTO assets (title, created_at, updated_at)
+VALUES ('$ef', strftime('%s','now'), strftime('%s','now'));
 SELECT last_insert_rowid();
 COMMIT;
 SQL
     } | sqlite_batch | tail -n 1)"
 
     local thumb_rel ethumb
-    thumb_rel="$(generate_thumb "$file" "$asset_id" "$kind")"
+    thumb_rel="$(generate_thumb "$file" "$asset_id")"
     ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
     {
@@ -281,6 +198,7 @@ SQL
     echo "$asset_id"
 
   else
+    # ----------------- FILE GIÀ CONOSCIUTO -----------------
     local file_id old_sha old_mtime asset_id
     file_id=$(echo "$row" | awk -F'|' '{print $1}')
     old_sha=$(echo "$row" | awk -F'|' '{print $2}')
@@ -291,7 +209,7 @@ SQL
       log_run "File modificato: $abs_path"
 
       local thumb_rel ethumb
-      thumb_rel="$(generate_thumb "$file" "$asset_id" "$kind")"
+      thumb_rel="$(generate_thumb "$file" "$asset_id")"
       ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
       {
@@ -333,6 +251,7 @@ done < <(find "$PHOTO_ROOT_ABS" -type f 2>/dev/null) > "$PENDING_IDS_FILE"
 
 log_ok "Scansione filesystem completata."
 
+# asset già presenti ma senza descrizione
 SALVATI_SENZA_DESC=$(sqlite_query "SELECT id FROM assets WHERE ai_description_id IS NULL;")
 
 ALL_PENDING=$(
@@ -356,7 +275,7 @@ else
     parallel \
       --jobs "$AI_WORKERS" \
       --line-buffer \
-      python3 "$WORKER_SCRIPT" {}
+      python3 "\"$WORKER_SCRIPT\"" {}
   log_ok "Elaborazione IA completata ($COUNT asset processati)."
 fi
 

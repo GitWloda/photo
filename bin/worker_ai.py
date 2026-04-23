@@ -1,226 +1,241 @@
 #!/usr/bin/env python3
 """
-worker_ai.py  -  elabora un singolo asset (immagine o video).
+Worker IA: riceve un asset_id come argomento, chiama Ollama e salva la descrizione nel DB.
 
-Per le IMMAGINI: usa Ollama Vision API per descrivere la thumbnail (o il
-                 file originale se la thumbnail non esiste).
-Per i VIDEO:     chiama generate_video_description.sh che estrae e descrive
-                 i frame, poi sintetizza il risultato.
-
-Uso:  python3 worker_ai.py <asset_id>
+Migliorie:
+- retry automatico se la descrizione è vuota;
+- log completo di stdout/stderr/return code;
+- backoff semplice tra i tentativi;
+- evita di perdere il motivo reale del fallimento.
 """
-import sys
+
 import os
-import json
-import base64
-import subprocess
+import sys
 import sqlite3
-import urllib.request
-import urllib.error
+import subprocess
+import time
+from datetime import datetime
+
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ENV_FILE = os.path.join(ROOT_DIR, "config", "app.env")
 
 
-# ---------------------------------------------------------------------------
-# Lettura app.env
-# ---------------------------------------------------------------------------
 def load_env(path: str) -> dict:
-    env: dict = {}
-    with open(path) as f:
+    cfg = {}
+    with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if not line or line.startswith('#'):
+            if not line or line.startswith("#") or "=" not in line:
                 continue
-            if '=' in line:
-                key, _, val = line.lstrip('export ').partition('=')
-                val = val.split('#')[0].strip().strip('"').strip("'")
-                env[key.strip()] = val
-    return env
+            key, _, value = line.partition("=")
+            cfg[key.strip()] = value.strip().strip('"').strip("'")
+    return cfg
 
 
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-ENV_PATH = os.path.join(ROOT_DIR, 'config', 'app.env')
-ENV = load_env(ENV_PATH)
+cfg = load_env(ENV_FILE)
 
-OLLAMA_URL   = ENV.get('OLLAMA_URL', 'http://localhost:11434')
-OLLAMA_MODEL = ENV.get('OLLAMA_MODEL', 'llava')
-LANGUAGE     = ENV.get('LANGUAGE', 'italiano')
+DB_PATH = cfg.get("DB_PATH", "db/gallery.db")
+if not os.path.isabs(DB_PATH):
+    DB_PATH = os.path.join(ROOT_DIR, DB_PATH)
 
-_db_path = ENV.get('DB_PATH', 'db/gallery.db')
-DB_PATH  = _db_path if os.path.isabs(_db_path) else os.path.join(ROOT_DIR, _db_path)
+OLLAMA_MODEL = cfg.get("OLLAMA_MODEL", "gemma3:12b")
+LANGUAGE = cfg.get("LANGUAGE", "it")
+GEN_SCRIPT = os.path.join(ROOT_DIR, "bin", "generate_description.sh")
 
-_thumb = ENV.get('THUMB_DIR', 'data/thumbs')
-THUMB_DIR = _thumb if os.path.isabs(_thumb) else os.path.join(ROOT_DIR, _thumb)
+DB_TIMEOUT = 30
+DB_RETRIES = 6
+DESC_RETRIES = int(cfg.get("DESC_RETRIES", "3"))
+DESC_SLEEP = float(cfg.get("DESC_SLEEP", "1.5"))
 
-_photo_root = ENV.get('PHOTO_ROOT', 'photos')
-PHOTO_ROOT  = _photo_root if os.path.isabs(_photo_root) else os.path.join(ROOT_DIR, _photo_root)
+GREEN = "\033[32m"
+WHITE = "\033[97m"
+YELLOW = "\033[33m"
+RED = "\033[31m"
+RESET = "\033[0m"
 
-VIDEO_DESC_SCRIPT = os.path.join(ROOT_DIR, 'bin', 'generate_video_description.sh')
+def _ts() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-IMAGE_PROMPT = (
-    f"Descrivi dettagliatamente questa foto in {LANGUAGE}. "
-    "Descrivi persone, paesaggi, oggetti, atmosfera e qualsiasi dettaglio rilevante. "
-    "Rispondi direttamente senza formule introduttive."
-)
+def log_run(msg: str) -> None:
+    print(f"{WHITE}[{_ts()}] [RUN]  {msg}{RESET}", flush=True)
+
+def log_ok(msg: str) -> None:
+    print(f"{GREEN}[{_ts()}] [OK]   {msg}{RESET}", flush=True)
+
+def log_warn(msg: str) -> None:
+    print(f"{YELLOW}[{_ts()}] [WARN] {msg}{RESET}", file=sys.stderr, flush=True)
+
+def log_err(msg: str) -> None:
+    print(f"{RED}[{_ts()}] [ERR]  {msg}{RESET}", file=sys.stderr, flush=True)
+
+def log_skip(msg: str) -> None:
+    print(f"{YELLOW}[{_ts()}] [SKIP] {msg}{RESET}", flush=True)
 
 
-# ---------------------------------------------------------------------------
-# Helpers DB
-# ---------------------------------------------------------------------------
-def get_db():
-    conn = sqlite3.connect(DB_PATH, timeout=30)
+def db_connect() -> sqlite3.Connection:
+    conn = sqlite3.connect(DB_PATH, timeout=DB_TIMEOUT, check_same_thread=False)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA synchronous=NORMAL")
     return conn
 
 
-def fetch_asset(asset_id: int):
-    conn = get_db()
-    row = conn.execute("""
-        SELECT a.id, a.media_kind, a.ai_description_id,
-               f.absolute_path, f.thumb_path
-          FROM assets a
-          JOIN asset_files f ON f.asset_id = a.id
-         WHERE a.id = ?
-         LIMIT 1
-    """, (asset_id,)).fetchone()
+def write_description(asset_id: int, desc: str) -> None:
+    for attempt in range(DB_RETRIES):
+        try:
+            conn = db_connect()
+            with conn:
+                conn.execute(
+                    """
+                    INSERT INTO ai_descriptions
+                        (asset_id, model, language, description, created_at)
+                    VALUES
+                        (?, ?, ?, ?, strftime('%s','now'))
+                    """,
+                    (asset_id, OLLAMA_MODEL, LANGUAGE, desc),
+                )
+                conn.execute(
+                    """
+                    UPDATE assets
+                    SET ai_description_id = (
+                            SELECT id
+                            FROM ai_descriptions
+                            WHERE asset_id = ?
+                            ORDER BY created_at DESC
+                            LIMIT 1
+                        ),
+                        updated_at = strftime('%s','now')
+                    WHERE id = ?
+                    """,
+                    (asset_id, asset_id),
+                )
+            conn.close()
+            return
+        except sqlite3.OperationalError as exc:
+            if "locked" in str(exc).lower() and attempt < DB_RETRIES - 1:
+                wait = 0.3 * (2 ** attempt)
+                print(
+                    f"[WARN] asset_id={asset_id} DB locked, retry {attempt + 1}/{DB_RETRIES} "
+                    f"tra {wait:.1f}s",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                time.sleep(wait)
+            else:
+                raise
+
+
+def get_file_path(asset_id: int) -> str | None:
+    conn = db_connect()
+    row = conn.execute(
+        "SELECT absolute_path FROM asset_files WHERE asset_id = ? LIMIT 1",
+        (asset_id,),
+    ).fetchone()
     conn.close()
-    return dict(row) if row else None
+    return row["absolute_path"] if row else None
 
 
-def already_described(asset: dict) -> bool:
-    return asset['ai_description_id'] is not None
+def already_has_description(asset_id: int) -> bool:
+    conn = db_connect()
+    row = conn.execute(
+        "SELECT ai_description_id FROM assets WHERE id = ? LIMIT 1",
+        (asset_id,),
+    ).fetchone()
+    conn.close()
+    return row is not None and row["ai_description_id"] is not None
 
 
-def save_description(asset_id: int, description: str):
-    conn = get_db()
-    try:
-        conn.execute("BEGIN IMMEDIATE")
-        cur = conn.execute("""
-            INSERT INTO ai_descriptions (asset_id, model, language, description, created_at)
-            VALUES (?, ?, ?, ?, strftime('%s','now'))
-        """, (asset_id, OLLAMA_MODEL, LANGUAGE, description))
-        desc_id = cur.lastrowid
-        conn.execute("""
-            UPDATE assets
-               SET ai_description_id = ?, updated_at = strftime('%s','now')
-             WHERE id = ?
-        """, (desc_id, asset_id))
-        conn.commit()
-    except Exception as exc:
-        conn.rollback()
-        raise exc
-    finally:
-        conn.close()
-
-
-# ---------------------------------------------------------------------------
-# Descrizione immagine via Ollama Vision
-# ---------------------------------------------------------------------------
-def describe_image(image_path: str) -> str:
-    with open(image_path, 'rb') as f:
-        img_b64 = base64.b64encode(f.read()).decode('utf-8')
-
-    payload = json.dumps({
-        "model": OLLAMA_MODEL,
-        "prompt": IMAGE_PROMPT,
-        "images": [img_b64],
-        "stream": False,
-    }).encode('utf-8')
-
-    req = urllib.request.Request(
-        f"{OLLAMA_URL}/api/generate",
-        data=payload,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=120) as resp:
-        result = json.loads(resp.read().decode('utf-8'))
-        return result.get('response', '').strip()
-
-
-# ---------------------------------------------------------------------------
-# Descrizione video via generate_video_description.sh
-# ---------------------------------------------------------------------------
-def describe_video(video_path: str) -> str:
-    if not os.path.isfile(VIDEO_DESC_SCRIPT):
-        raise FileNotFoundError(f"Script non trovato: {VIDEO_DESC_SCRIPT}")
-
+def call_ollama(abs_path: str) -> tuple[str, int, str, str]:
     result = subprocess.run(
-        ['bash', VIDEO_DESC_SCRIPT, video_path],
+        [GEN_SCRIPT, abs_path],
         capture_output=True,
         text=True,
-        timeout=600,
     )
-    if result.returncode != 0:
-        stderr = result.stderr.strip()
-        raise RuntimeError(f"generate_video_description.sh fallito: {stderr}")
-
-    return result.stdout.strip()
+    stdout = result.stdout.strip()
+    stderr = result.stderr.strip()
+    return stdout, result.returncode, stderr, result.args[0] if isinstance(result.args, list) and result.args else str(result.args)
 
 
-# ---------------------------------------------------------------------------
-# Main
-# ---------------------------------------------------------------------------
-def main():
-    if len(sys.argv) < 2:
-        print("Uso: worker_ai.py <asset_id>", file=sys.stderr)
-        sys.exit(1)
+def call_ollama_with_retry(abs_path: str, retries: int = DESC_RETRIES) -> str:
+    last_stdout = ""
+    last_stderr = ""
+    last_rc = 0
+
+    for attempt in range(1, retries + 1):
+        stdout, rc, stderr, _ = call_ollama(abs_path)
+        last_stdout = stdout
+        last_stderr = stderr
+        last_rc = rc
+
+        if rc == 0 and stdout:
+            return stdout
+
+        log_warn(
+            f"generate_description fallita/vuota per file={abs_path} "
+            f"tentativo {attempt}/{retries} rc={rc}"
+        )
+
+        if stdout:
+            log_warn(f"stdout: {stdout}")
+
+        if stderr:
+            log_warn(f"stderr: {stderr}")
+
+        if attempt < retries:
+            time.sleep(DESC_SLEEP * attempt)
+
+    log_err(
+        f"generate_description esauriti i retry per file={abs_path} "
+        f"(rc={last_rc})"
+    )
+    if last_stdout:
+        log_err(f"ultimo stdout: {last_stdout}")
+    if last_stderr:
+        log_err(f"ultimo stderr: {last_stderr}")
+
+    return ""
+
+
+def process(asset_id: int) -> None:
+    if already_has_description(asset_id):
+        log_skip(f"asset_id={asset_id} ha già una descrizione.")
+        return
+
+    abs_path = get_file_path(asset_id)
+    if not abs_path:
+        log_err(f"asset_id={asset_id} nessun file trovato nel DB.")
+        return
+
+    if not os.path.isfile(abs_path):
+        log_err(f"asset_id={asset_id} file non esistente: {abs_path}")
+        return
+
+    log_run(f"asset_id={asset_id} -> {os.path.basename(abs_path)}")
+
+    desc = call_ollama_with_retry(abs_path)
+
+    if not desc:
+        log_warn(f"asset_id={asset_id} descrizione vuota, skip.")
+        return
 
     try:
-        asset_id = int(sys.argv[1])
-    except ValueError:
-        print(f"asset_id non valido: {sys.argv[1]}", file=sys.stderr)
-        sys.exit(1)
-
-    asset = fetch_asset(asset_id)
-    if asset is None:
-        print(f"[{asset_id}] Asset non trovato nel DB.", file=sys.stderr)
-        sys.exit(0)
-
-    if already_described(asset):
-        print(f"[{asset_id}] Gia' descritto, salto.")
-        sys.exit(0)
-
-    media_kind = asset.get('media_kind', 'image')
-    abs_path   = asset.get('absolute_path', '')
-    thumb_rel  = asset.get('thumb_path', '')
-    thumb_abs  = os.path.join(THUMB_DIR, thumb_rel) if thumb_rel else ''
-
-    try:
-        if media_kind == 'video':
-            print(f"[{asset_id}] Descrizione VIDEO: {abs_path}")
-            if not os.path.isfile(abs_path):
-                print(f"[{asset_id}] File video non trovato: {abs_path}", file=sys.stderr)
-                sys.exit(0)
-            description = describe_video(abs_path)
-
-        else:
-            if thumb_abs and os.path.isfile(thumb_abs):
-                img_for_ai = thumb_abs
-            elif os.path.isfile(abs_path):
-                img_for_ai = abs_path
-            else:
-                print(f"[{asset_id}] Nessuna immagine disponibile: {abs_path}", file=sys.stderr)
-                sys.exit(0)
-
-            print(f"[{asset_id}] Descrizione IMMAGINE: {img_for_ai}")
-            description = describe_image(img_for_ai)
-
-        if not description:
-            print(f"[{asset_id}] Descrizione vuota, salto.", file=sys.stderr)
-            sys.exit(0)
-
-        save_description(asset_id, description)
-        print(f"[{asset_id}] OK  -  {len(description)} caratteri.")
-
-    except urllib.error.URLError as exc:
-        print(f"[{asset_id}] Errore Ollama: {exc}", file=sys.stderr)
-        sys.exit(1)
-    except subprocess.TimeoutExpired:
-        print(f"[{asset_id}] Timeout generazione descrizione video.", file=sys.stderr)
-        sys.exit(1)
+        write_description(asset_id, desc)
     except Exception as exc:
-        print(f"[{asset_id}] Errore: {exc}", file=sys.stderr)
+        log_err(f"asset_id={asset_id} errore salvataggio DB: {exc}")
+        raise
+
+    log_ok(f"asset_id={asset_id} descrizione salvata ({len(desc)} caratteri).")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print(f"Uso: {sys.argv[0]} <asset_id>", file=sys.stderr)
         sys.exit(1)
 
+    try:
+        aid = int(sys.argv[1])
+    except ValueError:
+        print(f"Errore: asset_id deve essere un intero, ricevuto: {sys.argv[1]}", file=sys.stderr)
+        sys.exit(1)
 
-if __name__ == '__main__':
-    main()
+    process(aid)

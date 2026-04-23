@@ -1573,932 +1573,160 @@
 [2026-04-16 17:07:07] cleanup_deleted: Pulizia file mancanti...
 [2026-04-16 17:07:07] cleanup_deleted: Pulizia asset senza file collegati...
 [2026-04-16 17:07:07] cleanup_deleted: Pulizia completata.
-[2026-04-16 17:21:52] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-16 17:21:52] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:20:22] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-17 16:20:22] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:20:59] [OK]   Scansione filesystem completata.
-[2026-04-17 16:23:06] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-17 16:23:06] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:23:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
-[2026-04-17 16:23:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
-[2026-04-17 16:23:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
-[2026-04-17 16:23:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270051.JPG
-[2026-04-17 16:23:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270053.JPG
-[2026-04-17 16:23:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270056.JPG
-[2026-04-17 16:23:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270057.JPG
-[2026-04-17 16:23:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270058.JPG
-[2026-04-17 16:23:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270059.JPG
-[2026-04-17 16:23:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270060.JPG
-[2026-04-17 16:23:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280062.JPG
-[2026-04-17 16:23:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280063.JPG
-[2026-04-17 16:23:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280064.JPG
-[2026-04-17 16:23:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180054.JPG
-[2026-04-17 16:23:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180055.JPG
-[2026-04-17 16:23:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180056.JPG
-[2026-04-17 16:23:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180057.JPG
-[2026-04-17 16:23:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180058.JPG
-[2026-04-17 16:23:39] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-17 16:23:40] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:23:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180058.JPG
-[2026-04-17 16:23:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180059.JPG
-[2026-04-17 16:23:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180060.JPG
-[2026-04-17 16:23:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180061.JPG
-[2026-04-17 16:23:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180063.JPG
-[2026-04-17 16:23:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180064.JPG
-[2026-04-17 16:23:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180065.JPG
-[2026-04-17 16:23:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180066.JPG
-[2026-04-17 16:23:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180067.JPG
-[2026-04-17 16:23:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270001.JPG
-[2026-04-17 16:23:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270002.JPG
-[2026-04-17 16:23:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270003.JPG
-[2026-04-17 16:23:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270004.JPG
-[2026-04-17 16:24:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270005.JPG
-[2026-04-17 16:24:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270006.JPG
-[2026-04-17 16:24:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270007.JPG
-[2026-04-17 16:24:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270008.JPG
-[2026-04-17 16:24:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270009.JPG
-[2026-04-17 16:24:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270010.JPG
-[2026-04-17 16:24:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270014.JPG
-[2026-04-17 16:24:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270015.JPG
-[2026-04-17 16:24:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270016.JPG
-[2026-04-17 16:24:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270017.JPG
-[2026-04-17 16:24:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270018.JPG
-[2026-04-17 16:24:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270019.JPG
-[2026-04-17 16:24:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270020.JPG
-[2026-04-17 16:24:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270021.JPG
-[2026-04-17 16:24:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270023.JPG
-[2026-04-17 16:24:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270024.JPG
-[2026-04-17 16:24:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270025.JPG
-[2026-04-17 16:24:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270026.JPG
-[2026-04-17 16:24:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270027.JPG
-[2026-04-17 16:24:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270028.JPG
-[2026-04-17 16:24:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270029.JPG
-[2026-04-17 16:24:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270030.JPG
-[2026-04-17 16:24:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270031.JPG
-[2026-04-17 16:24:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270032.JPG
-[2026-04-17 16:24:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270033.JPG
-[2026-04-17 16:24:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270035.JPG
-[2026-04-17 16:24:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270036.JPG
-[2026-04-17 16:24:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270037.JPG
-[2026-04-17 16:24:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270038.JPG
-[2026-04-17 16:24:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270039.JPG
-[2026-04-17 16:24:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270040.JPG
-[2026-04-17 16:24:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270041.JPG
-[2026-04-17 16:24:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270042.JPG
-[2026-04-17 16:24:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270045.JPG
-[2026-04-17 16:24:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270046.JPG
-[2026-04-17 16:24:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270047.JPG
-[2026-04-17 16:24:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270048.JPG
-[2026-04-17 16:24:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270049.JPG
-[2026-04-17 16:24:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270050.JPG
-[2026-04-17 16:24:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
-[2026-04-17 16:24:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
-[2026-04-17 16:24:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
-[2026-04-17 16:24:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
-[2026-04-17 16:24:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
-[2026-04-17 16:24:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
-[2026-04-17 16:24:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
-[2026-04-17 16:24:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/P4080001.JPG
-[2026-04-17 16:24:47] [OK]   Scansione filesystem completata.
-[2026-04-17 16:24:47] [RUN]  Avvio 8 worker IA su 78 asset...
-[2026-04-17 16:31:59] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-17 16:31:59] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:32:35] [OK]   Scansione filesystem completata.
-[2026-04-17 16:32:35] [RUN]  Avvio 8 worker IA su 42 asset...
-[2026-04-17 16:40:45] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-17 16:40:45] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:40:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
-[2026-04-17 16:40:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
-[2026-04-17 16:40:57] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-17 16:40:57] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:40:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
-[2026-04-17 16:40:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
-[2026-04-17 16:40:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
-[2026-04-17 16:41:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270051.JPG
-[2026-04-17 16:41:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270053.JPG
-[2026-04-17 16:41:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270056.JPG
-[2026-04-17 16:41:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270057.JPG
-[2026-04-17 16:41:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270058.JPG
-[2026-04-17 16:41:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270059.JPG
-[2026-04-17 16:41:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270060.JPG
-[2026-04-17 16:41:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280062.JPG
-[2026-04-17 16:41:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280063.JPG
-[2026-04-17 16:41:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280064.JPG
-[2026-04-17 16:41:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180054.JPG
-[2026-04-17 16:41:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180055.JPG
-[2026-04-17 16:41:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180056.JPG
-[2026-04-17 16:41:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180057.JPG
-[2026-04-17 16:41:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180058.JPG
-[2026-04-17 16:41:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180059.JPG
-[2026-04-17 16:41:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180060.JPG
-[2026-04-17 16:41:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180061.JPG
-[2026-04-17 16:41:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180063.JPG
-[2026-04-17 16:41:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180064.JPG
-[2026-04-17 16:41:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180065.JPG
-[2026-04-17 16:41:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180066.JPG
-[2026-04-17 16:41:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180067.JPG
-[2026-04-17 16:41:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270001.JPG
-[2026-04-17 16:41:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270002.JPG
-[2026-04-17 16:41:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270003.JPG
-[2026-04-17 16:41:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270004.JPG
-[2026-04-17 16:41:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270005.JPG
-[2026-04-17 16:41:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270006.JPG
-[2026-04-17 16:41:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270007.JPG
-[2026-04-17 16:41:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270008.JPG
-[2026-04-17 16:41:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270009.JPG
-[2026-04-17 16:41:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270010.JPG
-[2026-04-17 16:41:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270014.JPG
-[2026-04-17 16:41:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270015.JPG
-[2026-04-17 16:41:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270016.JPG
-[2026-04-17 16:41:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270017.JPG
-[2026-04-17 16:41:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270018.JPG
-[2026-04-17 16:42:05] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-17 16:42:05] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-17 16:42:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
-[2026-04-17 16:42:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
-[2026-04-17 16:42:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
-[2026-04-17 16:42:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270051.JPG
-[2026-04-17 16:42:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270053.JPG
-[2026-04-17 16:42:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270056.JPG
-[2026-04-17 16:42:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270057.JPG
-[2026-04-17 16:42:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270058.JPG
-[2026-04-17 16:42:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270059.JPG
-[2026-04-17 16:42:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270060.JPG
-[2026-04-17 16:42:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280062.JPG
-[2026-04-17 16:42:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280063.JPG
-[2026-04-17 16:42:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280064.JPG
-[2026-04-17 16:42:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180054.JPG
-[2026-04-17 16:42:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180055.JPG
-[2026-04-17 16:42:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180056.JPG
-[2026-04-17 16:42:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180057.JPG
-[2026-04-17 16:42:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180058.JPG
-[2026-04-17 16:42:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180059.JPG
-[2026-04-17 16:42:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180060.JPG
-[2026-04-17 16:42:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180061.JPG
-[2026-04-17 16:42:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180063.JPG
-[2026-04-17 16:42:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180064.JPG
-[2026-04-17 16:42:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180065.JPG
-[2026-04-17 16:42:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180066.JPG
-[2026-04-17 16:42:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180067.JPG
-[2026-04-17 16:42:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270001.JPG
-[2026-04-17 16:43:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270002.JPG
-[2026-04-17 16:43:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270003.JPG
-[2026-04-17 16:43:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270004.JPG
-[2026-04-17 16:43:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270005.JPG
-[2026-04-17 16:43:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270006.JPG
-[2026-04-17 16:43:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270007.JPG
-[2026-04-17 16:43:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270008.JPG
-[2026-04-17 16:43:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270009.JPG
-[2026-04-17 16:43:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270010.JPG
-[2026-04-17 16:43:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270014.JPG
-[2026-04-17 16:43:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270015.JPG
-[2026-04-17 16:43:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270016.JPG
-[2026-04-17 16:43:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270017.JPG
-[2026-04-17 16:43:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270018.JPG
-[2026-04-17 16:43:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270019.JPG
-[2026-04-17 16:43:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270020.JPG
-[2026-04-17 16:43:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270021.JPG
-[2026-04-17 16:43:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270023.JPG
-[2026-04-17 16:43:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270024.JPG
-[2026-04-17 16:43:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270025.JPG
-[2026-04-17 16:43:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270026.JPG
-[2026-04-17 16:43:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270027.JPG
-[2026-04-17 16:43:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270028.JPG
-[2026-04-17 16:43:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270029.JPG
-[2026-04-17 16:43:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270030.JPG
-[2026-04-17 16:43:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270031.JPG
-[2026-04-17 16:43:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270032.JPG
-[2026-04-17 16:43:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270033.JPG
-[2026-04-17 16:43:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270035.JPG
-[2026-04-17 16:43:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270036.JPG
-[2026-04-17 16:43:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270037.JPG
-[2026-04-17 16:43:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270038.JPG
-[2026-04-17 16:43:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270039.JPG
-[2026-04-17 16:43:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270040.JPG
-[2026-04-17 16:43:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270041.JPG
-[2026-04-17 16:43:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270042.JPG
-[2026-04-17 16:43:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270045.JPG
-[2026-04-17 16:43:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270046.JPG
-[2026-04-17 16:43:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270047.JPG
-[2026-04-17 16:43:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270048.JPG
-[2026-04-17 16:43:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270049.JPG
-[2026-04-17 16:44:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270050.JPG
-[2026-04-17 16:44:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1002492944.jpg
-[2026-04-17 16:44:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1007676520.png
-[2026-04-17 16:44:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1007687184.jpg
-[2026-04-17 16:44:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1041155352.jpg
-[2026-04-17 16:44:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1041162480.jpg
-[2026-04-17 16:44:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1041233248.png
-[2026-04-17 16:44:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
-[2026-04-17 16:44:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1059627376.jpg
-[2026-04-17 16:44:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
-[2026-04-17 16:44:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060674568.jpg
-[2026-04-17 16:44:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060907352.jpg
-[2026-04-17 16:44:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060909056.jpg
-[2026-04-17 16:44:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060915952.jpg
-[2026-04-17 16:44:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1063835912.jpg
-[2026-04-17 16:44:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1064043184.jpg
-[2026-04-17 16:44:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1064043320.jpg
-[2026-04-17 16:44:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
-[2026-04-17 16:44:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076016.jpg
-[2026-04-17 16:44:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076192.jpg
-[2026-04-17 16:44:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076320.jpg
-[2026-04-17 16:44:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076688.jpg
-[2026-04-17 16:44:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076784.jpg
-[2026-04-17 16:44:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071077096.jpg
-[2026-04-17 16:44:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071241072.jpg
-[2026-04-17 16:44:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071259032.jpg
-[2026-04-17 16:44:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071320024.png
-[2026-04-17 16:44:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
-[2026-04-17 16:44:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072801904.jpg
-[2026-04-17 16:44:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072882144.jpg
-[2026-04-17 16:44:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072954928.jpg
-[2026-04-17 16:44:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072956632.jpg
-[2026-04-17 16:44:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074501288.png
-[2026-04-17 16:44:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074501344.png
-[2026-04-17 16:44:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074603296.webp
-[2026-04-17 16:44:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074606360.jpg
-[2026-04-17 16:44:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074607680.jpg
-[2026-04-17 16:44:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074865696.jpg
-[2026-04-17 16:44:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074868256.jpg
-[2026-04-17 16:44:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074886376.jpg
-[2026-04-17 16:44:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074889616.png
-[2026-04-17 16:44:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277176.jpg
-[2026-04-17 16:44:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277240.jpg
-[2026-04-17 16:44:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277424.jpg
-[2026-04-17 16:44:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277528.jpg
-[2026-04-17 16:44:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277736.jpg
-[2026-04-17 16:44:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277792.jpg
-[2026-04-17 16:44:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277856.jpg
-[2026-04-17 16:44:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277904.jpg
-[2026-04-17 16:44:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092278008.jpg
-[2026-04-17 16:44:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092278080.jpg
-[2026-04-17 16:44:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094401896.jpg
-[2026-04-17 16:44:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094402152.jpg
-[2026-04-17 16:44:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094402432.jpg
-[2026-04-17 16:44:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094403440.jpg
-[2026-04-17 16:45:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094403952.jpg
-[2026-04-17 16:45:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094439904.jpg
-[2026-04-17 16:45:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094487032.png
-[2026-04-17 16:45:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094500544.jpg
-[2026-04-17 16:45:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094509256.jpg
-[2026-04-17 16:45:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1095043072.jpg
-[2026-04-17 16:45:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096895688.jpg
-[2026-04-17 16:45:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897184.jpg
-[2026-04-17 16:45:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897328.jpg
-[2026-04-17 16:45:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897912.jpg
-[2026-04-17 16:45:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096898392.jpg
-[2026-04-17 16:45:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096965312.jpg
-[2026-04-17 16:45:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096965480.jpg
-[2026-04-17 16:45:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096972136.jpg
-[2026-04-17 16:45:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096972424.jpg
-[2026-04-17 16:45:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096972912.jpg
-[2026-04-17 16:45:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096974968.jpg
-[2026-04-17 16:45:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096976888.jpg
-[2026-04-17 16:45:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096977288.jpg
-[2026-04-17 16:45:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096979576.jpg
-[2026-04-17 16:45:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097000584.jpg
-[2026-04-17 16:45:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097004632.jpg
-[2026-04-17 16:45:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097016744.jpg
-[2026-04-17 16:45:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097023112.jpg
-[2026-04-17 16:45:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097028800.jpg
-[2026-04-17 16:45:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097667392.jpg
-[2026-04-17 16:45:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099709992.jpg
-[2026-04-17 16:45:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099717424.jpg
-[2026-04-17 16:45:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099727416.jpg
-[2026-04-17 16:45:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099730288.jpg
-[2026-04-17 16:45:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
-[2026-04-17 16:45:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1222568872.jpg
-[2026-04-17 16:45:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1222571552.jpg
-[2026-04-17 16:45:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225883368.jpg
-[2026-04-17 16:45:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225890304.jpg
-[2026-04-17 16:45:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225890616.jpg
-[2026-04-17 16:45:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225895208.jpg
-[2026-04-17 16:45:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225895984.jpg
-[2026-04-17 16:45:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225896520.jpg
-[2026-04-17 16:45:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225899976.jpg
-[2026-04-17 16:45:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225900032.jpg
-[2026-04-17 16:45:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225900776.jpg
-[2026-04-17 16:45:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226287648.png
-[2026-04-17 16:45:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226287792.png
-[2026-04-17 16:45:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226478536.jpg
-[2026-04-17 16:45:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226483464.jpg
-[2026-04-17 16:45:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226485016.jpg
-[2026-04-17 16:45:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226487712.jpg
-[2026-04-17 16:45:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226488968.jpg
-[2026-04-17 16:45:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226504800.jpg
-[2026-04-17 16:45:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226505232.jpg
-[2026-04-17 16:45:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226505776.jpg
-[2026-04-17 16:45:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226507288.jpg
-[2026-04-17 16:45:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226508008.jpg
-[2026-04-17 16:45:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226509928.jpg
-[2026-04-17 16:45:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226512832.jpg
-[2026-04-17 16:45:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226517840.jpg
-[2026-04-17 16:45:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226520056.jpg
-[2026-04-17 16:45:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226520944.jpg
-[2026-04-17 16:45:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226636240.jpg
-[2026-04-17 16:45:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226642216.jpg
-[2026-04-17 16:45:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226644440.jpg
-[2026-04-17 16:45:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226647544.jpg
-[2026-04-17 16:45:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226652768.jpg
-[2026-04-17 16:45:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226657600.jpg
-[2026-04-17 16:45:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226660184.jpg
-[2026-04-17 16:45:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226661520.jpg
-[2026-04-17 16:45:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226661872.jpg
-[2026-04-17 16:45:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226662064.jpg
-[2026-04-17 16:45:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226662464.jpg
-[2026-04-17 16:45:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226663328.jpg
-[2026-04-17 16:45:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226663504.jpg
-[2026-04-17 16:46:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226664728.jpg
-[2026-04-17 16:46:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226665448.jpg
-[2026-04-17 16:46:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226666032.jpg
-[2026-04-17 16:46:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226675384.jpg
-[2026-04-17 16:46:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226675672.jpg
-[2026-04-17 16:46:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226676680.jpg
-[2026-04-17 16:46:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226679184.jpg
-[2026-04-17 16:46:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227052264.jpg
-[2026-04-17 16:46:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227196424.jpg
-[2026-04-17 16:46:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227377936.jpg
-[2026-04-17 16:46:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1229203776.png
-[2026-04-17 16:46:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1229205128.png
-[2026-04-17 16:46:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1230918072.jpg
-[2026-04-17 16:46:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1231459192.jpg
-[2026-04-17 16:46:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000312.jpg
-[2026-04-17 16:46:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000416.jpg
-[2026-04-17 16:46:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000504.jpg
-[2026-04-17 16:46:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000680.jpg
-[2026-04-17 16:46:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000736.jpg
-[2026-04-17 16:46:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000816.jpg
-[2026-04-17 16:46:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000880.jpg
-[2026-04-17 16:46:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000984.jpg
-[2026-04-17 16:46:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235236152.jpg
-[2026-04-17 16:46:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235236976.jpg
-[2026-04-17 16:46:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235237032.jpg
-[2026-04-17 16:46:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235237112.jpg
-[2026-04-17 16:46:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235237888.jpg
-[2026-04-17 16:46:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238008.jpg
-[2026-04-17 16:46:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238136.jpg
-[2026-04-17 16:46:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238528.jpg
-[2026-04-17 16:46:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238616.jpg
-[2026-04-17 16:46:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238720.jpg
-[2026-04-17 16:46:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239152.jpg
-[2026-04-17 16:46:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239504.jpg
-[2026-04-17 16:46:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239592.jpg
-[2026-04-17 16:46:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239744.jpg
-[2026-04-17 16:46:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235240192.jpg
-[2026-04-17 16:46:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235240496.jpg
-[2026-04-17 16:46:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235241152.jpg
-[2026-04-17 16:46:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235241384.jpg
-[2026-04-17 16:46:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235242832.jpg
-[2026-04-17 16:46:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235243392.jpg
-[2026-04-17 16:46:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235243648.jpg
-[2026-04-17 16:46:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235244120.jpg
-[2026-04-17 16:46:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235245040.jpg
-[2026-04-17 16:46:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235245120.jpg
-[2026-04-17 16:46:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235245184.jpg
-[2026-04-17 16:46:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525109000.png
-[2026-04-17 16:46:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525119232.png
-[2026-04-17 16:46:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525120824.jpg
-[2026-04-17 16:46:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525121224.jpg
-[2026-04-17 16:46:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525123000.jpg
-[2026-04-17 16:46:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525124024.png
-[2026-04-17 16:47:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525124464.jpg
-[2026-04-17 16:47:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525125120.png
-[2026-04-17 16:47:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525129280.png
-[2026-04-17 16:47:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525277568.jpg
-[2026-04-17 16:47:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525278672.jpg
-[2026-04-17 16:47:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525280176.jpg
-[2026-04-17 16:47:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525286968.jpg
-[2026-04-17 16:47:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525290176.jpg
-[2026-04-17 16:47:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525290344.jpg
-[2026-04-17 16:47:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789215848.png
-[2026-04-17 16:47:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789221000.png
-[2026-04-17 16:47:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789223712.png
-[2026-04-17 16:47:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789227752.png
-[2026-04-17 16:47:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789242088.png
-[2026-04-17 16:47:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789244024.png
-[2026-04-17 16:47:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789260632.png
-[2026-04-17 16:47:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789266456.png
-[2026-04-17 16:47:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789271200.png
-[2026-04-17 16:47:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789275600.png
-[2026-04-17 16:47:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789276088.png
-[2026-04-17 16:47:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789277752.png
-[2026-04-17 16:47:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789277856.png
-[2026-04-17 16:47:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789280328.png
-[2026-04-17 16:47:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789285816.png
-[2026-04-17 16:47:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789302704.png
-[2026-04-17 16:47:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789303248.png
-[2026-04-17 16:47:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789313360.png
-[2026-04-17 16:47:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789321056.png
-[2026-04-17 16:47:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789322288.png
-[2026-04-17 16:47:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
-[2026-04-17 16:47:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
-[2026-04-17 16:47:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0001.JPG
-[2026-04-17 16:47:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0002.JPG
-[2026-04-17 16:47:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0004.JPG
-[2026-04-17 16:47:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0005.JPG
-[2026-04-17 16:47:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0006.JPG
-[2026-04-17 16:47:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0007.JPG
-[2026-04-17 16:47:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0008.JPG
-[2026-04-17 16:47:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0009.JPG
-[2026-04-17 16:47:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0010.JPG
-[2026-04-17 16:47:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0011.JPG
-[2026-04-17 16:47:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0012.JPG
-[2026-04-17 16:47:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0013.JPG
-[2026-04-17 16:47:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0014.JPG
-[2026-04-17 16:47:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0015.JPG
-[2026-04-17 16:47:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0017.JPG
-[2026-04-17 16:47:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0019.JPG
-[2026-04-17 16:47:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0020.JPG
-[2026-04-17 16:47:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0021.JPG
-[2026-04-17 16:47:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0022.JPG
-[2026-04-17 16:47:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0023.JPG
-[2026-04-17 16:47:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0024.JPG
-[2026-04-17 16:47:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0025.JPG
-[2026-04-17 16:47:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0026.JPG
-[2026-04-17 16:47:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0027.JPG
-[2026-04-17 16:47:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0028.JPG
-[2026-04-17 16:47:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0029.JPG
-[2026-04-17 16:47:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0030.JPG
-[2026-04-17 16:47:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0031.JPG
-[2026-04-17 16:47:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0032.PNG
-[2026-04-17 16:47:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0033.JPG
-[2026-04-17 16:47:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0034.JPG
-[2026-04-17 16:47:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0035.JPG
-[2026-04-17 16:47:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0036.JPG
-[2026-04-17 16:47:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0037.JPG
-[2026-04-17 16:48:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0038.JPG
-[2026-04-17 16:48:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/P4080001.JPG
-[2026-04-17 16:48:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1141750168.jpg
-[2026-04-17 16:48:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1150935296.jpg
-[2026-04-17 16:48:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1242381584.jpg
-[2026-04-17 16:48:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1506457920.jpg
-[2026-04-17 16:48:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1506538432.jpg
-[2026-04-17 16:48:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1610812928.jpg
-[2026-04-17 16:48:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1678959536.jpg
-[2026-04-17 16:48:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1846408672.jpg
-[2026-04-17 16:48:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946182600.jpg
-[2026-04-17 16:48:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946222024.jpg
-[2026-04-17 16:48:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946296768.jpg
-[2026-04-17 16:48:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946313320.jpg
-[2026-04-17 16:48:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1947402120.jpg
-[2026-04-17 16:48:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t474272096.jpg
-[2026-04-17 16:48:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t475147584.jpg
-[2026-04-17 16:48:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t478463040.jpg
-[2026-04-17 16:48:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t482975784.jpg
-[2026-04-17 16:48:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t516171040.jpg
-[2026-04-17 16:48:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t516182160.jpg
-[2026-04-17 16:48:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t524718736.jpg
-[2026-04-17 16:48:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t610900104.jpg
-[2026-04-17 16:48:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t610921240.jpg
-[2026-04-17 16:48:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611838304.jpg
-[2026-04-17 16:48:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611850240.jpg
-[2026-04-17 16:48:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611893408.jpg
-[2026-04-17 16:48:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611988184.jpg
-[2026-04-17 16:48:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t701295496.jpg
-[2026-04-17 16:48:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0156.jpg
-[2026-04-17 16:48:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0157.jpg
-[2026-04-17 16:48:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0158.jpg
-[2026-04-17 16:48:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0159.jpg
-[2026-04-17 16:48:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0161.jpg
-[2026-04-17 16:48:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0162.jpg
-[2026-04-17 16:48:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0163.jpg
-[2026-04-17 16:48:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0164.jpg
-[2026-04-17 16:48:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0165.jpg
-[2026-04-17 16:48:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0166.jpg
-[2026-04-17 16:48:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0167.jpg
-[2026-04-17 16:48:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0168.jpg
-[2026-04-17 16:48:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0169.jpg
-[2026-04-17 16:48:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0170.jpg
-[2026-04-17 16:48:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0171.jpg
-[2026-04-17 16:48:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0172.jpg
-[2026-04-17 16:48:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0173.jpg
-[2026-04-17 16:48:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0174.jpg
-[2026-04-17 16:48:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0175.jpg
-[2026-04-17 16:48:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0176.jpg
-[2026-04-17 16:48:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0177.jpg
-[2026-04-17 16:48:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0178.jpg
-[2026-04-17 16:48:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0179.jpg
-[2026-04-17 16:48:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0180.jpg
-[2026-04-17 16:48:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0181.jpg
-[2026-04-17 16:48:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0182.jpg
-[2026-04-17 16:48:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0183.jpg
-[2026-04-17 16:48:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0184.jpg
-[2026-04-17 16:48:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0185.jpg
-[2026-04-17 16:48:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0186.jpg
-[2026-04-17 16:48:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0187.jpg
-[2026-04-17 16:48:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0188.jpg
-[2026-04-17 16:48:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0189.jpg
-[2026-04-17 16:48:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0193.jpg
-[2026-04-17 16:48:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0194.jpg
-[2026-04-17 16:48:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0195.jpg
-[2026-04-17 16:48:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0196.jpg
-[2026-04-17 16:48:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0197.jpg
-[2026-04-17 16:48:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0199.jpg
-[2026-04-17 16:49:00] [OK]   Scansione filesystem completata.
-[2026-04-17 16:49:00] [RUN]  Avvio 8 worker IA su 381 asset...
-[2026-04-17 17:52:57] [OK]   Elaborazione IA completata (381 asset processati).
-[2026-04-17 17:52:57] [OK]   Update DB completato.
-[2026-04-17 17:52:57] cleanup_deleted: Pulizia file mancanti...
-[2026-04-17 17:52:58] cleanup_deleted: Pulizia asset senza file collegati...
-[2026-04-17 17:52:58] cleanup_deleted: Pulizia completata.
-[2026-04-23 12:41:05] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-23 12:41:05] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-23 12:45:22] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-23 12:45:22] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-23 12:49:08] [OK]   Scansione filesystem completata.
-[2026-04-23 13:52:11] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-23 13:52:11] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-23 13:52:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1007606640.jpg
-[2026-04-23 13:52:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f1057820192.jpg
-[2026-04-23 13:52:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/asd/f94636360.jpg
-[2026-04-23 13:52:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270051.JPG
-[2026-04-23 13:52:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270053.JPG
-[2026-04-23 13:52:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270056.JPG
-[2026-04-23 13:52:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270057.JPG
-[2026-04-23 13:52:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270058.JPG
-[2026-04-23 13:52:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270059.JPG
-[2026-04-23 13:52:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270060.JPG
-[2026-04-23 13:52:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280062.JPG
-[2026-04-23 13:52:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280063.JPG
-[2026-04-23 13:52:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280064.JPG
-[2026-04-23 13:52:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180054.JPG
-[2026-04-23 13:52:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180055.JPG
-[2026-04-23 13:52:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180056.JPG
-[2026-04-23 13:52:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180057.JPG
-[2026-04-23 13:52:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180058.JPG
-[2026-04-23 13:52:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180059.JPG
-[2026-04-23 13:52:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180060.JPG
-[2026-04-23 13:52:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180061.JPG
-[2026-04-23 13:52:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180063.JPG
-[2026-04-23 13:52:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180064.JPG
-[2026-04-23 13:52:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180065.JPG
-[2026-04-23 13:52:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180066.JPG
-[2026-04-23 13:52:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180067.JPG
-[2026-04-23 13:52:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270001.JPG
-[2026-04-23 13:52:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270002.JPG
-[2026-04-23 13:52:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270003.JPG
-[2026-04-23 13:52:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270004.JPG
-[2026-04-23 13:52:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270005.JPG
-[2026-04-23 13:52:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270006.JPG
-[2026-04-23 13:52:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270007.JPG
-[2026-04-23 13:52:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270008.JPG
-[2026-04-23 13:52:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270009.JPG
-[2026-04-23 13:52:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270010.JPG
-[2026-04-23 13:52:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270014.JPG
-[2026-04-23 13:52:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270015.JPG
-[2026-04-23 13:52:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270016.JPG
-[2026-04-23 13:52:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270017.JPG
-[2026-04-23 13:52:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270018.JPG
-[2026-04-23 13:53:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270019.JPG
-[2026-04-23 13:53:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270020.JPG
-[2026-04-23 13:53:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270021.JPG
-[2026-04-23 13:53:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270023.JPG
-[2026-04-23 13:53:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270024.JPG
-[2026-04-23 13:53:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270025.JPG
-[2026-04-23 13:53:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270026.JPG
-[2026-04-23 13:53:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270027.JPG
-[2026-04-23 13:53:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270028.JPG
-[2026-04-23 13:53:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270029.JPG
-[2026-04-23 13:53:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270030.JPG
-[2026-04-23 13:53:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270031.JPG
-[2026-04-23 13:53:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270032.JPG
-[2026-04-23 13:53:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270033.JPG
-[2026-04-23 13:53:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270035.JPG
-[2026-04-23 13:53:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270036.JPG
-[2026-04-23 13:53:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270037.JPG
-[2026-04-23 13:53:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270038.JPG
-[2026-04-23 13:53:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270039.JPG
-[2026-04-23 13:53:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270040.JPG
-[2026-04-23 13:53:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270041.JPG
-[2026-04-23 13:53:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270042.JPG
-[2026-04-23 13:53:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270045.JPG
-[2026-04-23 13:53:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270046.JPG
-[2026-04-23 13:53:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270047.JPG
-[2026-04-23 13:53:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270048.JPG
-[2026-04-23 13:53:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270049.JPG
-[2026-04-23 13:53:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270050.JPG
-[2026-04-23 13:53:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1002492944.jpg
-[2026-04-23 13:53:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1007676520.png
-[2026-04-23 13:53:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1007687184.jpg
-[2026-04-23 13:53:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1041155352.jpg
-[2026-04-23 13:53:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1041162480.jpg
-[2026-04-23 13:53:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1041233248.png
-[2026-04-23 13:53:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1057778632.jpg
-[2026-04-23 13:53:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1059627376.jpg
-[2026-04-23 13:53:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060024744.jpg
-[2026-04-23 13:53:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060674568.jpg
-[2026-04-23 13:53:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060907352.jpg
-[2026-04-23 13:53:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060909056.jpg
-[2026-04-23 13:53:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060915952.jpg
-[2026-04-23 13:53:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1063835912.jpg
-[2026-04-23 13:54:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1064043184.jpg
-[2026-04-23 13:54:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1064043320.jpg
-[2026-04-23 13:54:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1069084360.jpg
-[2026-04-23 13:54:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076016.jpg
-[2026-04-23 13:54:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076192.jpg
-[2026-04-23 13:54:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076320.jpg
-[2026-04-23 13:54:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076688.jpg
-[2026-04-23 13:54:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076784.jpg
-[2026-04-23 13:54:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071077096.jpg
-[2026-04-23 13:54:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071241072.jpg
-[2026-04-23 13:54:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071259032.jpg
-[2026-04-23 13:54:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071320024.png
-[2026-04-23 13:54:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071386712.jpg
-[2026-04-23 13:54:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072801904.jpg
-[2026-04-23 13:54:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072882144.jpg
-[2026-04-23 13:54:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072954928.jpg
-[2026-04-23 13:54:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072956632.jpg
-[2026-04-23 13:54:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074501288.png
-[2026-04-23 13:54:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074501344.png
-[2026-04-23 13:54:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074603296.webp
-[2026-04-23 13:54:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074606360.jpg
-[2026-04-23 13:54:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074607680.jpg
-[2026-04-23 13:54:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074865696.jpg
-[2026-04-23 13:54:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074868256.jpg
-[2026-04-23 13:54:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074886376.jpg
-[2026-04-23 13:54:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074889616.png
-[2026-04-23 13:54:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277176.jpg
-[2026-04-23 13:54:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277240.jpg
-[2026-04-23 13:54:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277424.jpg
-[2026-04-23 13:54:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277528.jpg
-[2026-04-23 13:54:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277736.jpg
-[2026-04-23 13:54:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277792.jpg
-[2026-04-23 13:54:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277856.jpg
-[2026-04-23 13:54:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277904.jpg
-[2026-04-23 13:54:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092278008.jpg
-[2026-04-23 13:54:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092278080.jpg
-[2026-04-23 13:54:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094401896.jpg
-[2026-04-23 13:54:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094402152.jpg
-[2026-04-23 13:54:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094402432.jpg
-[2026-04-23 13:54:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094403440.jpg
-[2026-04-23 13:54:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094403952.jpg
-[2026-04-23 13:54:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094439904.jpg
-[2026-04-23 13:54:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094487032.png
-[2026-04-23 13:54:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094500544.jpg
-[2026-04-23 13:54:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094509256.jpg
-[2026-04-23 13:54:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1095043072.jpg
-[2026-04-23 13:54:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096895688.jpg
-[2026-04-23 13:54:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897184.jpg
-[2026-04-23 13:54:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897328.jpg
-[2026-04-23 13:54:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897912.jpg
-[2026-04-23 13:54:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096898392.jpg
-[2026-04-23 13:54:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096965312.jpg
-[2026-04-23 13:54:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096965480.jpg
-[2026-04-23 13:54:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096972136.jpg
-[2026-04-23 13:54:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096972424.jpg
-[2026-04-23 13:54:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096972912.jpg
-[2026-04-23 13:54:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096974968.jpg
-[2026-04-23 13:54:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096976888.jpg
-[2026-04-23 13:54:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096977288.jpg
-[2026-04-23 13:54:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096979576.jpg
-[2026-04-23 13:54:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097000584.jpg
-[2026-04-23 13:54:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097004632.jpg
-[2026-04-23 13:54:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097016744.jpg
-[2026-04-23 13:54:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097023112.jpg
-[2026-04-23 13:54:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097028800.jpg
-[2026-04-23 13:54:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097667392.jpg
-[2026-04-23 13:54:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099709992.jpg
-[2026-04-23 13:54:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099717424.jpg
-[2026-04-23 13:54:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099727416.jpg
-[2026-04-23 13:54:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099730288.jpg
-[2026-04-23 13:54:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f113901536.png
-[2026-04-23 13:54:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1222568872.jpg
-[2026-04-23 13:54:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1222571552.jpg
-[2026-04-23 13:54:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225883368.jpg
-[2026-04-23 13:54:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225890304.jpg
-[2026-04-23 13:54:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225890616.jpg
-[2026-04-23 13:54:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225895208.jpg
-[2026-04-23 13:54:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225895984.jpg
-[2026-04-23 13:54:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225896520.jpg
-[2026-04-23 13:54:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225899976.jpg
-[2026-04-23 13:54:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225900032.jpg
-[2026-04-23 13:54:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225900776.jpg
-[2026-04-23 13:54:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226287648.png
-[2026-04-23 13:54:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226287792.png
-[2026-04-23 13:54:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226478536.jpg
-[2026-04-23 13:54:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226483464.jpg
-[2026-04-23 13:54:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226485016.jpg
-[2026-04-23 13:54:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226487712.jpg
-[2026-04-23 13:54:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226488968.jpg
-[2026-04-23 13:55:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226504800.jpg
-[2026-04-23 13:55:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226505232.jpg
-[2026-04-23 13:55:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226505776.jpg
-[2026-04-23 13:55:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226507288.jpg
-[2026-04-23 13:55:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226508008.jpg
-[2026-04-23 13:55:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226509928.jpg
-[2026-04-23 13:55:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226512832.jpg
-[2026-04-23 13:55:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226517840.jpg
-[2026-04-23 13:55:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226520056.jpg
-[2026-04-23 13:55:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226520944.jpg
-[2026-04-23 13:55:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226636240.jpg
-[2026-04-23 13:55:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226642216.jpg
-[2026-04-23 13:55:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226644440.jpg
-[2026-04-23 13:55:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226647544.jpg
-[2026-04-23 13:55:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226652768.jpg
-[2026-04-23 13:55:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226657600.jpg
-[2026-04-23 13:55:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226660184.jpg
-[2026-04-23 13:55:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226661520.jpg
-[2026-04-23 13:55:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226661872.jpg
-[2026-04-23 13:55:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226662064.jpg
-[2026-04-23 13:55:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226662464.jpg
-[2026-04-23 13:55:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226663328.jpg
-[2026-04-23 13:55:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226663504.jpg
-[2026-04-23 13:55:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226664728.jpg
-[2026-04-23 13:55:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226665448.jpg
-[2026-04-23 13:55:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226666032.jpg
-[2026-04-23 13:55:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226675384.jpg
-[2026-04-23 13:55:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226675672.jpg
-[2026-04-23 13:55:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226676680.jpg
-[2026-04-23 13:55:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226679184.jpg
-[2026-04-23 13:55:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227052264.jpg
-[2026-04-23 13:55:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227196424.jpg
-[2026-04-23 13:55:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227377936.jpg
-[2026-04-23 13:55:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1229203776.png
-[2026-04-23 13:55:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1229205128.png
-[2026-04-23 13:55:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1230918072.jpg
-[2026-04-23 13:55:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1231459192.jpg
-[2026-04-23 13:55:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000312.jpg
-[2026-04-23 13:55:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000416.jpg
-[2026-04-23 13:55:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000504.jpg
-[2026-04-23 13:55:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000680.jpg
-[2026-04-23 13:55:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000736.jpg
-[2026-04-23 13:55:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000816.jpg
-[2026-04-23 13:55:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000880.jpg
-[2026-04-23 13:55:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1232000984.jpg
-[2026-04-23 13:55:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235236152.jpg
-[2026-04-23 13:55:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235236976.jpg
-[2026-04-23 13:55:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235237032.jpg
-[2026-04-23 13:55:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235237112.jpg
-[2026-04-23 13:55:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235237888.jpg
-[2026-04-23 13:55:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238008.jpg
-[2026-04-23 13:55:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238136.jpg
-[2026-04-23 13:55:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238528.jpg
-[2026-04-23 13:55:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238616.jpg
-[2026-04-23 13:55:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235238720.jpg
-[2026-04-23 13:55:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239152.jpg
-[2026-04-23 13:55:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239504.jpg
-[2026-04-23 13:55:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239592.jpg
-[2026-04-23 13:55:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235239744.jpg
-[2026-04-23 13:55:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235240192.jpg
-[2026-04-23 13:55:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235240496.jpg
-[2026-04-23 13:55:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235241152.jpg
-[2026-04-23 13:55:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235241384.jpg
-[2026-04-23 13:55:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235242832.jpg
-[2026-04-23 13:55:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235243392.jpg
-[2026-04-23 13:55:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235243648.jpg
-[2026-04-23 13:55:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235244120.jpg
-[2026-04-23 13:55:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235245040.jpg
-[2026-04-23 13:55:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235245120.jpg
-[2026-04-23 13:55:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1235245184.jpg
-[2026-04-23 13:55:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525109000.png
-[2026-04-23 13:55:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525119232.png
-[2026-04-23 13:55:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525120824.jpg
-[2026-04-23 13:55:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525121224.jpg
-[2026-04-23 13:55:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525123000.jpg
-[2026-04-23 13:55:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525124024.png
-[2026-04-23 13:55:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525124464.jpg
-[2026-04-23 13:55:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525125120.png
-[2026-04-23 13:55:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525129280.png
-[2026-04-23 13:55:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525277568.jpg
-[2026-04-23 13:55:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525278672.jpg
-[2026-04-23 13:55:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525280176.jpg
-[2026-04-23 13:55:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525286968.jpg
-[2026-04-23 13:55:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525290176.jpg
-[2026-04-23 13:55:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525290344.jpg
-[2026-04-23 13:55:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789215848.png
-[2026-04-23 13:55:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789221000.png
-[2026-04-23 13:55:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789223712.png
-[2026-04-23 13:55:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789227752.png
-[2026-04-23 13:55:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789242088.png
-[2026-04-23 13:55:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789244024.png
-[2026-04-23 13:55:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789260632.png
-[2026-04-23 13:55:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789266456.png
-[2026-04-23 13:55:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789271200.png
-[2026-04-23 13:55:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789275600.png
-[2026-04-23 13:56:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789276088.png
-[2026-04-23 13:56:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789277752.png
-[2026-04-23 13:56:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789277856.png
-[2026-04-23 13:56:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789280328.png
-[2026-04-23 13:56:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789285816.png
-[2026-04-23 13:56:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789302704.png
-[2026-04-23 13:56:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789303248.png
-[2026-04-23 13:56:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789313360.png
-[2026-04-23 13:56:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789321056.png
-[2026-04-23 13:56:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789322288.png
-[2026-04-23 13:56:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94518520.png
-[2026-04-23 13:56:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg
-[2026-04-23 13:56:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0001.JPG
-[2026-04-23 13:56:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0002.JPG
-[2026-04-23 13:56:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0004.JPG
-[2026-04-23 13:56:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0005.JPG
-[2026-04-23 13:56:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0006.JPG
-[2026-04-23 13:56:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0007.JPG
-[2026-04-23 13:56:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0008.JPG
-[2026-04-23 13:56:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0009.JPG
-[2026-04-23 13:56:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0010.JPG
-[2026-04-23 13:56:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0011.JPG
-[2026-04-23 13:56:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0012.JPG
-[2026-04-23 13:56:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0013.JPG
-[2026-04-23 13:56:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0014.JPG
-[2026-04-23 13:56:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0015.JPG
-[2026-04-23 13:56:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0017.JPG
-[2026-04-23 13:56:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0019.JPG
-[2026-04-23 13:56:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0020.JPG
-[2026-04-23 13:56:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0021.JPG
-[2026-04-23 13:56:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0022.JPG
-[2026-04-23 13:56:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0023.JPG
-[2026-04-23 13:56:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0024.JPG
-[2026-04-23 13:56:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0025.JPG
-[2026-04-23 13:56:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0026.JPG
-[2026-04-23 13:56:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0027.JPG
-[2026-04-23 13:56:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0028.JPG
-[2026-04-23 13:56:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0029.JPG
-[2026-04-23 13:56:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0030.JPG
-[2026-04-23 13:56:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0031.JPG
-[2026-04-23 13:56:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0032.PNG
-[2026-04-23 13:56:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0033.JPG
-[2026-04-23 13:56:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0034.JPG
-[2026-04-23 13:56:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0035.JPG
-[2026-04-23 13:56:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0036.JPG
-[2026-04-23 13:56:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0037.JPG
-[2026-04-23 13:56:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0038.JPG
-[2026-04-23 13:56:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/P4080001.JPG
-[2026-04-23 13:56:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1141750168.jpg
-[2026-04-23 13:56:41] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1150935296.jpg
-[2026-04-23 13:56:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1242381584.jpg
-[2026-04-23 13:56:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1506457920.jpg
-[2026-04-23 13:56:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1506538432.jpg
-[2026-04-23 13:56:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1610812928.jpg
-[2026-04-23 13:56:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1678959536.jpg
-[2026-04-23 13:56:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1846408672.jpg
-[2026-04-23 13:56:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946182600.jpg
-[2026-04-23 13:56:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946222024.jpg
-[2026-04-23 13:56:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946296768.jpg
-[2026-04-23 13:56:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1946313320.jpg
-[2026-04-23 13:56:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t1947402120.jpg
-[2026-04-23 13:56:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t474272096.jpg
-[2026-04-23 13:56:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t475147584.jpg
-[2026-04-23 13:56:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t478463040.jpg
-[2026-04-23 13:56:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t482975784.jpg
-[2026-04-23 13:56:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t516171040.jpg
-[2026-04-23 13:56:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t516182160.jpg
-[2026-04-23 13:56:52] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t524718736.jpg
-[2026-04-23 13:56:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t610900104.jpg
-[2026-04-23 13:56:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t610921240.jpg
-[2026-04-23 13:56:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611838304.jpg
-[2026-04-23 13:56:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611850240.jpg
-[2026-04-23 13:56:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611893408.jpg
-[2026-04-23 13:56:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t611988184.jpg
-[2026-04-23 13:56:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/t701295496.jpg
-[2026-04-23 13:56:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0156.jpg
-[2026-04-23 13:56:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0157.jpg
-[2026-04-23 13:56:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0158.jpg
-[2026-04-23 13:56:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0159.jpg
-[2026-04-23 13:57:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0161.jpg
-[2026-04-23 13:57:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0162.jpg
-[2026-04-23 13:57:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0163.jpg
-[2026-04-23 13:57:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0164.jpg
-[2026-04-23 13:57:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0165.jpg
-[2026-04-23 13:57:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0166.jpg
-[2026-04-23 13:57:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0167.jpg
-[2026-04-23 13:57:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0168.jpg
-[2026-04-23 13:57:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0169.jpg
-[2026-04-23 13:57:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0170.jpg
-[2026-04-23 13:57:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0171.jpg
-[2026-04-23 13:57:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0172.jpg
-[2026-04-23 13:57:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0173.jpg
-[2026-04-23 13:57:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0174.jpg
-[2026-04-23 13:57:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0175.jpg
-[2026-04-23 13:57:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0176.jpg
-[2026-04-23 13:57:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0177.jpg
-[2026-04-23 13:57:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0178.jpg
-[2026-04-23 13:57:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0179.jpg
-[2026-04-23 13:57:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0180.jpg
-[2026-04-23 13:57:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0181.jpg
-[2026-04-23 13:57:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0182.jpg
-[2026-04-23 13:57:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0183.jpg
-[2026-04-23 13:57:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0184.jpg
-[2026-04-23 13:57:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0185.jpg
-[2026-04-23 13:57:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0186.jpg
-[2026-04-23 13:57:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0187.jpg
-[2026-04-23 13:57:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0188.jpg
-[2026-04-23 13:57:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0189.jpg
-[2026-04-23 13:57:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0193.jpg
-[2026-04-23 13:57:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0194.jpg
-[2026-04-23 13:57:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0195.jpg
-[2026-04-23 13:57:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0196.jpg
-[2026-04-23 13:57:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0197.jpg
-[2026-04-23 13:57:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/wlodIA/IMG-20240504-WA0199.jpg
-[2026-04-23 13:57:23] [OK]   Scansione filesystem completata.
-[2026-04-23 13:57:23] [RUN]  Avvio 8 worker IA su 381 asset...
-[2026-04-23 14:00:22] init_db: database pronto in /mnt/d/projects/newRDMD5IA/photo/db/gallery.db
-[2026-04-23 14:00:23] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
-[2026-04-23 14:03:42] [OK]   Scansione filesystem completata.
-[2026-04-23 14:03:42] [RUN]  Avvio 8 worker IA su 381 asset...
-[2026-04-23 15:56:49] [OK]   Elaborazione IA completata (381 asset processati).
-[2026-04-23 15:56:49] [OK]   Update DB completato.
-[2026-04-23 15:56:49] cleanup_deleted: Pulizia file mancanti...
-[2026-04-23 15:56:49] cleanup_deleted: Pulizia asset senza file collegati...
-[2026-04-23 15:56:50] cleanup_deleted: Pulizia completata.
+[2026-04-23 21:35:57] init_db: database pronto in /mnt/d/projects/photo/db/gallery.db
+[2026-04-23 21:36:05] init_db: database pronto in /mnt/d/projects/photo/db/gallery.db
+[2026-04-23 21:36:05] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-23 21:36:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1007687184.jpg
+[2026-04-23 21:36:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1041233248.png
+[2026-04-23 21:36:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060674568.jpg
+[2026-04-23 21:36:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1060907352.jpg
+[2026-04-23 21:36:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1064043320.jpg
+[2026-04-23 21:36:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076016.jpg
+[2026-04-23 21:36:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076192.jpg
+[2026-04-23 21:36:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076688.jpg
+[2026-04-23 21:36:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1071076784.jpg
+[2026-04-23 21:36:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072882144.jpg
+[2026-04-23 21:36:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072954928.jpg
+[2026-04-23 21:36:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1072956632.jpg
+[2026-04-23 21:36:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074603296.webp
+[2026-04-23 21:36:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074606360.jpg
+[2026-04-23 21:36:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074868256.jpg
+[2026-04-23 21:36:40] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1074886376.jpg
+[2026-04-23 21:36:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277424.jpg
+[2026-04-23 21:36:42] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277528.jpg
+[2026-04-23 21:36:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277736.jpg
+[2026-04-23 21:36:43] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092277792.jpg
+[2026-04-23 21:36:44] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1092278008.jpg
+[2026-04-23 21:36:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094402152.jpg
+[2026-04-23 21:36:45] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094402432.jpg
+[2026-04-23 21:36:46] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094403440.jpg
+[2026-04-23 21:36:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094403952.jpg
+[2026-04-23 21:36:47] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094439904.jpg
+[2026-04-23 21:36:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1094487032.png
+[2026-04-23 21:36:48] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096895688.jpg
+[2026-04-23 21:36:49] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897184.jpg
+[2026-04-23 21:36:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897328.jpg
+[2026-04-23 21:36:50] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096897912.jpg
+[2026-04-23 21:36:51] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096898392.jpg
+[2026-04-23 21:36:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096965312.jpg
+[2026-04-23 21:36:53] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096972424.jpg
+[2026-04-23 21:36:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096976888.jpg
+[2026-04-23 21:36:54] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096977288.jpg
+[2026-04-23 21:36:55] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1096979576.jpg
+[2026-04-23 21:36:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097000584.jpg
+[2026-04-23 21:36:56] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097023112.jpg
+[2026-04-23 21:36:57] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099709992.jpg
+[2026-04-23 21:36:58] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1099717424.jpg
+[2026-04-23 21:36:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1222568872.jpg
+[2026-04-23 21:36:59] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1222571552.jpg
+[2026-04-23 21:37:00] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225883368.jpg
+[2026-04-23 21:37:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225890304.jpg
+[2026-04-23 21:37:01] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225890616.jpg
+[2026-04-23 21:37:02] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1225900032.jpg
+[2026-04-23 21:37:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226287648.png
+[2026-04-23 21:37:03] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226287792.png
+[2026-04-23 21:37:04] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226478536.jpg
+[2026-04-23 21:37:05] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226483464.jpg
+[2026-04-23 21:37:06] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226485016.jpg
+[2026-04-23 21:37:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226505776.jpg
+[2026-04-23 21:37:07] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226507288.jpg
+[2026-04-23 21:37:08] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226509928.jpg
+[2026-04-23 21:37:09] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226512832.jpg
+[2026-04-23 21:37:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226520944.jpg
+[2026-04-23 21:37:10] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226636240.jpg
+[2026-04-23 21:37:11] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226647544.jpg
+[2026-04-23 21:37:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226657600.jpg
+[2026-04-23 21:37:12] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226661872.jpg
+[2026-04-23 21:37:13] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226662064.jpg
+[2026-04-23 21:37:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226662464.jpg
+[2026-04-23 21:37:14] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226663328.jpg
+[2026-04-23 21:37:15] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226665448.jpg
+[2026-04-23 21:37:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226675672.jpg
+[2026-04-23 21:37:16] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226676680.jpg
+[2026-04-23 21:37:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1226679184.jpg
+[2026-04-23 21:37:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227052264.jpg
+[2026-04-23 21:37:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227196424.jpg
+[2026-04-23 21:37:19] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1227377936.jpg
+[2026-04-23 21:37:20] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525109000.png
+[2026-04-23 21:37:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525119232.png
+[2026-04-23 21:37:21] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f525120824.jpg
+[2026-04-23 21:37:22] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789227752.png
+[2026-04-23 21:37:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789242088.png
+[2026-04-23 21:37:23] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789244024.png
+[2026-04-23 21:37:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789260632.png
+[2026-04-23 21:37:24] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789266456.png
+[2026-04-23 21:37:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789271200.png
+[2026-04-23 21:37:25] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789277752.png
+[2026-04-23 21:37:26] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789285816.png
+[2026-04-23 21:37:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789302704.png
+[2026-04-23 21:37:27] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789303248.png
+[2026-04-23 21:37:28] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f789313360.png
+[2026-04-23 21:37:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0001.JPG
+[2026-04-23 21:37:30] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0002.JPG
+[2026-04-23 21:37:31] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0007.JPG
+[2026-04-23 21:37:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0008.JPG
+[2026-04-23 21:37:32] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0009.JPG
+[2026-04-23 21:37:33] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0029.JPG
+[2026-04-23 21:37:34] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0030.JPG
+[2026-04-23 21:37:35] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0031.JPG
+[2026-04-23 21:37:36] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0032.PNG
+[2026-04-23 21:37:37] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0033.JPG
+[2026-04-23 21:37:38] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0034.JPG
+[2026-04-23 21:37:39] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/Nuova cartella/IMG_0035.JPG
+[2026-04-23 21:37:40] [OK]   Scansione filesystem completata.
+[2026-04-23 21:37:40] [RUN]  Avvio 8 worker IA su 97 asset...
+[2026-04-23 21:53:11] [OK]   Elaborazione IA completata (97 asset processati).
+[2026-04-23 21:53:11] [OK]   Update DB completato.
+[2026-04-23 21:53:11] cleanup_deleted: Pulizia file mancanti...
+[2026-04-23 21:53:11] cleanup_deleted: Rimuovo asset_files id=5 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270053.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=6 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270056.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=14 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180054.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=15 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180055.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=16 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180056.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=17 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180057.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=18 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180058.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=19 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180059.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=20 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/dahab/P2180060.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=31 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270005.JPG)
+[2026-04-23 21:53:12] cleanup_deleted: Rimuovo asset_files id=33 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270007.JPG)
+[2026-04-23 21:53:13] cleanup_deleted: Rimuovo asset_files id=38 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270015.JPG)
+[2026-04-23 21:53:13] cleanup_deleted: Rimuovo asset_files id=39 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270016.JPG)
+[2026-04-23 21:53:13] cleanup_deleted: Rimuovo asset_files id=42 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270019.JPG)
+[2026-04-23 21:53:13] cleanup_deleted: Rimuovo asset_files id=43 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270020.JPG)
+[2026-04-23 21:53:13] cleanup_deleted: Rimuovo asset_files id=50 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270028.JPG)
+[2026-04-23 21:53:13] cleanup_deleted: Rimuovo asset_files id=51 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270029.JPG)
+[2026-04-23 21:53:13] cleanup_deleted: Rimuovo asset_files id=54 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270032.JPG)
+[2026-04-23 21:53:15] cleanup_deleted: Rimuovo asset_files id=55 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270033.JPG)
+[2026-04-23 21:53:15] cleanup_deleted: Rimuovo asset_files id=57 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270036.JPG)
+[2026-04-23 21:53:15] cleanup_deleted: Rimuovo asset_files id=59 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270038.JPG)
+[2026-04-23 21:53:15] cleanup_deleted: Rimuovo asset_files id=60 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270039.JPG)
+[2026-04-23 21:53:16] cleanup_deleted: Rimuovo asset_files id=67 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270048.JPG)
+[2026-04-23 21:53:16] cleanup_deleted: Rimuovo asset_files id=69 (file mancante: /mnt/d/projects/newRDMD5IA/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270050.JPG)
+[2026-04-23 21:53:16] cleanup_deleted: Rimuovo asset_files id=75 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94518520.png)
+[2026-04-23 21:53:16] cleanup_deleted: Rimuovo asset_files id=76 (file mancante: /mnt/d/projects/newRDMD5IA/foto/f94634088.jpg)
+[2026-04-23 21:53:16] cleanup_deleted: Rimuovo asset_files id=77 (file mancante: /mnt/d/projects/newRDMD5IA/foto/P4080001.JPG)
+[2026-04-23 21:53:16] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-23 21:53:17] cleanup_deleted: Pulizia completata.
+[2026-04-23 22:06:42] init_db: database pronto in /mnt/d/projects/photo/db/gallery.db
+[2026-04-23 22:06:42] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-23 22:07:17] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097017016/frames/frame_00002.jpg
+[2026-04-23 22:07:18] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097017016/frames/scarti/frame_00001.jpg
+[2026-04-23 22:07:39] [OK]   Scansione filesystem completata.
+[2026-04-23 22:07:39] [RUN]  Avvio 8 worker IA su 2 asset...
+[2026-04-23 22:08:35] [OK]   Elaborazione IA completata (2 asset processati).
+[2026-04-23 22:08:35] [OK]   Update DB completato.
+[2026-04-23 22:08:35] cleanup_deleted: Pulizia file mancanti...
+[2026-04-23 22:08:35] cleanup_deleted: Pulizia asset senza file collegati...
+[2026-04-23 22:08:35] cleanup_deleted: Pulizia completata.
+[2026-04-23 22:10:21] init_db: database pronto in /mnt/d/projects/photo/db/gallery.db
+[2026-04-23 22:10:21] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-23 22:11:25] [OK]   Scansione filesystem completata.
+[2026-04-23 22:11:53] init_db: database pronto in /mnt/d/projects/photo/db/gallery.db
+[2026-04-23 22:11:53] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-23 22:12:59] [OK]   Scansione filesystem completata.
+[2026-04-23 22:13:53] init_db: database pronto in /mnt/d/projects/photo/db/gallery.db
+[2026-04-23 22:13:53] [RUN]  Scansione libreria in /mnt/d/projects/newRDMD5IA/foto
+[2026-04-23 22:14:29] [OK]   Nuovo file: /mnt/d/projects/newRDMD5IA/foto/f1097017016/frames/frame_00001.jpg
+[2026-04-23 22:14:29] [RUN]  File modificato: /mnt/d/projects/newRDMD5IA/foto/f1097017016/frames/frame_00002.jpg
+[2026-04-23 22:14:54] [OK]   Scansione filesystem completata.
+[2026-04-23 22:14:54] [RUN]  Avvio 8 worker IA su 2 asset...
