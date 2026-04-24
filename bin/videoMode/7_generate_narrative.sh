@@ -32,7 +32,7 @@ done
 
 if [ ! -f "$INPUT_JSON" ]; then
   echo "[ERRORE] File non trovato: $INPUT_JSON" >&2
-  echo "         Esegui prima 5_generate_descriptions.sh" >&2
+  echo "         Esegui prima 6_generate_descriptions.sh" >&2
   exit 1
 fi
 
@@ -56,7 +56,7 @@ DESCRIPTIONS_BLOCK="$(
 PROMPT="Sei un narratore visivo. Di seguito ti vengono fornite le descrizioni di ${TOTAL} frame estratti in sequenza da un video. \
 Analizzale tutte insieme e scrivi un unico testo discorsivo in ${LANGUAGE}, coerente e fluido, che racconti cosa accade nella scena \
 nel suo insieme. Non elencare i frame uno per uno: sintetizza, collega i momenti e restituisci una narrazione unica come se \
-stessi descrivendo un breve filmato a qualcuno che non può vederlo. Sii preciso, descrittivo e usa uno stile narrativo naturale.\n\n\
+stessi descrivendo un filmato a qualcuno che non può vederlo. Sii preciso, descrittivo e usa uno stile narrativo naturale.\n\n\
 --- DESCRIZIONI DEI FRAME ---\n${DESCRIPTIONS_BLOCK}\n--- FINE DESCRIZIONI ---"
 
 echo "[INFO] Invio prompt a Ollama ($OLLAMA_TEXT_MODEL)..."
