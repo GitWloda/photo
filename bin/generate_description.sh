@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.."; pwd)"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." ; pwd)"
 
 if [ ! -f "$ROOT_DIR/config/app.env" ]; then
   echo "config/app.env non trovato." >&2
@@ -33,13 +33,22 @@ if [ ! -f "$FILE" ]; then
   exit 1
 fi
 
-# Metadati come contesto extra (opzionale)
+# FIX #6: METADATA_JSON ora incluso nel prompt come contesto per il modello
 METADATA_JSON="$("$ROOT_DIR/bin/extract_metadata.sh" "$FILE" || echo '{}')"
 
-PROMPT="Descrivi con precisione e senza inventare questa foto in ${LANGUAGE}, in più frasi, senza saluti, introduzioni né elenchi: ${FILE}"
+# Estrai solo i campi utili per il contesto (evita di inondare il prompt)
+META_CONTEXT="$(printf '%s' "$METADATA_JSON" | jq -r '
+  [ (.Make // ""), (.Model // ""), (.LensModel // ""), (.CreateDate // ""), (.ISO // "") ]
+  | map(select(. != ""))
+  | if length > 0 then "Metadati disponibili: " + join(", ") + "." else "" end
+' 2>/dev/null || true)"
 
-# Pipeline:
-#   base64 -> (una riga) -> jq costruisce JSON -> curl legge body da stdin (-d @-)
+if [ -n "$META_CONTEXT" ]; then
+  PROMPT="Descrivi con precisione e senza inventare questa foto in ${LANGUAGE}, in più frasi, senza saluti, introduzioni né elenchi. ${META_CONTEXT}"
+else
+  PROMPT="Descrivi con precisione e senza inventare questa foto in ${LANGUAGE}, in più frasi, senza saluti, introduzioni né elenchi."
+fi
+
 RESPONSE="$(
   base64 < "$FILE" | tr -d '\n' | \
   jq -Rn \
