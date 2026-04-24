@@ -9,6 +9,14 @@
 
   let currentItems = [];
 
+  // FIX #8: helper escape HTML per evitare rendering corrotto su nomi con caratteri speciali
+  const esc = (s) =>
+    String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
   async function fetchJSON(url) {
     const res = await fetch(url);
     if (!res.ok) {
@@ -34,10 +42,19 @@
       card.className = "card";
       card.dataset.id = item.id;
 
-      const img = document.createElement("img");
-      img.loading = "lazy";
-      img.src = item.thumb_url || item.file_url;
-      img.alt = item.filename || "Foto";
+      // FIX #5: usa <video> per i video, <img> per le immagini
+      let thumb;
+      if (item.media_kind === "video") {
+        thumb = document.createElement("video");
+        thumb.muted = true;
+        thumb.preload = "none";
+        thumb.src = item.thumb_url || item.file_url;
+      } else {
+        thumb = document.createElement("img");
+        thumb.loading = "lazy";
+        thumb.src = item.thumb_url || item.file_url;
+        thumb.alt = item.filename || "Foto";
+      }
 
       const body = document.createElement("div");
       body.className = "card-body";
@@ -52,7 +69,7 @@
 
       body.appendChild(title);
       body.appendChild(desc);
-      card.appendChild(img);
+      card.appendChild(thumb);
       card.appendChild(body);
 
       card.addEventListener("click", () => openDetail(item.id));
@@ -63,7 +80,6 @@
     galleryEl.appendChild(fragment);
   }
 
-  // Renders ALL metadata keys (not just a fixed subset)
   function renderMetadataTable(metadata) {
     if (!metadata || typeof metadata !== "object") {
       return "";
@@ -74,7 +90,6 @@
       return "";
     }
 
-    // Sort keys: known "primary" ones first, then the rest alphabetically
     const primary = ["Make", "Model", "LensModel", "CreateDate", "ISO", "FNumber", "ExposureTime"];
     const sorted = [
       ...primary.filter((k) => Object.prototype.hasOwnProperty.call(metadata, k)),
@@ -85,7 +100,7 @@
 
     const rows = sorted.map(
       (key) =>
-        `<tr><th>${key}</th><td>${String(metadata[key])}</td></tr>`
+        `<tr><th>${esc(key)}</th><td>${esc(String(metadata[key]))}</td></tr>`
     );
 
     return `
@@ -103,10 +118,10 @@
       const data = await fetchJSON(`/media/${id}`);
       const chips = [];
       if (data.ai_description && data.ai_description.model) {
-        chips.push(`Modello AI: ${data.ai_description.model}`);
+        chips.push(`Modello AI: ${esc(data.ai_description.model)}`);
       }
       if (data.ai_description && data.ai_description.language) {
-        chips.push(`Lingua: ${data.ai_description.language}`);
+        chips.push(`Lingua: ${esc(data.ai_description.language)}`);
       }
       if (data.size_bytes != null) {
         chips.push(`${(data.size_bytes / (1024 * 1024)).toFixed(1)} MB`);
@@ -114,10 +129,16 @@
 
       const metaTable = renderMetadataTable(data.metadata);
 
+      // FIX #5: mostra <video controls> per i video, <img> per le immagini
+      const mediaTag =
+        data.media_kind === "video"
+          ? `<video class="detail-image" src="${esc(data.file_url)}" controls></video>`
+          : `<img class="detail-image" src="${esc(data.file_url)}" alt="${esc(data.filename)}" />`;
+
       detailContentEl.innerHTML = `
-        <img class="detail-image" src="${data.file_url}" alt="${data.filename}" />
-        <h2 class="detail-title">${data.title || data.filename}</h2>
-        <p class="detail-path">${data.absolute_path}</p>
+        ${mediaTag}
+        <h2 class="detail-title">${esc(data.title || data.filename)}</h2>
+        <p class="detail-path">${esc(data.absolute_path)}</p>
 
         ${
           chips.length
@@ -128,9 +149,9 @@
         }
 
         <h3 class="detail-section-title">Descrizione AI</h3>
-        <p class="detail-description">${
+        <p class="detail-description">${esc(
           (data.ai_description && data.ai_description.text) || "Nessuna descrizione disponibile."
-        }</p>
+        )}</p>
 
         ${
           metaTable
@@ -186,5 +207,6 @@
     }
   });
 
-  document.addEventListener("DOMContentLoaded", loadInitial);
+  // FIX #1: rimosso DOMContentLoaded (già nel body, DOM è pronto) — chiamata diretta
+  loadInitial();
 })();

@@ -25,7 +25,6 @@ log_ok()   { echo -e "${C_GREEN}[$(_ts)] [OK]   $*${C_RESET}" >&2; echo "[$(_ts)
 log_warn() { echo -e "${C_YELLOW}[$(_ts)] [WARN] $*${C_RESET}" >&2; echo "[$(_ts)] [WARN] $*" >> "$LOG_FILE_ABS"; }
 log_err()  { echo -e "${C_RED}[$(_ts)] [ERR]  $*${C_RESET}" >&2; echo "[$(_ts)] [ERR]  $*" >> "$LOG_FILE_ABS"; }
 
-# sostituisce la vecchia funzione log() – compatibilità interna
 log() { log_run "update_db: $*"; }
 
 # --- Dipendenze esterne ---
@@ -69,7 +68,6 @@ if [ -z "$PHOTO_ROOT_ABS" ]; then
   exit 1
 fi
 
-# Default AI_WORKERS se non impostato nel config
 AI_WORKERS="${AI_WORKERS:-4}"
 
 mkdir -p "$THUMB_DIR_ABS"
@@ -106,30 +104,132 @@ get_size_mtime() {
   fi
 }
 
+# ---------------------------------------------------------------------------
+# generate_thumb: immagini con convert, video con ffmpeg (frame al secondo 5)
+# Timeout 30s su entrambi per evitare blocchi su file corrotti/grandi.
+# ---------------------------------------------------------------------------
 generate_thumb() {
   local file="$1"
   local asset_id="$2"
+  local lc_file="${file,,}"
   local out_file="$THUMB_DIR_ABS/${asset_id}.jpg"
 
-  if command -v convert >/dev/null 2>&1; then
-    if convert "$file" -auto-orient -thumbnail 400x400 "$out_file" >/dev/null 2>&1; then
-      echo "${asset_id}.jpg"
-      return 0
-    fi
-  fi
+  case "$lc_file" in
+    *.mp4|*.mov|*.avi|*.mkv|*.webm)
+      # Usa ffmpeg: estrae frame al 5° secondo (o al primo se il video è più corto)
+      if command -v ffmpeg >/dev/null 2>&1; then
+        if timeout 30 ffmpeg -y \
+            -ss 00:00:05 \
+            -i "$file" \
+            -vframes 1 \
+            -vf "scale=400:400:force_original_aspect_ratio=decrease" \
+            "$out_file" \
+            </dev/null >/dev/null 2>&1; then
+          echo "${asset_id}.jpg"
+          return 0
+        fi
+        # Fallback: prende il primo frame se ss=5 fallisce (video < 5s)
+        if timeout 30 ffmpeg -y \
+            -i "$file" \
+            -vframes 1 \
+            -vf "scale=400:400:force_original_aspect_ratio=decrease" \
+            "$out_file" \
+            </dev/null >/dev/null 2>&1; then
+          echo "${asset_id}.jpg"
+          return 0
+        fi
+      else
+        log_warn "ffmpeg non trovato, thumbnail video non generato per: $file"
+      fi
+      ;;
+    *)
+      # Immagini: usa convert con timeout
+      if command -v convert >/dev/null 2>&1; then
+        if timeout 30 convert "$file" \
+            -auto-orient \
+            -thumbnail 400x400 \
+            "$out_file" \
+            >/dev/null 2>&1; then
+          echo "${asset_id}.jpg"
+          return 0
+        fi
+      fi
+      ;;
+  esac
 
   echo ""
 }
 
 # ---------------------------------------------------------------------------
-# process_file: gestisce insert/update di asset e asset_files nel DB.
+# Funzioni SQL a livello top-level (fix: heredoc dentro $() causa parse error)
+# ---------------------------------------------------------------------------
+_sql_insert_asset() {
+  local ef="$1" emk="$2"
+  sqlite_batch <<SQL
+BEGIN IMMEDIATE;
+INSERT INTO assets (title, media_kind, created_at, updated_at)
+VALUES ('$ef', '$emk', strftime('%s','now'), strftime('%s','now'));
+SELECT last_insert_rowid();
+COMMIT;
+SQL
+}
+
+_sql_insert_file() {
+  local asset_id="$1" ep="$2" er="$3" ef="$4" esha="$5" em="$6"
+  local size_bytes="$7" mtime="$8" ethumb="$9"
+  sqlite_batch <<SQL
+BEGIN IMMEDIATE;
+INSERT INTO asset_files (
+  asset_id, absolute_path, relative_path, filename, sha256,
+  metadata_json, size_bytes, mtime, thumb_path, created_at, updated_at
+) VALUES (
+  $asset_id, '$ep', '$er', '$ef', '$esha',
+  '$em', $size_bytes, $mtime, '$ethumb',
+  strftime('%s','now'), strftime('%s','now')
+);
+COMMIT;
+SQL
+}
+
+_sql_update_file() {
+  local esha="$1" em="$2" size_bytes="$3" mtime="$4" ethumb="$5"
+  local file_id="$6" emk="$7" asset_id="$8"
+  sqlite_batch <<SQL
+BEGIN IMMEDIATE;
+UPDATE asset_files
+SET sha256='$esha',
+    metadata_json='$em',
+    size_bytes=$size_bytes,
+    mtime=$mtime,
+    thumb_path='$ethumb',
+    updated_at=strftime('%s','now')
+WHERE id=$file_id;
+
+UPDATE assets
+SET ai_description_id=NULL,
+    media_kind='$emk',
+    updated_at=strftime('%s','now')
+WHERE id=$asset_id;
+COMMIT;
+SQL
+}
+
+# ---------------------------------------------------------------------------
+# process_file
 # ---------------------------------------------------------------------------
 process_file() {
   local file="$1"
 
   local lc_file="${file,,}"
+
+  local media_kind
   case "$lc_file" in
-    *.jpg|*.jpeg|*.png|*.gif|*.webp) ;;
+    *.mp4|*.mov|*.avi|*.mkv|*.webm) media_kind="video" ;;
+    *) media_kind="image" ;;
+  esac
+
+  case "$lc_file" in
+    *.jpg|*.jpeg|*.png|*.gif|*.webp|*.mp4|*.mov|*.avi|*.mkv|*.webm) ;;
     *) return 0 ;;
   esac
 
@@ -150,55 +250,32 @@ process_file() {
 
   metadata_json="$("$ROOT_DIR/bin/extract_metadata.sh" "$file" || echo '{}')"
 
-  # Escaping per SQL
-  local ep er ef esha em
+  local ep er ef esha em emk
   ep=$(printf '%s' "$abs_path"      | sql_escape)
   er=$(printf '%s' "$rel_path"      | sql_escape)
   ef=$(printf '%s' "$filename"      | sql_escape)
   esha=$(printf '%s' "$sha256"      | sql_escape)
   em=$(printf '%s' "$metadata_json" | sql_escape)
+  emk=$(printf '%s' "$media_kind"   | sql_escape)
 
   local row
   row=$(sqlite_query "SELECT id, sha256, mtime, asset_id FROM asset_files WHERE absolute_path = '$ep';")
 
   if [ -z "$row" ]; then
-    # ----------------- NUOVO FILE -----------------
     log_ok "Nuovo file: $abs_path"
 
     local asset_id
-    asset_id="$({
-      cat <<SQL
-BEGIN IMMEDIATE;
-INSERT INTO assets (title, created_at, updated_at)
-VALUES ('$ef', strftime('%s','now'), strftime('%s','now'));
-SELECT last_insert_rowid();
-COMMIT;
-SQL
-    } | sqlite_batch | tail -n 1)"
+    asset_id="$(_sql_insert_asset "$ef" "$emk" | tail -n 1)"
 
     local thumb_rel ethumb
     thumb_rel="$(generate_thumb "$file" "$asset_id")"
     ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
-    {
-      cat <<SQL
-BEGIN IMMEDIATE;
-INSERT INTO asset_files (
-  asset_id, absolute_path, relative_path, filename, sha256,
-  metadata_json, size_bytes, mtime, thumb_path, created_at, updated_at
-) VALUES (
-  $asset_id, '$ep', '$er', '$ef', '$esha',
-  '$em', $size_bytes, $mtime, '$ethumb',
-  strftime('%s','now'), strftime('%s','now')
-);
-COMMIT;
-SQL
-    } | sqlite_batch >/dev/null
+    _sql_insert_file "$asset_id" "$ep" "$er" "$ef" "$esha" "$em" "$size_bytes" "$mtime" "$ethumb" >/dev/null
 
     echo "$asset_id"
 
   else
-    # ----------------- FILE GIÀ CONOSCIUTO -----------------
     local file_id old_sha old_mtime asset_id
     file_id=$(echo "$row" | awk -F'|' '{print $1}')
     old_sha=$(echo "$row" | awk -F'|' '{print $2}')
@@ -212,25 +289,7 @@ SQL
       thumb_rel="$(generate_thumb "$file" "$asset_id")"
       ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
 
-      {
-        cat <<SQL
-BEGIN IMMEDIATE;
-UPDATE asset_files
-SET sha256='$esha',
-    metadata_json='$em',
-    size_bytes=$size_bytes,
-    mtime=$mtime,
-    thumb_path='$ethumb',
-    updated_at=strftime('%s','now')
-WHERE id=$file_id;
-
-UPDATE assets
-SET ai_description_id=NULL,
-    updated_at=strftime('%s','now')
-WHERE id=$asset_id;
-COMMIT;
-SQL
-      } | sqlite_batch >/dev/null
+      _sql_update_file "$esha" "$em" "$size_bytes" "$mtime" "$ethumb" "$file_id" "$emk" "$asset_id" >/dev/null
 
       echo "$asset_id"
     fi
@@ -238,7 +297,7 @@ SQL
 }
 
 # ---------------------------------------------------------------------------
-# FASE 1: scansione sequenziale (DB writes safe, nessuna chiamata Ollama)
+# FASE 1: scansione sequenziale
 # ---------------------------------------------------------------------------
 log_run "Scansione libreria in $PHOTO_ROOT_ABS"
 
@@ -251,7 +310,6 @@ done < <(find "$PHOTO_ROOT_ABS" -type f 2>/dev/null) > "$PENDING_IDS_FILE"
 
 log_ok "Scansione filesystem completata."
 
-# asset già presenti ma senza descrizione
 SALVATI_SENZA_DESC=$(sqlite_query "SELECT id FROM assets WHERE ai_description_id IS NULL;")
 
 ALL_PENDING=$(
@@ -263,7 +321,7 @@ ALL_PENDING=$(
 COUNT=$(echo "$ALL_PENDING" | grep -c '[0-9]' || true)
 
 # ---------------------------------------------------------------------------
-# FASE 2: elaborazione IA parallela sui nuovi/modificati + asset senza descrizione
+# FASE 2: elaborazione IA parallela
 # ---------------------------------------------------------------------------
 WORKER_SCRIPT="$ROOT_DIR/bin/worker_ai.py"
 

@@ -75,8 +75,9 @@ for VIDEO in "${VIDEOS[@]}"; do
     2_remove_white_frames.sh \
     3_remove_bad_frames.sh \
     4_remove_similar_frames.sh \
-    5_generate_descriptions.sh \
-    6_generate_narrative.sh
+    5_rename_frame.sh \
+    6_generate_descriptions.sh \
+    7_generate_narrative.sh
   do
     echo "[INFO] Eseguo $STEP su $FRAMES_DIR"
     if ! "$SCRIPT_DIR/$STEP" "$FRAMES_DIR"; then
