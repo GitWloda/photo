@@ -8,7 +8,7 @@ DIR="${1:-.}"
 DIR="$(realpath "$DIR")"
 
 OLLAMA_URL="${OLLAMA_URL:-http://localhost:11434}"
-OLLAMA_TEXT_MODEL="${OLLAMA_TEXT_MODEL:-gemma4:e4b}"
+OLLAMA_TEXT_MODEL="${OLLAMA_TEXT_MODEL:-qwen3.5:35b}"
 LANGUAGE="${LANGUAGE:-italiano}"
 INPUT_JSON="$DIR/descriptions.json"
 NARRATIVE_FILE="$DIR/narrative.txt"

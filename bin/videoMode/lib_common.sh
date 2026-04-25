@@ -2,6 +2,7 @@
 
 SCRIPT_DIR_COMMON="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE_DEFAULT="$SCRIPT_DIR_COMMON/frame_cleaner.conf"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR_COMMON/../.." && pwd)"
 
 load_config() {
     local config_file="${FRAME_CLEANER_CONFIG:-$CONFIG_FILE_DEFAULT}"
@@ -31,15 +32,25 @@ load_config() {
     QS_WEIGHT_DARK="${QS_WEIGHT_DARK:-0.70}"
 
     WINDOW_SIZE="${WINDOW_SIZE:-5}"
+    PARALLEL_WORKERS="${PARALLEL_WORKERS:-4}"
 
     HASH_WIDTH="${HASH_WIDTH:-9}"
     HASH_HEIGHT="${HASH_HEIGHT:-8}"
     SIMILARITY_MAX_DISTANCE="${SIMILARITY_MAX_DISTANCE:-6}"
-    SIMILARITY_THRESHOLD="${SIMILARITY_THRESHOLD:-0.90}"
-    USE_QUALITY_SCORE_FOR_TIEBREAK="${USE_QUALITY_SCORE_FOR_TIEBREAK:-1}"
 
     VERBOSE="${VERBOSE:-1}"
     PROGRESS_BAR_WIDTH="${PROGRESS_BAR_WIDTH:-28}"
+
+    DATA_ROOT="${DATA_ROOT:-$PROJECT_ROOT/data}"
+    WORK_ROOT="${WORK_ROOT:-$DATA_ROOT/work}"
+    CLEAN_SCARTI_ON_SUCCESS="${CLEAN_SCARTI_ON_SUCCESS:-1}"
+
+    OLLAMA_URL="${OLLAMA_URL:-http://localhost:11434}"
+    OLLAMA_VISION_MODEL="${OLLAMA_VISION_MODEL:-llava:7b}"
+    LANGUAGE="${LANGUAGE:-italiano}"
+    OLLAMA_BATCH_SIZE="${OLLAMA_BATCH_SIZE:-4}"
+    OLLAMA_TIMEOUT="${OLLAMA_TIMEOUT:-240}"
+    OLLAMA_TEMPERATURE="${OLLAMA_TEMPERATURE:-0.2}"
 }
 
 require_command() {
@@ -62,6 +73,14 @@ log() {
 
 info() {
     printf '[%s] %s\n' "$(ts)" "$*"
+}
+
+warn() {
+    printf '[%s] [WARN] %s\n' "$(ts)" "$*" >&2
+}
+
+error() {
+    printf '[%s] [ERRORE] %s\n' "$(ts)" "$*" >&2
 }
 
 float_ge() {
@@ -88,6 +107,14 @@ resolve_dir() {
 ensure_scarti_dir() {
     local dir="$1"
     mkdir -p "$dir/$SCARTI_SUBDIR"
+}
+
+cleanup_scarti_dir() {
+    local dir="$1"
+    if [[ "${CLEAN_SCARTI_ON_SUCCESS}" == "1" && -d "$dir/$SCARTI_SUBDIR" ]]; then
+        rm -rf "$dir/$SCARTI_SUBDIR"
+        info "Scarti rimossi: $dir/$SCARTI_SUBDIR"
+    fi
 }
 
 list_frames() {
@@ -204,4 +231,18 @@ section_start() {
     info "--------------------------------------------------"
     info "$1"
     info "--------------------------------------------------"
+}
+
+get_video_slug() {
+    local video="$1"
+    local base
+    base="$(basename "$video")"
+    printf '%s\n' "${base%.*}"
+}
+
+get_video_work_dir() {
+    local video="$1"
+    local slug
+    slug="$(get_video_slug "$video")"
+    printf '%s/%s\n' "$WORK_ROOT" "$slug"
 }
