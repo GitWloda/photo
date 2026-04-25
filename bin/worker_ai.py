@@ -7,66 +7,63 @@ Worker IA: riceve un asset_id, chiama Ollama e salva la descrizione nel DB.
 """
 
 import os
-import sys
+import random
 import sqlite3
 import subprocess
+import sys
 import time
 from datetime import datetime
 
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-ENV_FILE = os.path.join(ROOT_DIR, "config", "app.env")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from lib.config import ROOT_DIR, load_env
 
-# Estensioni video: Ollama vision non le supporta, skip immediato
+cfg = load_env()
+
 VIDEO_EXTENSIONS = {".mp4", ".mov", ".avi", ".mkv", ".webm", ".ts", ".m4v", ".3gp"}
-
-
-def load_env(path: str) -> dict:
-    cfg = {}
-    if not os.path.isfile(path):
-        return cfg
-    with open(path, encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            key, _, value = line.partition("=")
-            cfg[key.strip()] = value.strip().strip('"').strip("'")
-    return cfg
-
-
-cfg = load_env(ENV_FILE)
 
 DB_PATH = cfg.get("DB_PATH", "db/gallery.db")
 if not os.path.isabs(DB_PATH):
     DB_PATH = os.path.join(ROOT_DIR, DB_PATH)
 
-OLLAMA_MODEL  = cfg.get("OLLAMA_MODEL", "gemma3:12b")
-LANGUAGE      = cfg.get("LANGUAGE", "it")
-GEN_SCRIPT    = os.path.join(ROOT_DIR, "bin", "generate_description.sh")
+OLLAMA_MODEL = cfg.get("OLLAMA_MODEL", "gemma3:12b")
+LANGUAGE = cfg.get("LANGUAGE", "it")
+GEN_SCRIPT = os.path.join(ROOT_DIR, "bin", "generate_description.sh")
 
-DB_TIMEOUT    = 30
-DB_RETRIES    = 6
-DESC_RETRIES  = int(cfg.get("DESC_RETRIES", "3"))
-DESC_SLEEP    = float(cfg.get("DESC_SLEEP", "2.0"))
-# Pausa iniziale randomizzata per evitare thundering herd con più worker paralleli
-# Ogni worker aspetta un offset casuale 0-WORKER_STAGGER secondi prima di iniziare
+DB_TIMEOUT = 30
+DB_RETRIES = 6
+DESC_RETRIES = int(cfg.get("DESC_RETRIES", "3"))
+DESC_SLEEP = float(cfg.get("DESC_SLEEP", "2.0"))
 WORKER_STAGGER = float(cfg.get("WORKER_STAGGER", "3.0"))
 
-GREEN  = "\033[32m"
-WHITE  = "\033[97m"
+GREEN = "\033[32m"
+WHITE = "\033[97m"
 YELLOW = "\033[33m"
-RED    = "\033[31m"
-RESET  = "\033[0m"
+RED = "\033[31m"
+RESET = "\033[0m"
 
 
 def _ts() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-def log_run(msg):  print(f"{WHITE}[{_ts()}] [RUN]  {msg}{RESET}", flush=True)
-def log_ok(msg):   print(f"{GREEN}[{_ts()}] [OK]   {msg}{RESET}", flush=True)
-def log_warn(msg): print(f"{YELLOW}[{_ts()}] [WARN] {msg}{RESET}", file=sys.stderr, flush=True)
-def log_err(msg):  print(f"{RED}[{_ts()}] [ERR]  {msg}{RESET}", file=sys.stderr, flush=True)
-def log_skip(msg): print(f"{YELLOW}[{_ts()}] [SKIP] {msg}{RESET}", flush=True)
+
+def log_run(msg):
+    print(f"{WHITE}[{_ts()}] [RUN]  {msg}{RESET}", flush=True)
+
+
+def log_ok(msg):
+    print(f"{GREEN}[{_ts()}] [OK]   {msg}{RESET}", flush=True)
+
+
+def log_warn(msg):
+    print(f"{YELLOW}[{_ts()}] [WARN] {msg}{RESET}", file=sys.stderr, flush=True)
+
+
+def log_err(msg):
+    print(f"{RED}[{_ts()}] [ERR]  {msg}{RESET}", file=sys.stderr, flush=True)
+
+
+def log_skip(msg):
+    print(f"{YELLOW}[{_ts()}] [SKIP] {msg}{RESET}", flush=True)
 
 
 def db_connect() -> sqlite3.Connection:
@@ -91,7 +88,6 @@ def already_has_description(asset_id: int) -> bool:
 
 
 def get_file_info(asset_id: int):
-    """Ritorna (absolute_path, media_kind) oppure (None, None)."""
     conn = db_connect()
     try:
         row = conn.execute(
@@ -117,7 +113,7 @@ def write_description(asset_id: int, desc: str) -> None:
             conn = db_connect()
             try:
                 with conn:
-                    conn.execute(
+                    cur = conn.execute(
                         """
                         INSERT INTO ai_descriptions
                             (asset_id, model, language, description, created_at)
@@ -126,19 +122,16 @@ def write_description(asset_id: int, desc: str) -> None:
                         """,
                         (asset_id, OLLAMA_MODEL, LANGUAGE, desc),
                     )
+                    desc_id = cur.lastrowid
+
                     conn.execute(
                         """
                         UPDATE assets
-                        SET ai_description_id = (
-                                SELECT id FROM ai_descriptions
-                                WHERE asset_id = ?
-                                ORDER BY created_at DESC
-                                LIMIT 1
-                            ),
+                        SET ai_description_id = ?,
                             updated_at = strftime('%s','now')
                         WHERE id = ?
                         """,
-                        (asset_id, asset_id),
+                        (desc_id, asset_id),
                     )
             finally:
                 conn.close()
@@ -146,7 +139,9 @@ def write_description(asset_id: int, desc: str) -> None:
         except sqlite3.OperationalError as exc:
             if "locked" in str(exc).lower() and attempt < DB_RETRIES - 1:
                 wait = 0.3 * (2 ** attempt)
-                log_warn(f"asset_id={asset_id} DB locked, retry {attempt+1}/{DB_RETRIES} tra {wait:.1f}s")
+                log_warn(
+                    f"asset_id={asset_id} DB locked, retry {attempt+1}/{DB_RETRIES} tra {wait:.1f}s"
+                )
                 time.sleep(wait)
             else:
                 raise
@@ -167,12 +162,12 @@ def call_ollama(abs_path: str):
 
 
 def call_ollama_with_retry(abs_path: str) -> str:
-    last_rc     = 0
+    last_rc = 0
     last_stderr = ""
 
     for attempt in range(1, DESC_RETRIES + 1):
         stdout, rc, stderr = call_ollama(abs_path)
-        last_rc     = rc
+        last_rc = rc
         last_stderr = stderr
 
         if rc == 0 and stdout:
@@ -185,17 +180,15 @@ def call_ollama_with_retry(abs_path: str) -> str:
         if stderr:
             log_warn(f"stderr: {stderr}")
 
-        # rc=1 con "unknown format" = Ollama non supporta questo tipo di file
-        # Non ha senso riprovare — interrompi subito
-        if rc == 1 and ("unknown format" in stderr or "unknown format" in stdout):
+        if rc == 1 and ("unknown format" in stderr.lower() or "unknown format" in stdout.lower()):
             log_err(f"Ollama non supporta il formato: {abs_path} — skip permanente")
             return ""
 
-        # rc=7 = Ollama non raggiungibile, rc=52 = risposta vuota (sovraccarico)
-        # Backoff più lungo per dare tempo a Ollama di recuperare
         if rc in (7, 52):
             wait = DESC_SLEEP * (3 ** (attempt - 1))
-            log_warn(f"Ollama irraggiungibile (rc={rc}), attendo {wait:.1f}s prima del prossimo tentativo...")
+            log_warn(
+                f"Ollama irraggiungibile (rc={rc}), attendo {wait:.1f}s prima del prossimo tentativo..."
+            )
             time.sleep(wait)
         elif attempt < DESC_RETRIES:
             time.sleep(DESC_SLEEP * attempt)
@@ -207,8 +200,6 @@ def call_ollama_with_retry(abs_path: str) -> str:
 
 
 def process(asset_id: int) -> None:
-    # Stagger casuale per distribuire il carico tra worker paralleli
-    import random
     time.sleep(random.uniform(0, WORKER_STAGGER))
 
     if already_has_description(asset_id):
@@ -224,9 +215,10 @@ def process(asset_id: int) -> None:
         log_err(f"asset_id={asset_id} file non esistente: {abs_path}")
         return
 
-    # FIX: skip video — Ollama vision accetta solo immagini statiche
     if media_kind == "video" or is_video_file(abs_path):
-        log_skip(f"asset_id={asset_id} è un video, descrizione AI non supportata: {os.path.basename(abs_path)}")
+        log_skip(
+            f"asset_id={asset_id} è un video, descrizione AI non supportata: {os.path.basename(abs_path)}"
+        )
         return
 
     log_run(f"asset_id={asset_id} -> {os.path.basename(abs_path)}")
@@ -250,9 +242,11 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print(f"Uso: {sys.argv[0]} <asset_id>", file=sys.stderr)
         sys.exit(1)
+
     try:
         aid = int(sys.argv[1])
     except ValueError:
         print(f"Errore: asset_id deve essere un intero, ricevuto: {sys.argv[1]}", file=sys.stderr)
         sys.exit(1)
+
     process(aid)

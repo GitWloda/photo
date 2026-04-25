@@ -1,1 +1,0 @@
-ALTER TABLE assets ADD COLUMN media_kind TEXT NOT NULL DEFAULT 'image';

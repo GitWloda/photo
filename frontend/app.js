@@ -1,15 +1,18 @@
 (function () {
   const galleryEl = document.getElementById("gallery");
   const emptyStateEl = document.getElementById("empty-state");
-  const detailPanelEl = document.getElementById("detail-panel");
   const detailContentEl = document.getElementById("detail-content");
   const searchForm = document.getElementById("search-form");
   const searchInput = document.getElementById("search-input");
   const clearSearchBtn = document.getElementById("clear-search");
 
   let currentItems = [];
+  let currentPage = 1;
+  let currentLimit = 100;
+  let currentQuery = "";
+  let hasMore = false;
+  let totalItems = 0;
 
-  // FIX #8: helper escape HTML per evitare rendering corrotto su nomi con caratteri speciali
   const esc = (s) =>
     String(s)
       .replace(/&/g, "&amp;")
@@ -23,6 +26,45 @@
       throw new Error(`HTTP ${res.status}`);
     }
     return res.json();
+  }
+
+  function ensurePaginationEl() {
+    let el = document.getElementById("pagination");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "pagination";
+      el.className = "pagination";
+      galleryEl.parentElement.appendChild(el);
+    }
+    return el;
+  }
+
+  function renderPagination() {
+    const el = ensurePaginationEl();
+    el.innerHTML = "";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "← Precedente";
+    prevBtn.disabled = currentPage <= 1;
+    prevBtn.addEventListener("click", async () => {
+      await loadPage(currentPage - 1, currentQuery);
+    });
+
+    const info = document.createElement("span");
+    const start = totalItems === 0 ? 0 : (currentPage - 1) * currentLimit + 1;
+    const end = Math.min(currentPage * currentLimit, totalItems);
+    info.textContent = `Pagina ${currentPage} • ${start}-${end} di ${totalItems}`;
+
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Successiva →";
+    nextBtn.disabled = !hasMore;
+    nextBtn.addEventListener("click", async () => {
+      await loadPage(currentPage + 1, currentQuery);
+    });
+
+    el.appendChild(prevBtn);
+    el.appendChild(info);
+    el.appendChild(nextBtn);
   }
 
   function renderGallery(items) {
@@ -42,7 +84,6 @@
       card.className = "card";
       card.dataset.id = item.id;
 
-      // FIX #5: usa <video> per i video, <img> per le immagini
       let thumb;
       if (item.media_kind === "video") {
         thumb = document.createElement("video");
@@ -81,26 +122,18 @@
   }
 
   function renderMetadataTable(metadata) {
-    if (!metadata || typeof metadata !== "object") {
-      return "";
-    }
-
+    if (!metadata || typeof metadata !== "object") return "";
     const keys = Object.keys(metadata);
-    if (keys.length === 0) {
-      return "";
-    }
+    if (keys.length === 0) return "";
 
     const primary = ["Make", "Model", "LensModel", "CreateDate", "ISO", "FNumber", "ExposureTime"];
     const sorted = [
       ...primary.filter((k) => Object.prototype.hasOwnProperty.call(metadata, k)),
-      ...keys
-        .filter((k) => !primary.includes(k))
-        .sort((a, b) => a.localeCompare(b)),
+      ...keys.filter((k) => !primary.includes(k)).sort((a, b) => a.localeCompare(b)),
     ];
 
     const rows = sorted.map(
-      (key) =>
-        `<tr><th>${esc(key)}</th><td>${esc(String(metadata[key]))}</td></tr>`
+      (key) => `<tr><th>${esc(key)}</th><td>${esc(String(metadata[key]))}</td></tr>`
     );
 
     return `
@@ -116,6 +149,7 @@
     detailContentEl.innerHTML = `<p class="placeholder">Caricamento dettagli...</p>`;
     try {
       const data = await fetchJSON(`/media/${id}`);
+
       const chips = [];
       if (data.ai_description && data.ai_description.model) {
         chips.push(`Modello AI: ${esc(data.ai_description.model)}`);
@@ -129,7 +163,6 @@
 
       const metaTable = renderMetadataTable(data.metadata);
 
-      // FIX #5: mostra <video controls> per i video, <img> per le immagini
       const mediaTag =
         data.media_kind === "video"
           ? `<video class="detail-image" src="${esc(data.file_url)}" controls></video>`
@@ -142,9 +175,7 @@
 
         ${
           chips.length
-            ? `<div class="chip-row">${chips
-                .map((c) => `<span class="chip">${c}</span>`)
-                .join("")}</div>`
+            ? `<div class="chip-row">${chips.map((c) => `<span class="chip">${c}</span>`).join("")}</div>`
             : ""
         }
 
@@ -153,11 +184,7 @@
           (data.ai_description && data.ai_description.text) || "Nessuna descrizione disponibile."
         )}</p>
 
-        ${
-          metaTable
-            ? `<h3 class="detail-section-title">Metadati</h3>${metaTable}`
-            : ""
-        }
+        ${metaTable ? `<h3 class="detail-section-title">Metadati</h3>${metaTable}` : ""}
       `;
     } catch (err) {
       console.error(err);
@@ -166,12 +193,24 @@
     }
   }
 
+  async function loadPage(page = 1, q = "") {
+    const url = q
+      ? `/search?q=${encodeURIComponent(q)}&page=${page}&limit=${currentLimit}`
+      : `/media?page=${page}&limit=${currentLimit}`;
+
+    const data = await fetchJSON(url);
+    currentPage = data.page || 1;
+    hasMore = !!data.has_more;
+    totalItems = data.total || 0;
+    renderGallery(data.items || []);
+    renderPagination();
+  }
+
   async function loadInitial() {
     try {
-      const items = await fetchJSON("/media");
-      renderGallery(items);
-      if (items.length > 0) {
-        openDetail(items[0].id);
+      await loadPage(1, "");
+      if (currentItems.length > 0) {
+        openDetail(currentItems[0].id);
       }
     } catch (err) {
       console.error(err);
@@ -183,11 +222,9 @@
 
   searchForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const q = searchInput.value.trim();
-    const url = q ? `/search?q=${encodeURIComponent(q)}` : "/media";
+    currentQuery = searchInput.value.trim();
     try {
-      const items = await fetchJSON(url);
-      renderGallery(items);
+      await loadPage(1, currentQuery);
       detailContentEl.innerHTML =
         '<p class="placeholder">Seleziona una foto per vedere i dettagli.</p>';
     } catch (err) {
@@ -197,9 +234,9 @@
 
   clearSearchBtn.addEventListener("click", async () => {
     searchInput.value = "";
+    currentQuery = "";
     try {
-      const items = await fetchJSON("/media");
-      renderGallery(items);
+      await loadPage(1, "");
       detailContentEl.innerHTML =
         '<p class="placeholder">Seleziona una foto per vedere i dettagli.</p>';
     } catch (err) {
@@ -207,6 +244,5 @@
     }
   });
 
-  // FIX #1: rimosso DOMContentLoaded (già nel body, DOM è pronto) — chiamata diretta
   loadInitial();
 })();

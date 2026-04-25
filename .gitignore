@@ -1,0 +1,7 @@
+gallerydb*
+*.db
+thumbnails/
+thumbs/
+**/thumbnails/
+**/thumbs/
+**/*thumb*

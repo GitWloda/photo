@@ -1,0 +1,8 @@
+# Dipendenze Python runtime — tutte stdlib, nessun pacchetto esterno.
+# Dipendenze di sistema richieste (non-Python):
+#   ffmpeg        >= 4.x   (thumbnail video)
+#   imagemagick   >= 7.x   (thumbnail immagini: 'convert')
+#   exiftool      >= 12.x  (estrazione metadati)
+#   gnu-parallel  >= 20.x  (parallelizzazione worker AI)
+#   ollama        >= 0.3   (inference AI locale)
+#   sqlite3       >= 3.35  (incluso in Python 3.9+)

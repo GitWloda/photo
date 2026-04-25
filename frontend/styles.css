@@ -299,3 +299,31 @@ body {
   font-size: 0.8rem;
   color: #6b7280;
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  background: #1f2937;
+  color: #fff;
+  border: 1px solid #374151;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #cbd5e1;
+  font-size: 14px;
+}

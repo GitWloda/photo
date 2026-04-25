@@ -1,0 +1,15 @@
+[project]
+name = "photo-gallery"
+version = "0.1.0"
+description = "Gallery fotografica locale con AI descriptions via Ollama"
+requires-python = ">=3.9"
+dependencies = []   # solo stdlib
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
