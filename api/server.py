@@ -2,17 +2,31 @@
 import json
 import mimetypes
 import os
+import re
 import sqlite3
 import sys
 import urllib.parse
 from datetime import datetime
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from lib.config import ROOT_DIR, load_env_into_os
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ENV_FILE = os.path.join(ROOT_DIR, "config", "app.env")
 
-load_env_into_os()
+
+def load_env_file(path: str) -> None:
+    if not os.path.isfile(path):
+        return
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            os.environ[key.strip()] = value.strip().strip('"').strip("'")
+
+
+load_env_file(ENV_FILE)
 
 DB_PATH = os.environ.get("DB_PATH", os.path.join(ROOT_DIR, "db", "gallery.db"))
 PHOTO_ROOT = os.environ.get("PHOTO_ROOT", os.path.expanduser("~/Pictures"))
@@ -55,7 +69,6 @@ def get_db_connection():
         raise sqlite3.OperationalError(f"DB directory non trovata: {db_dir}")
     if not os.path.exists(DB_PATH):
         raise sqlite3.OperationalError(f"DB file non trovato: {DB_PATH}")
-
     conn = sqlite3.connect(DB_PATH, timeout=15)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
@@ -76,13 +89,13 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 
 
 class GalleryHandler(BaseHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"
+
     def log_message(self, format, *args):
         try:
             status = int(args[1]) if len(args) >= 2 else None
             msg = "%s - - [%s] %s" % (
-                self.address_string(),
-                self.log_date_time_string(),
-                format % args,
+                self.address_string(), self.log_date_time_string(), format % args
             )
             if status and status >= 500:
                 log_err(msg)
@@ -93,22 +106,74 @@ class GalleryHandler(BaseHTTPRequestHandler):
         except Exception:
             log_warn(f"log_message fallback: {format % args}")
 
+    def _write_safely(self, data: bytes) -> bool:
+        try:
+            self.wfile.write(data)
+            return True
+        except (BrokenPipeError, ConnectionResetError, OSError):
+            return False
+
     def _send_json(self, obj, status=200):
         data = json.dumps(obj, ensure_ascii=False).encode("utf-8")
-        self.send_response(status)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Length", str(len(data)))
-        self.end_headers()
-        self.wfile.write(data)
+        try:
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self._write_safely(data)
+        except (BrokenPipeError, ConnectionResetError, OSError):
+            return
 
     def _handle_db_error(self, exc):
         log_err(str(exc))
         self._send_json({"error": str(exc), "db_path": DB_PATH}, status=500)
 
-    def _send_file(self, path, content_type=None, status=200):
+    def _parse_range_header(self, range_header: str, file_size: int):
+        if not range_header or not range_header.startswith("bytes="):
+            return None
+
+        m = re.match(r"bytes=(\d*)-(\d*)$", range_header.strip())
+        if not m:
+            return "invalid"
+
+        start_s, end_s = m.groups()
+
+        if start_s == "" and end_s == "":
+            return "invalid"
+
+        if start_s == "":
+            suffix_len = int(end_s)
+            if suffix_len <= 0:
+                return "invalid"
+            if suffix_len > file_size:
+                suffix_len = file_size
+            start = file_size - suffix_len
+            end = file_size - 1
+            return (start, end)
+
+        start = int(start_s)
+
+        if start >= file_size:
+            return "invalid"
+
+        if end_s == "":
+            end = file_size - 1
+        else:
+            end = int(end_s)
+            if end < start:
+                return "invalid"
+            if end >= file_size:
+                end = file_size - 1
+
+        return (start, end)
+
+    def _send_file(self, path, content_type=None):
         if not os.path.isfile(path):
             log_warn(f"file non trovato: {path}")
-            self.send_error(404, "File not found")
+            try:
+                self.send_error(404, "File not found")
+            except (BrokenPipeError, ConnectionResetError, OSError):
+                pass
             return
 
         if content_type is None:
@@ -119,83 +184,66 @@ class GalleryHandler(BaseHTTPRequestHandler):
         try:
             file_size = os.path.getsize(path)
         except OSError:
-            log_err(f"impossibile stat file: {path}")
-            self.send_error(500, "Cannot stat file")
+            log_err(f"impossibile leggere size file: {path}")
+            try:
+                self.send_error(500, "Cannot stat file")
+            except (BrokenPipeError, ConnectionResetError, OSError):
+                pass
             return
 
         range_header = self.headers.get("Range")
-        if range_header:
+        byte_range = self._parse_range_header(range_header, file_size)
+
+        if byte_range == "invalid":
+            log_warn(f"Range non valido '{range_header}' su {path}")
             try:
-                unit, rng = range_header.strip().split("=", 1)
-                if unit != "bytes":
-                    raise ValueError("unsupported range unit")
-
-                start_str, end_str = rng.split("-", 1)
-
-                if start_str == "" and end_str == "":
-                    raise ValueError("invalid empty range")
-
-                if start_str == "":
-                    suffix_len = int(end_str)
-                    if suffix_len <= 0:
-                        raise ValueError("invalid suffix length")
-                    start = max(file_size - suffix_len, 0)
-                    end = file_size - 1
-                else:
-                    start = int(start_str)
-                    end = int(end_str) if end_str else file_size - 1
-
-                if start < 0 or end < start or start >= file_size:
-                    raise ValueError("range out of bounds")
-
-                end = min(end, file_size - 1)
-                length = end - start + 1
-
-                self.send_response(206)
-                self.send_header("Content-Type", content_type)
-                self.send_header("Content-Length", str(length))
-                self.send_header("Content-Range", f"bytes {start}-{end}/{file_size}")
-                self.send_header("Accept-Ranges", "bytes")
-                self.end_headers()
-
-                with open(path, "rb") as f:
-                    f.seek(start)
-                    remaining = length
-                    chunk_size = 64 * 1024
-                    while remaining > 0:
-                        chunk = f.read(min(chunk_size, remaining))
-                        if not chunk:
-                            break
-                        self.wfile.write(chunk)
-                        remaining -= len(chunk)
-                return
-
-            except Exception as exc:
-                log_warn(f"Range non valido '{range_header}' su {path}: {exc}")
-                self.send_response(416)
+                self.send_response(416, "Requested Range Not Satisfiable")
                 self.send_header("Content-Range", f"bytes */{file_size}")
+                self.send_header("Content-Length", "0")
                 self.end_headers()
-                return
+            except (BrokenPipeError, ConnectionResetError, OSError):
+                pass
+            return
+
+        if byte_range is None:
+            start = 0
+            end = file_size - 1
+            status = 200
+        else:
+            start, end = byte_range
+            status = 206
+
+        content_length = end - start + 1
 
         try:
             self.send_response(status)
             self.send_header("Content-Type", content_type)
-            self.send_header("Content-Length", str(file_size))
             self.send_header("Accept-Ranges", "bytes")
+            self.send_header("Content-Length", str(content_length))
+            if status == 206:
+                self.send_header("Content-Range", f"bytes {start}-{end}/{file_size}")
             self.end_headers()
+        except (BrokenPipeError, ConnectionResetError, OSError):
+            return
 
+        try:
             with open(path, "rb") as f:
-                while True:
-                    chunk = f.read(64 * 1024)
+                f.seek(start)
+                remaining = content_length
+                chunk_size = 64 * 1024
+
+                while remaining > 0:
+                    chunk = f.read(min(chunk_size, remaining))
                     if not chunk:
                         break
-                    self.wfile.write(chunk)
-        except OSError:
-            log_err(f"impossibile leggere file: {path}")
-            if not self.wfile.closed:
-                self.send_error(500, "Cannot read file")
-        except BrokenPipeError:
-            log_warn(f"client disconnected durante invio file: {path}")
+                    if not self._write_safely(chunk):
+                        return
+                    remaining -= len(chunk)
+        except (BrokenPipeError, ConnectionResetError):
+            return
+        except OSError as exc:
+            log_warn(f"Errore I/O durante stream di {path}: {exc}")
+            return
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
@@ -226,7 +274,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
             full = _safe_path(PHOTO_ROOT, rel)
             if full is None:
                 log_warn(f"path traversal bloccato: {rel}")
-                self.send_error(403, "Forbidden")
+                try:
+                    self.send_error(403, "Forbidden")
+                except (BrokenPipeError, ConnectionResetError, OSError):
+                    pass
                 return
             return self._send_file(full)
 
@@ -235,7 +286,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
             full = _safe_path(THUMB_DIR, rel)
             if full is None:
                 log_warn(f"path traversal bloccato (thumb): {rel}")
-                self.send_error(403, "Forbidden")
+                try:
+                    self.send_error(403, "Forbidden")
+                except (BrokenPipeError, ConnectionResetError, OSError):
+                    pass
                 return
             return self._send_file(full)
 
@@ -248,18 +302,26 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 return self.handle_media_detail(parts[1])
 
         if path == "/search":
-            return self.handle_search(query)
+            return self.handle_search(query.get("q", [""])[0])
 
         log_warn(f"route non trovata: {path}")
-        self.send_error(404, "Not found")
+        try:
+            self.send_error(404, "Not found")
+        except (BrokenPipeError, ConnectionResetError, OSError):
+            pass
 
     def handle_media_list(self, query):
         try:
             page = max(1, int(query.get("page", ["1"])[0]))
-            limit = max(1, min(500, int(query.get("limit", ["100"])[0])))
         except ValueError:
-            return self._send_json({"error": "page/limit non validi"}, status=400)
+            page = 1
 
+        try:
+            limit = int(query.get("limit", ["100"])[0])
+        except ValueError:
+            limit = 100
+
+        limit = max(1, min(limit, 500))
         offset = (page - 1) * limit
 
         try:
@@ -268,8 +330,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self._handle_db_error(exc)
 
         try:
-            total = conn.execute("SELECT COUNT(*) AS cnt FROM assets").fetchone()["cnt"]
-
+            total = conn.execute("SELECT COUNT(*) AS c FROM assets").fetchone()["c"]
             rows = conn.execute(
                 """
                 SELECT assets.id AS asset_id,
@@ -311,11 +372,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
 
         self._send_json(
             {
-                "items": items,
                 "page": page,
                 "limit": limit,
                 "total": total,
-                "has_more": offset + len(items) < total,
+                "items": items,
             }
         )
 
@@ -323,7 +383,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
         try:
             asset_id = int(id_str)
         except ValueError:
-            self.send_error(400, "Invalid id")
+            try:
+                self.send_error(400, "Invalid id")
+            except (BrokenPipeError, ConnectionResetError, OSError):
+                pass
             return
 
         try:
@@ -339,7 +402,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
                        assets.media_kind,
                        asset_files.filename,
                        asset_files.relative_path,
-                       asset_files.absolute_path,
                        asset_files.sha256,
                        asset_files.metadata_json,
                        asset_files.size_bytes,
@@ -360,7 +422,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
             conn.close()
 
         if row is None:
-            self.send_error(404, "Media not found")
+            try:
+                self.send_error(404, "Media not found")
+            except (BrokenPipeError, ConnectionResetError, OSError):
+                pass
             return
 
         rel = urllib.parse.quote(row["relative_path"], safe="/")
@@ -384,32 +449,22 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 "filename": row["filename"],
                 "file_url": furl,
                 "thumb_url": turl,
-                "absolute_path": row["absolute_path"],
                 "sha256": row["sha256"],
                 "metadata": metadata,
                 "size_bytes": row["size_bytes"],
                 "mtime": row["mtime"],
-                "ai_description": {
-                    "text": row["description"] or "",
-                    "model": row["model"] or "",
-                    "language": row["language"] or "",
-                    "created_at": row["description_created_at"],
-                },
+                "description": row["description"] or "",
+                "model": row["model"],
+                "language": row["language"],
+                "description_created_at": row["description_created_at"],
             }
         )
 
-    def handle_search(self, query):
-        q = (query.get("q", [""])[0] or "").strip()
+    def handle_search(self, q):
+        q = (q or "").strip()
         if not q:
-            return self.handle_media_list(query)
+            return self._send_json({"query": "", "items": []})
 
-        try:
-            page = max(1, int(query.get("page", ["1"])[0]))
-            limit = max(1, min(500, int(query.get("limit", ["100"])[0])))
-        except ValueError:
-            return self._send_json({"error": "page/limit non validi"}, status=400)
-
-        offset = (page - 1) * limit
         pattern = f"%{q}%"
 
         try:
@@ -418,23 +473,9 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self._handle_db_error(exc)
 
         try:
-            total = conn.execute(
-                """
-                SELECT COUNT(DISTINCT assets.id) AS cnt
-                FROM assets
-                JOIN asset_files ON asset_files.asset_id = assets.id
-                LEFT JOIN ai_descriptions ON ai_descriptions.id = assets.ai_description_id
-                WHERE asset_files.filename LIKE ?
-                   OR (ai_descriptions.description IS NOT NULL
-                       AND ai_descriptions.description LIKE ?)
-                """,
-                (pattern, pattern),
-            ).fetchone()["cnt"]
-
             rows = conn.execute(
                 """
-                SELECT DISTINCT
-                       assets.id AS asset_id,
+                SELECT assets.id AS asset_id,
                        assets.media_kind,
                        asset_files.filename,
                        asset_files.relative_path,
@@ -444,12 +485,11 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 JOIN asset_files ON asset_files.asset_id = assets.id
                 LEFT JOIN ai_descriptions ON ai_descriptions.id = assets.ai_description_id
                 WHERE asset_files.filename LIKE ?
-                   OR (ai_descriptions.description IS NOT NULL
-                       AND ai_descriptions.description LIKE ?)
+                   OR ai_descriptions.description LIKE ?
                 ORDER BY assets.created_at DESC
-                LIMIT ? OFFSET ?
+                LIMIT 100
                 """,
-                (pattern, pattern, limit, offset),
+                (pattern, pattern),
             ).fetchall()
         finally:
             conn.close()
@@ -474,34 +514,25 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 }
             )
 
-        self._send_json(
-            {
-                "items": items,
-                "page": page,
-                "limit": limit,
-                "total": total,
-                "has_more": offset + len(items) < total,
-                "query": q,
-            }
-        )
+        self._send_json({"query": q, "items": items})
 
 
-def run():
+def main():
     log_run(f"ROOT_DIR={ROOT_DIR}")
     log_run(f"DB_PATH={DB_PATH} exists={os.path.exists(DB_PATH)}")
     log_run(f"PHOTO_ROOT={PHOTO_ROOT}")
     log_run(f"THUMB_DIR={THUMB_DIR}")
+
     server = ThreadedHTTPServer((HOST, PORT), GalleryHandler)
     log_run(f"Server in ascolto su http://{HOST}:{PORT}")
     log_run("Ctrl+C per interrompere.")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        log_warn("Arresto server richiesto da tastiera.")
+        log_warn("Interrotto da tastiera.")
     finally:
         server.server_close()
-        log_run("Server chiuso.")
 
 
 if __name__ == "__main__":
-    run()
+    main()

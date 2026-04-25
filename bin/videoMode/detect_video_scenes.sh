@@ -34,10 +34,12 @@ DURATION_SEC="$(awk -v d="$DURATION_RAW" 'BEGIN { printf "%d", d + 0.5 }')"
 
 FPS_VALUE="2"
 if (( DURATION_SEC < 15 )); then
-  FPS_VALUE="8"
+  FPS_VALUE="10"
 elif (( DURATION_SEC < 30 )); then
-  FPS_VALUE="6"
+  FPS_VALUE="8"
 elif (( DURATION_SEC < 60 )); then
+  FPS_VALUE="6"
+elif (( DURATION_SEC < 300 )); then
   FPS_VALUE="4"
 fi
 

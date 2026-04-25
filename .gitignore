@@ -2,6 +2,8 @@ gallerydb*
 *.db
 thumbnails/
 thumbs/
+work/
+**/work/
 **/thumbnails/
 **/thumbs/
 **/*thumb*
