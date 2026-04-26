@@ -3988,3 +3988,101 @@
 [2026-04-25 21:46:42] [RUN]  Avvio 8 worker IA su 7 asset...
 [2026-04-25 21:46:59] [OK]   Elaborazione IA completata (7 asset processati).
 [2026-04-25 21:46:59] [OK]   Update DB completato.
+[2026-04-26 13:42:15] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 13:42:15] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 13:42:15] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 13:42:15] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 13:42:15] cleanup_deleted: Pulizia completata.
+[2026-04-26 13:42:15] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 13:42:16] [OK]   Scansione filesystem completata.
+[2026-04-26 13:42:16] [RUN]  Avvio 8 worker IA su 4 asset...
+[2026-04-26 13:42:44] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 13:42:44] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 13:42:44] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 13:42:44] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 13:42:44] cleanup_deleted: Pulizia completata.
+[2026-04-26 13:42:44] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 13:42:44] [OK]   Scansione filesystem completata.
+[2026-04-26 13:42:44] [RUN]  Avvio 8 worker IA su 4 asset...
+[2026-04-26 13:42:46] [OK]   Elaborazione IA completata (4 asset processati).
+[2026-04-26 13:42:46] [OK]   Update DB completato.
+[2026-04-26 13:44:09] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 13:44:09] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 13:44:09] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 13:44:09] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 13:44:09] cleanup_deleted: Pulizia completata.
+[2026-04-26 13:44:09] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 13:44:10] [OK]   Scansione filesystem completata.
+[2026-04-26 13:44:10] [RUN]  Avvio 8 worker IA su 4 asset...
+[2026-04-26 13:44:12] [OK]   Elaborazione IA completata (4 asset processati).
+[2026-04-26 13:44:12] [OK]   Update DB completato.
+[2026-04-26 13:49:26] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 13:49:26] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 13:49:26] cleanup_deleted: File mancante: id=250 asset_id=251 path=/home/wloda/Downloads/foto/Pinched.mp4
+[2026-04-26 13:49:26] cleanup_deleted: File mancante: id=364 asset_id=368 path=/home/wloda/Downloads/foto/PXL_20250812_122658490.TS.mp4
+[2026-04-26 13:49:26] cleanup_deleted: File mancante: id=365 asset_id=369 path=/home/wloda/Downloads/foto/asd/f1057820192.jpg
+[2026-04-26 13:49:26] cleanup_deleted: File mancante: id=366 asset_id=370 path=/home/wloda/Downloads/foto/asd/f94636360.jpg
+[2026-04-26 13:49:26] cleanup_deleted: File mancante: id=367 asset_id=371 path=/home/wloda/Downloads/foto/asd/f1007606640.jpg
+[2026-04-26 13:49:26] cleanup_deleted: Rimuovo 250,364,365,366,367 da asset_files (batch)...
+[2026-04-26 13:49:26] cleanup_deleted: Rimuovo 5 asset orfani (senza asset_files)...
+[2026-04-26 13:49:26] cleanup_deleted: Pulizia completata.
+[2026-04-26 13:49:26] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 13:49:27] [OK]   Scansione filesystem completata.
+[2026-04-26 13:49:27] [RUN]  Avvio 8 worker IA su 2 asset...
+[2026-04-26 13:49:29] [OK]   Elaborazione IA completata (2 asset processati).
+[2026-04-26 13:49:29] [OK]   Update DB completato.
+[2026-04-26 13:49:32] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 13:49:32] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 13:49:32] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 13:49:32] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 13:49:32] cleanup_deleted: Pulizia completata.
+[2026-04-26 13:49:32] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 13:49:32] [OK]   Scansione filesystem completata.
+[2026-04-26 13:49:32] [RUN]  Avvio 8 worker IA su 2 asset...
+[2026-04-26 13:49:35] [OK]   Elaborazione IA completata (2 asset processati).
+[2026-04-26 13:49:35] [OK]   Update DB completato.
+[2026-04-26 13:52:34] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 13:52:34] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 13:52:34] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 13:52:34] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 13:52:34] cleanup_deleted: Pulizia completata.
+[2026-04-26 13:52:34] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 13:52:34] [OK]   Scansione filesystem completata.
+[2026-04-26 13:52:34] [RUN]  Avvio 8 worker IA su 2 asset...
+[2026-04-26 13:52:35] [OK]   Elaborazione IA completata (2 asset processati).
+[2026-04-26 13:52:35] [OK]   Update DB completato.
+[2026-04-26 14:03:12] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 14:03:12] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 14:03:12] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 14:03:12] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 14:03:12] cleanup_deleted: Pulizia completata.
+[2026-04-26 14:03:12] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 14:03:12] [OK]   Scansione filesystem completata.
+[2026-04-26 14:03:12] [RUN]  Avvio 8 worker IA su 2 asset...
+[2026-04-26 14:03:13] [OK]   Elaborazione IA completata (2 asset processati).
+[2026-04-26 14:03:13] [OK]   Update DB completato.
+[2026-04-26 14:06:52] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 14:06:52] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 14:06:52] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 14:06:52] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 14:06:52] cleanup_deleted: Pulizia completata.
+[2026-04-26 14:06:52] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 14:06:52] [OK]   Nuovo file: /home/wloda/Downloads/foto/PXL_20250812_122658490.TS.mp4
+[2026-04-26 14:06:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/Pinched.mp4
+[2026-04-26 14:06:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/asd/f1057820192.jpg
+[2026-04-26 14:06:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/asd/f94636360.jpg
+[2026-04-26 14:06:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/asd/f1007606640.jpg
+[2026-04-26 14:06:54] [OK]   Scansione filesystem completata.
+[2026-04-26 14:06:54] [RUN]  Avvio 8 worker IA su 7 asset...
+[2026-04-26 14:07:21] [OK]   Elaborazione IA completata (7 asset processati).
+[2026-04-26 14:07:21] [OK]   Update DB completato.
+[2026-04-26 14:35:49] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-26 14:35:49] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-26 14:35:49] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-26 14:35:49] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-26 14:35:49] cleanup_deleted: Pulizia completata.
+[2026-04-26 14:35:49] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-26 14:35:50] [OK]   Scansione filesystem completata.
+[2026-04-26 14:35:50] [RUN]  Avvio 8 worker IA su 4 asset...
+[2026-04-26 14:35:52] [OK]   Elaborazione IA completata (4 asset processati).
+[2026-04-26 14:35:52] [OK]   Update DB completato.
