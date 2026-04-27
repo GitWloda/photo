@@ -275,6 +275,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self.handle_media_list(query)
         if path == "/filters":
             return self.handle_filters()
+        if path == "/albums":
+            return self.handle_albums()
         if path.startswith("/media/"):
             parts = path.strip("/").split("/")
             if len(parts) == 2:
@@ -287,6 +289,72 @@ class GalleryHandler(BaseHTTPRequestHandler):
             self.send_error(404, "Not found")
         except (BrokenPipeError, ConnectionResetError, OSError):
             pass
+
+    # ------------------------------------------------------------------
+    def handle_albums(self):
+        """Return folders as albums with count, cover thumb, and last modified."""
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
+        try:
+            # Get all relative paths to compute folder groupings
+            rows = conn.execute(
+                """
+                SELECT
+                    asset_files.relative_path,
+                    asset_files.thumb_path,
+                    asset_files.mtime,
+                    assets.media_kind
+                FROM asset_files
+                JOIN assets ON assets.id = asset_files.asset_id
+                WHERE asset_files.relative_path IS NOT NULL
+                  AND asset_files.relative_path <> ''
+                ORDER BY asset_files.relative_path ASC
+                """
+            ).fetchall()
+        finally:
+            conn.close()
+
+        # Build albums by grouping on the parent folder (first path component or full rsplit)
+        albums = {}
+        for r in rows:
+            rel = (r["relative_path"] or "").strip()
+            if "/" not in rel:
+                folder = "(radice)"
+            else:
+                folder = rel.rsplit("/", 1)[0]
+
+            if folder not in albums:
+                albums[folder] = {
+                    "folder": folder,
+                    "count": 0,
+                    "cover_thumb": None,
+                    "cover_file": None,
+                    "last_mtime": None,
+                }
+
+            albums[folder]["count"] += 1
+
+            # Use first image as cover (prefer image over video)
+            if albums[folder]["cover_thumb"] is None or r["media_kind"] == "image":
+                if albums[folder]["cover_thumb"] is None:
+                    tp = r["thumb_path"]
+                    rel_enc = urllib.parse.quote(r["relative_path"], safe="/")
+                    furl = f"/files/{rel_enc}"
+                    turl = (f"/thumbs/{urllib.parse.quote(tp, safe='/')}" if tp else furl)
+                    albums[folder]["cover_thumb"] = turl
+                    albums[folder]["cover_file"] = furl
+
+            # Track last modification time
+            mtime = r["mtime"]
+            if mtime and (albums[folder]["last_mtime"] is None or mtime > albums[folder]["last_mtime"]):
+                albums[folder]["last_mtime"] = mtime
+
+        # Sort albums by folder name
+        result = sorted(albums.values(), key=lambda a: a["folder"].casefold())
+        self._send_json(result)
 
     # ------------------------------------------------------------------
     def handle_media_list(self, query):
@@ -488,8 +556,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
                    WHERE instr(filename,'.') > 0
                    ORDER BY value COLLATE NOCASE ASC"""
             ).fetchall()
-            # reverse() non e' disponibile in tutte le build di SQLite:
-            # recuperiamo tutti i percorsi distinti e calcoliamo la cartella padre lato Python.
             all_path_rows = conn.execute(
                 "SELECT DISTINCT relative_path FROM asset_files "
                 "WHERE relative_path IS NOT NULL AND relative_path <> ''"
