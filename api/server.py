@@ -429,10 +429,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 "mtime":         r["mtime"],
                 "extension":     ext_value,
                 "metadata": {
-                    "Make":     metadata.get("Make"),
-                    "Model":    metadata.get("Model"),
-                    "CameraID": metadata.get("CameraID"),
-                    "LensModel":metadata.get("LensModel"),
+                    "Make":      metadata.get("Make"),
+                    "Model":     metadata.get("Model"),
+                    "CameraID":  metadata.get("CameraID"),
+                    "LensModel": metadata.get("LensModel"),
                 },
             })
 
@@ -488,14 +488,11 @@ class GalleryHandler(BaseHTTPRequestHandler):
                    WHERE instr(filename,'.') > 0
                    ORDER BY value COLLATE NOCASE ASC"""
             ).fetchall()
-            folder_rows = conn.execute(
-                """SELECT DISTINCT
-                       CASE WHEN instr(relative_path,'/') > 0
-                            THEN substr(relative_path,1,length(relative_path)-instr(reverse(relative_path),'/'))
-                            ELSE '' END AS value
-                   FROM asset_files
-                   WHERE relative_path IS NOT NULL AND relative_path <> ''
-                   ORDER BY value COLLATE NOCASE ASC"""
+            # reverse() non e' disponibile in tutte le build di SQLite:
+            # recuperiamo tutti i percorsi distinti e calcoliamo la cartella padre lato Python.
+            all_path_rows = conn.execute(
+                "SELECT DISTINCT relative_path FROM asset_files "
+                "WHERE relative_path IS NOT NULL AND relative_path <> ''"
             ).fetchall()
         finally:
             conn.close()
@@ -509,6 +506,19 @@ class GalleryHandler(BaseHTTPRequestHandler):
                     out.append(v)
             return out
 
+        def extract_folders(rows):
+            seen, out = set(), []
+            for row in rows:
+                path = (row["relative_path"] or "").strip()
+                if "/" not in path:
+                    continue
+                folder = path.rsplit("/", 1)[0].strip()
+                if folder and folder not in seen:
+                    seen.add(folder)
+                    out.append(folder)
+            out.sort(key=str.casefold)
+            return out
+
         self._send_json({
             "make":       clean(make_rows),
             "model":      clean(model_rows),
@@ -517,7 +527,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
             "ai_model":   clean(ai_model_rows),
             "media_kind": clean(media_kind_rows),
             "extension":  clean(ext_rows),
-            "folder":     clean(folder_rows),
+            "folder":     extract_folders(all_path_rows),
             "sort": [
                 {"value": "created_desc", "label": "Data inserimento \u2193"},
                 {"value": "created_asc",  "label": "Data inserimento \u2191"},
