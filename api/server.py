@@ -84,6 +84,11 @@ def _safe_path(base: str, rel: str):
     return full
 
 
+def _json_extract_expr(key: str) -> str:
+    safe_key = key.replace("'", "''")
+    return f"json_extract(asset_files.metadata_json, '$.{safe_key}')"
+
+
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
 
@@ -131,31 +136,22 @@ class GalleryHandler(BaseHTTPRequestHandler):
     def _parse_range_header(self, range_header: str, file_size: int):
         if not range_header or not range_header.startswith("bytes="):
             return None
-
         m = re.match(r"bytes=(\d*)-(\d*)$", range_header.strip())
         if not m:
             return "invalid"
-
         start_s, end_s = m.groups()
-
         if start_s == "" and end_s == "":
             return "invalid"
-
         if start_s == "":
             suffix_len = int(end_s)
             if suffix_len <= 0:
                 return "invalid"
             if suffix_len > file_size:
                 suffix_len = file_size
-            start = file_size - suffix_len
-            end = file_size - 1
-            return (start, end)
-
+            return (file_size - suffix_len, file_size - 1)
         start = int(start_s)
-
         if start >= file_size:
             return "invalid"
-
         if end_s == "":
             end = file_size - 1
         else:
@@ -164,7 +160,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 return "invalid"
             if end >= file_size:
                 end = file_size - 1
-
         return (start, end)
 
     def _send_file(self, path, content_type=None):
@@ -175,12 +170,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
             except (BrokenPipeError, ConnectionResetError, OSError):
                 pass
             return
-
         if content_type is None:
             content_type, _ = mimetypes.guess_type(path)
         if content_type is None:
             content_type = "application/octet-stream"
-
         try:
             file_size = os.path.getsize(path)
         except OSError:
@@ -190,10 +183,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
             except (BrokenPipeError, ConnectionResetError, OSError):
                 pass
             return
-
         range_header = self.headers.get("Range")
         byte_range = self._parse_range_header(range_header, file_size)
-
         if byte_range == "invalid":
             log_warn(f"Range non valido '{range_header}' su {path}")
             try:
@@ -204,17 +195,12 @@ class GalleryHandler(BaseHTTPRequestHandler):
             except (BrokenPipeError, ConnectionResetError, OSError):
                 pass
             return
-
         if byte_range is None:
-            start = 0
-            end = file_size - 1
-            status = 200
+            start, end, status = 0, file_size - 1, 200
         else:
             start, end = byte_range
             status = 206
-
         content_length = end - start + 1
-
         try:
             self.send_response(status)
             self.send_header("Content-Type", content_type)
@@ -225,13 +211,11 @@ class GalleryHandler(BaseHTTPRequestHandler):
             self.end_headers()
         except (BrokenPipeError, ConnectionResetError, OSError):
             return
-
         try:
             with open(path, "rb") as f:
                 f.seek(start)
                 remaining = content_length
                 chunk_size = 64 * 1024
-
                 while remaining > 0:
                     chunk = f.read(min(chunk_size, remaining))
                     if not chunk:
@@ -243,7 +227,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return
         except OSError as exc:
             log_warn(f"Errore I/O durante stream di {path}: {exc}")
-            return
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
@@ -256,19 +239,16 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 os.path.join(ROOT_DIR, "frontend", "index.html"),
                 "text/html; charset=utf-8",
             )
-
         if path == "/app.js":
             return self._send_file(
                 os.path.join(ROOT_DIR, "frontend", "app.js"),
                 "application/javascript; charset=utf-8",
             )
-
         if path == "/styles.css":
             return self._send_file(
                 os.path.join(ROOT_DIR, "frontend", "styles.css"),
                 "text/css; charset=utf-8",
             )
-
         if path.startswith("/files/"):
             rel = urllib.parse.unquote(path[len("/files/"):])
             full = _safe_path(PHOTO_ROOT, rel)
@@ -280,7 +260,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
                     pass
                 return
             return self._send_file(full)
-
         if path.startswith("/thumbs/"):
             rel = urllib.parse.unquote(path[len("/thumbs/"):])
             full = _safe_path(THUMB_DIR, rel)
@@ -292,15 +271,14 @@ class GalleryHandler(BaseHTTPRequestHandler):
                     pass
                 return
             return self._send_file(full)
-
         if path == "/media":
             return self.handle_media_list(query)
-
+        if path == "/filters":
+            return self.handle_filters()
         if path.startswith("/media/"):
             parts = path.strip("/").split("/")
             if len(parts) == 2:
                 return self.handle_media_detail(parts[1])
-
         if path == "/search":
             return self.handle_search(query.get("q", [""])[0])
 
@@ -310,19 +288,85 @@ class GalleryHandler(BaseHTTPRequestHandler):
         except (BrokenPipeError, ConnectionResetError, OSError):
             pass
 
+    # ------------------------------------------------------------------
     def handle_media_list(self, query):
         try:
             page = max(1, int(query.get("page", ["1"])[0]))
         except ValueError:
             page = 1
-
         try:
             limit = int(query.get("limit", ["100"])[0])
         except ValueError:
             limit = 100
-
         limit = max(1, min(limit, 500))
         offset = (page - 1) * limit
+
+        q          = (query.get("q",          [""])[0] or "").strip()
+        make       = (query.get("make",       [""])[0] or "").strip()
+        model      = (query.get("model",      [""])[0] or "").strip()
+        camera_id  = (query.get("camera_id",  [""])[0] or "").strip()
+        lens_model = (query.get("lens_model", [""])[0] or "").strip()
+        ai_model   = (query.get("ai_model",   [""])[0] or "").strip()
+        media_kind = (query.get("media_kind", [""])[0] or "").strip().lower()
+        ext        = (query.get("ext",        [""])[0] or "").strip().lstrip(".").lower()
+        folder     = (query.get("folder",     [""])[0] or "").strip()
+        sort       = (query.get("sort",       ["created_desc"])[0] or "created_desc").strip()
+
+        where_clauses = []
+        params = []
+
+        if q:
+            pattern = f"%{q}%"
+            where_clauses.append(
+                "(asset_files.filename LIKE ? OR ai_descriptions.description LIKE ? OR asset_files.relative_path LIKE ?)"
+            )
+            params.extend([pattern, pattern, pattern])
+
+        if make:
+            where_clauses.append(f"COALESCE({_json_extract_expr('Make')}, '') = ?")
+            params.append(make)
+        if model:
+            where_clauses.append(f"COALESCE({_json_extract_expr('Model')}, '') = ?")
+            params.append(model)
+        if camera_id:
+            where_clauses.append(f"COALESCE({_json_extract_expr('CameraID')}, '') = ?")
+            params.append(camera_id)
+        if lens_model:
+            where_clauses.append(f"COALESCE({_json_extract_expr('LensModel')}, '') = ?")
+            params.append(lens_model)
+        if ai_model:
+            where_clauses.append("COALESCE(ai_descriptions.model, '') = ?")
+            params.append(ai_model)
+        if media_kind in ("image", "video"):
+            where_clauses.append("LOWER(COALESCE(assets.media_kind, 'image')) = ?")
+            params.append(media_kind)
+        if ext:
+            where_clauses.append("LOWER(asset_files.filename) LIKE ?")
+            params.append(f"%.{ext}")
+        if folder:
+            where_clauses.append("asset_files.relative_path LIKE ?")
+            params.append(f"{folder}%")
+
+        where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
+
+        order_map = {
+            "created_desc": "assets.created_at DESC, assets.id DESC",
+            "created_asc":  "assets.created_at ASC,  assets.id ASC",
+            "mtime_desc":   "asset_files.mtime DESC, assets.id DESC",
+            "mtime_asc":    "asset_files.mtime ASC,  assets.id ASC",
+            "size_desc":    "asset_files.size_bytes DESC, assets.id DESC",
+            "size_asc":     "asset_files.size_bytes ASC,  assets.id ASC",
+            "name_asc":     "asset_files.filename COLLATE NOCASE ASC,  assets.id ASC",
+            "name_desc":    "asset_files.filename COLLATE NOCASE DESC, assets.id DESC",
+        }
+        order_sql = order_map.get(sort, order_map["created_desc"])
+
+        base_from = f"""
+            FROM assets
+            JOIN asset_files ON asset_files.asset_id = assets.id
+            LEFT JOIN ai_descriptions ON ai_descriptions.id = assets.ai_description_id
+            {where_sql}
+        """
 
         try:
             conn = get_db_connection()
@@ -330,55 +374,163 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self._handle_db_error(exc)
 
         try:
-            total = conn.execute("SELECT COUNT(*) AS c FROM assets").fetchone()["c"]
-            rows = conn.execute(
-                """
+            total = conn.execute(f"SELECT COUNT(*) AS c {base_from}", params).fetchone()["c"]
+            rows  = conn.execute(
+                f"""
                 SELECT assets.id AS asset_id,
+                       assets.title,
                        assets.media_kind,
+                       assets.created_at,
+                       assets.updated_at,
                        asset_files.filename,
                        asset_files.relative_path,
                        asset_files.thumb_path,
-                       ai_descriptions.description
-                FROM assets
-                JOIN asset_files ON asset_files.asset_id = assets.id
-                LEFT JOIN ai_descriptions ON ai_descriptions.id = assets.ai_description_id
-                ORDER BY assets.created_at DESC
+                       asset_files.metadata_json,
+                       asset_files.size_bytes,
+                       asset_files.mtime,
+                       ai_descriptions.description,
+                       ai_descriptions.model,
+                       ai_descriptions.language
+                {base_from}
+                ORDER BY {order_sql}
                 LIMIT ? OFFSET ?
                 """,
-                (limit, offset),
+                (*params, limit, offset),
             ).fetchall()
         finally:
             conn.close()
 
         items = []
         for r in rows:
-            rel = urllib.parse.quote(r["relative_path"], safe="/")
+            rel  = urllib.parse.quote(r["relative_path"], safe="/")
             furl = f"/files/{rel}"
-            turl = (
-                f"/thumbs/{urllib.parse.quote(r['thumb_path'], safe='/')}"
-                if r["thumb_path"]
-                else furl
-            )
-            items.append(
-                {
-                    "id": r["asset_id"],
-                    "media_kind": r["media_kind"] or "image",
-                    "filename": r["filename"],
-                    "file_url": furl,
-                    "thumb_url": turl,
-                    "description": r["description"] or "",
-                }
-            )
+            turl = (f"/thumbs/{urllib.parse.quote(r['thumb_path'], safe='/')}" if r["thumb_path"] else furl)
+            try:
+                metadata = json.loads(r["metadata_json"]) if r["metadata_json"] else {}
+            except Exception:
+                metadata = {}
+            parent_folder = r["relative_path"].rsplit("/", 1)[0] if r["relative_path"] and "/" in r["relative_path"] else ""
+            ext_value     = r["filename"].rsplit(".", 1)[-1].lower() if r["filename"] and "." in r["filename"] else ""
+            items.append({
+                "id":            r["asset_id"],
+                "title":         r["title"],
+                "media_kind":    r["media_kind"] or "image",
+                "filename":      r["filename"],
+                "relative_path": r["relative_path"],
+                "parent_folder": parent_folder,
+                "file_url":      furl,
+                "thumb_url":     turl,
+                "description":   r["description"] or "",
+                "ai_model":      r["model"],
+                "language":      r["language"],
+                "size_bytes":    r["size_bytes"],
+                "created_at":    r["created_at"],
+                "updated_at":    r["updated_at"],
+                "mtime":         r["mtime"],
+                "extension":     ext_value,
+                "metadata": {
+                    "Make":     metadata.get("Make"),
+                    "Model":    metadata.get("Model"),
+                    "CameraID": metadata.get("CameraID"),
+                    "LensModel":metadata.get("LensModel"),
+                },
+            })
 
-        self._send_json(
-            {
-                "page": page,
-                "limit": limit,
-                "total": total,
-                "items": items,
-            }
-        )
+        total_pages = max(1, (total + limit - 1) // limit)
+        self._send_json({
+            "page":        page,
+            "limit":       limit,
+            "total":       total,
+            "total_pages": total_pages,
+            "sort":        sort,
+            "items":       items,
+        })
 
+    # ------------------------------------------------------------------
+    def handle_filters(self):
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
+        try:
+            make_rows = conn.execute(
+                f"SELECT DISTINCT {_json_extract_expr('Make')} AS value FROM asset_files "
+                f"WHERE COALESCE({_json_extract_expr('Make')},'') <> '' ORDER BY value COLLATE NOCASE ASC"
+            ).fetchall()
+            model_rows = conn.execute(
+                f"SELECT DISTINCT {_json_extract_expr('Model')} AS value FROM asset_files "
+                f"WHERE COALESCE({_json_extract_expr('Model')},'') <> '' ORDER BY value COLLATE NOCASE ASC"
+            ).fetchall()
+            camera_id_rows = conn.execute(
+                f"SELECT DISTINCT {_json_extract_expr('CameraID')} AS value FROM asset_files "
+                f"WHERE COALESCE({_json_extract_expr('CameraID')},'') <> '' ORDER BY value COLLATE NOCASE ASC"
+            ).fetchall()
+            lens_rows = conn.execute(
+                f"SELECT DISTINCT {_json_extract_expr('LensModel')} AS value FROM asset_files "
+                f"WHERE COALESCE({_json_extract_expr('LensModel')},'') <> '' ORDER BY value COLLATE NOCASE ASC"
+            ).fetchall()
+            ai_model_rows = conn.execute(
+                "SELECT DISTINCT model AS value FROM ai_descriptions "
+                "WHERE COALESCE(model,'') <> '' ORDER BY value COLLATE NOCASE ASC"
+            ).fetchall()
+            media_kind_rows = conn.execute(
+                "SELECT DISTINCT COALESCE(media_kind,'image') AS value FROM assets "
+                "WHERE COALESCE(media_kind,'') <> '' ORDER BY value COLLATE NOCASE ASC"
+            ).fetchall()
+            ext_rows = conn.execute(
+                """SELECT DISTINCT LOWER(
+                       CASE WHEN instr(filename,'.') > 0
+                            THEN substr(filename, instr(filename,'.')+1)
+                            ELSE '' END
+                   ) AS value
+                   FROM asset_files
+                   WHERE instr(filename,'.') > 0
+                   ORDER BY value COLLATE NOCASE ASC"""
+            ).fetchall()
+            folder_rows = conn.execute(
+                """SELECT DISTINCT
+                       CASE WHEN instr(relative_path,'/') > 0
+                            THEN substr(relative_path,1,length(relative_path)-instr(reverse(relative_path),'/'))
+                            ELSE '' END AS value
+                   FROM asset_files
+                   WHERE relative_path IS NOT NULL AND relative_path <> ''
+                   ORDER BY value COLLATE NOCASE ASC"""
+            ).fetchall()
+        finally:
+            conn.close()
+
+        def clean(rows):
+            seen, out = set(), []
+            for row in rows:
+                v = (row["value"] or "").strip()
+                if v and v not in seen:
+                    seen.add(v)
+                    out.append(v)
+            return out
+
+        self._send_json({
+            "make":       clean(make_rows),
+            "model":      clean(model_rows),
+            "camera_id":  clean(camera_id_rows),
+            "lens_model": clean(lens_rows),
+            "ai_model":   clean(ai_model_rows),
+            "media_kind": clean(media_kind_rows),
+            "extension":  clean(ext_rows),
+            "folder":     clean(folder_rows),
+            "sort": [
+                {"value": "created_desc", "label": "Data inserimento \u2193"},
+                {"value": "created_asc",  "label": "Data inserimento \u2191"},
+                {"value": "mtime_desc",   "label": "Data file \u2193"},
+                {"value": "mtime_asc",    "label": "Data file \u2191"},
+                {"value": "size_desc",    "label": "Peso \u2193"},
+                {"value": "size_asc",     "label": "Peso \u2191"},
+                {"value": "name_asc",     "label": "Nome A-Z"},
+                {"value": "name_desc",    "label": "Nome Z-A"},
+            ],
+        })
+
+    # ------------------------------------------------------------------
     def handle_media_detail(self, id_str):
         try:
             asset_id = int(id_str)
@@ -428,93 +580,44 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 pass
             return
 
-        rel = urllib.parse.quote(row["relative_path"], safe="/")
+        rel  = urllib.parse.quote(row["relative_path"], safe="/")
         furl = f"/files/{rel}"
-        turl = (
-            f"/thumbs/{urllib.parse.quote(row['thumb_path'], safe='/')}"
-            if row["thumb_path"]
-            else furl
-        )
+        turl = (f"/thumbs/{urllib.parse.quote(row['thumb_path'], safe='/')}" if row["thumb_path"] else furl)
 
         try:
             metadata = json.loads(row["metadata_json"]) if row["metadata_json"] else {}
         except Exception:
             metadata = {}
 
-        self._send_json(
-            {
-                "id": row["asset_id"],
-                "title": row["title"],
-                "media_kind": row["media_kind"] or "image",
-                "filename": row["filename"],
-                "file_url": furl,
-                "thumb_url": turl,
-                "sha256": row["sha256"],
-                "metadata": metadata,
-                "size_bytes": row["size_bytes"],
-                "mtime": row["mtime"],
-                "description": row["description"] or "",
-                "model": row["model"],
-                "language": row["language"],
-                "description_created_at": row["description_created_at"],
-            }
-        )
+        parent_folder = row["relative_path"].rsplit("/", 1)[0] if row["relative_path"] and "/" in row["relative_path"] else ""
+        ext_value     = row["filename"].rsplit(".", 1)[-1].lower() if row["filename"] and "." in row["filename"] else ""
 
+        self._send_json({
+            "id":            row["asset_id"],
+            "title":         row["title"],
+            "media_kind":    row["media_kind"] or "image",
+            "filename":      row["filename"],
+            "relative_path": row["relative_path"],
+            "parent_folder": parent_folder,
+            "file_url":      furl,
+            "thumb_url":     turl,
+            "sha256":        row["sha256"],
+            "metadata":      metadata,
+            "size_bytes":    row["size_bytes"],
+            "mtime":         row["mtime"],
+            "extension":     ext_value,
+            "description":   row["description"] or "",
+            "model":         row["model"],
+            "language":      row["language"],
+            "description_created_at": row["description_created_at"],
+        })
+
+    # ------------------------------------------------------------------
     def handle_search(self, q):
         q = (q or "").strip()
         if not q:
             return self._send_json({"query": "", "items": []})
-
-        pattern = f"%{q}%"
-
-        try:
-            conn = get_db_connection()
-        except sqlite3.OperationalError as exc:
-            return self._handle_db_error(exc)
-
-        try:
-            rows = conn.execute(
-                """
-                SELECT assets.id AS asset_id,
-                       assets.media_kind,
-                       asset_files.filename,
-                       asset_files.relative_path,
-                       asset_files.thumb_path,
-                       ai_descriptions.description
-                FROM assets
-                JOIN asset_files ON asset_files.asset_id = assets.id
-                LEFT JOIN ai_descriptions ON ai_descriptions.id = assets.ai_description_id
-                WHERE asset_files.filename LIKE ?
-                   OR ai_descriptions.description LIKE ?
-                ORDER BY assets.created_at DESC
-                LIMIT 100
-                """,
-                (pattern, pattern),
-            ).fetchall()
-        finally:
-            conn.close()
-
-        items = []
-        for r in rows:
-            rel = urllib.parse.quote(r["relative_path"], safe="/")
-            furl = f"/files/{rel}"
-            turl = (
-                f"/thumbs/{urllib.parse.quote(r['thumb_path'], safe='/')}"
-                if r["thumb_path"]
-                else furl
-            )
-            items.append(
-                {
-                    "id": r["asset_id"],
-                    "media_kind": r["media_kind"] or "image",
-                    "filename": r["filename"],
-                    "file_url": furl,
-                    "thumb_url": turl,
-                    "description": r["description"] or "",
-                }
-            )
-
-        self._send_json({"query": q, "items": items})
+        return self.handle_media_list({"q": [q], "page": ["1"], "limit": ["100"]})
 
 
 def main():
