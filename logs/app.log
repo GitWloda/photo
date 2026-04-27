@@ -532,3 +532,50 @@
 [2026-04-27 18:39:13] cleanup_deleted: Nessun asset orfano trovato.
 [2026-04-27 18:39:13] cleanup_deleted: Pulizia completata.
 [2026-04-27 18:39:13] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 21:04:37] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-27 21:04:37] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-27 21:04:37] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-27 21:04:37] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-27 21:04:37] cleanup_deleted: Pulizia completata.
+[2026-04-27 21:04:37] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 21:04:52] [OK]   Scansione filesystem completata.
+[2026-04-27 21:04:52] [RUN]  Avvio 8 worker IA su 139 asset...
+[2026-04-27 21:05:15] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-27 21:05:15] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-27 21:05:15] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-27 21:05:15] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-27 21:05:15] cleanup_deleted: Pulizia completata.
+[2026-04-27 21:05:15] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 21:05:28] [OK]   Scansione filesystem completata.
+[2026-04-27 21:05:28] [RUN]  Avvio 8 worker IA su 139 asset...
+[2026-04-27 21:27:20] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-27 21:27:20] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-27 21:27:20] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-27 21:27:20] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-27 21:27:20] cleanup_deleted: Pulizia completata.
+[2026-04-27 21:27:20] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 21:27:23] [WARN] Duplicato SHA256 trovato: '/home/wloda/Downloads/foto/tutto/f1057820192.jpg' -> asset_id=95
+[2026-04-27 21:27:25] [WARN] Duplicato SHA256 trovato: '/home/wloda/Downloads/foto/tutto/f94636360.jpg' -> asset_id=96
+[2026-04-27 21:27:29] [WARN] Duplicato SHA256 trovato: '/home/wloda/Downloads/foto/tutto/f1007606640.jpg' -> asset_id=97
+[2026-04-27 21:27:30] [WARN] Duplicato SHA256 trovato: '/home/wloda/Downloads/foto/asd/PC270057.JPG' -> asset_id=128
+[2026-04-27 21:27:30] [WARN] Duplicato SHA256 trovato: '/home/wloda/Downloads/foto/asd/PC280062.JPG' -> asset_id=129
+[2026-04-27 21:27:35] [OK]   Scansione filesystem completata.
+[2026-04-27 21:27:35] [RUN]  Avvio 8 worker IA su 127 asset...
+[2026-04-27 21:37:28] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-27 21:37:28] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-27 21:37:28] cleanup_deleted: File mancante: id=95 asset_id=95 path=/home/wloda/Downloads/foto/asd/f1057820192.jpg
+[2026-04-27 21:37:28] cleanup_deleted: Rimuovo 95 da asset_files (batch)...
+[2026-04-27 21:37:28] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-27 21:37:28] cleanup_deleted: Pulizia completata.
+[2026-04-27 21:37:28] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 21:37:42] [OK]   Scansione filesystem completata.
+[2026-04-27 21:37:42] [RUN]  Avvio 8 worker IA su 111 asset...
+[2026-04-27 21:38:15] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-27 21:38:15] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-27 21:38:15] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-27 21:38:15] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-27 21:38:15] cleanup_deleted: Pulizia completata.
+[2026-04-27 21:38:15] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 21:38:26] [WARN] Duplicato SHA256 trovato: '/home/wloda/Downloads/foto/asd/f1057820192.png' -> asset_id=95
+[2026-04-27 21:38:32] [OK]   Scansione filesystem completata.
+[2026-04-27 21:38:32] [RUN]  Avvio 8 worker IA su 110 asset...

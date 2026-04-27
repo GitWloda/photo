@@ -104,10 +104,6 @@ get_size_mtime() {
   fi
 }
 
-# ---------------------------------------------------------------------------
-# generate_thumb: immagini con convert, video con ffmpeg (frame al secondo 5)
-# Timeout 30s su entrambi per evitare blocchi su file corrotti/grandi.
-# ---------------------------------------------------------------------------
 generate_thumb() {
   local file="$1"
   local asset_id="$2"
@@ -116,7 +112,6 @@ generate_thumb() {
 
   case "$lc_file" in
     *.mp4|*.mov|*.avi|*.mkv|*.webm)
-      # Usa ffmpeg: estrae frame al 5° secondo (o al primo se il video è più corto)
       if command -v ffmpeg >/dev/null 2>&1; then
         if timeout 30 ffmpeg -y \
             -ss 00:00:05 \
@@ -128,7 +123,6 @@ generate_thumb() {
           echo "${asset_id}.jpg"
           return 0
         fi
-        # Fallback: prende il primo frame se ss=5 fallisce (video < 5s)
         if timeout 30 ffmpeg -y \
             -i "$file" \
             -vframes 1 \
@@ -143,7 +137,6 @@ generate_thumb() {
       fi
       ;;
     *)
-      # Immagini: usa convert con timeout
       if command -v convert >/dev/null 2>&1; then
         if timeout 30 convert "$file" \
             -auto-orient \
@@ -160,9 +153,6 @@ generate_thumb() {
   echo ""
 }
 
-# ---------------------------------------------------------------------------
-# Funzioni SQL a livello top-level (fix: heredoc dentro $() causa parse error)
-# ---------------------------------------------------------------------------
 _sql_insert_asset() {
   local ef="$1" emk="$2"
   sqlite_batch <<SQL
@@ -215,7 +205,7 @@ SQL
 }
 
 # ---------------------------------------------------------------------------
-# process_file
+# process_file — con deduplicazione SHA256
 # ---------------------------------------------------------------------------
 process_file() {
   local file="$1"
@@ -247,7 +237,6 @@ process_file() {
   mtime="$(echo "$stat_out" | awk '{print $2}')"
 
   sha256="$("$ROOT_DIR/bin/hash_file.sh" "$file")"
-
   metadata_json="$("$ROOT_DIR/bin/extract_metadata.sh" "$file" || echo '{}')"
 
   local ep er ef esha em emk
@@ -258,24 +247,46 @@ process_file() {
   em=$(printf '%s' "$metadata_json" | sql_escape)
   emk=$(printf '%s' "$media_kind"   | sql_escape)
 
+  # Controlla se il file fisico è già in DB per absolute_path
   local row
   row=$(sqlite_query "SELECT id, sha256, mtime, asset_id FROM asset_files WHERE absolute_path = '$ep';")
 
   if [ -z "$row" ]; then
-    log_ok "Nuovo file: $abs_path"
+    # ── FILE NUOVO ──
+    # Cerca se esiste già un asset_files con lo stesso SHA256 (duplicato)
+    local existing_asset_id
+    existing_asset_id=$(sqlite_query "SELECT asset_id FROM asset_files WHERE sha256 = '$esha' LIMIT 1;")
 
-    local asset_id
-    asset_id="$(_sql_insert_asset "$ef" "$emk" | tail -n 1)"
+    if [ -n "$existing_asset_id" ]; then
+      # Duplicato trovato: collega al medesimo asset, non creare un nuovo asset
+      log_warn "Duplicato SHA256 trovato: '$abs_path' -> asset_id=$existing_asset_id"
 
-    local thumb_rel ethumb
-    thumb_rel="$(generate_thumb "$file" "$asset_id")"
-    ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
+      # Usa la thumb già esistente dell'asset (non rigenera)
+      local existing_thumb
+      existing_thumb=$(sqlite_query "SELECT thumb_path FROM asset_files WHERE asset_id = $existing_asset_id AND thumb_path != '' LIMIT 1;")
+      local ethumb_dup
+      ethumb_dup=$(printf '%s' "$existing_thumb" | sql_escape)
 
-    _sql_insert_file "$asset_id" "$ep" "$er" "$ef" "$esha" "$em" "$size_bytes" "$mtime" "$ethumb" >/dev/null
+      _sql_insert_file "$existing_asset_id" "$ep" "$er" "$ef" "$esha" "$em" "$size_bytes" "$mtime" "$ethumb_dup" >/dev/null
+      # Non emettere asset_id: la descrizione AI esiste già
+    else
+      # File realmente nuovo: crea asset + asset_file
+      log_ok "Nuovo file: $abs_path"
 
-    echo "$asset_id"
+      local asset_id
+      asset_id="$(_sql_insert_asset "$ef" "$emk" | tail -n 1)"
+
+      local thumb_rel ethumb
+      thumb_rel="$(generate_thumb "$file" "$asset_id")"
+      ethumb=$(printf '%s' "$thumb_rel" | sql_escape)
+
+      _sql_insert_file "$asset_id" "$ep" "$er" "$ef" "$esha" "$em" "$size_bytes" "$mtime" "$ethumb" >/dev/null
+
+      echo "$asset_id"
+    fi
 
   else
+    # ── FILE GIÀ IN DB ── controlla se è cambiato
     local file_id old_sha old_mtime asset_id
     file_id=$(echo "$row" | awk -F'|' '{print $1}')
     old_sha=$(echo "$row" | awk -F'|' '{print $2}')

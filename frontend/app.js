@@ -119,7 +119,10 @@
       document.body.classList.remove("detail-open-mobile");
       detailBackdropEl?.classList.remove("open");
     }
+<<<<<<< HEAD
     // aggiorna stato pulsanti prev/next nella toolbar
+=======
+>>>>>>> 24e029d (deduplicazione)
     updateNavButtons();
   }
 
@@ -128,11 +131,19 @@
     if (clearSel) { selectedId = null; updateSelectedCards(); }
   }
 
+<<<<<<< HEAD
   /* ─── Nav buttons (toolbar del detail pane) ─────────────── */
 
   function updateNavButtons() {
     if (!detailPrev || !detailNext) return;
     const idx = getSelectedIndex();
+=======
+  /* ─── Nav buttons ────────────────────────────────────────── */
+
+  function updateNavButtons() {
+    if (!detailPrev || !detailNext) return;
+    const idx  = getSelectedIndex();
+>>>>>>> 24e029d (deduplicazione)
     const open = detailPane.classList.contains("open");
     detailPrev.disabled = !open || idx <= 0;
     detailNext.disabled = !open || (idx >= currentItems.length - 1 && !hasMore);
@@ -348,9 +359,13 @@
 
   function buildUrl(page) {
     const p = new URLSearchParams();
-    p.set("page", String(page));
+    p.set("page",  String(page));
     p.set("limit", String(PAGE_LIMIT));
+<<<<<<< HEAD
     p.set("sort", state.sort);
+=======
+    p.set("sort",  state.sort);
+>>>>>>> 24e029d (deduplicazione)
     if (state.q)          p.set("q",          state.q);
     if (state.mediaKind)  p.set("media_kind",  state.mediaKind);
     if (state.ext)        p.set("ext",         state.ext);
@@ -366,7 +381,11 @@
   /* ─── Card / tile factories ─────────────────────────────── */
 
   function makeCard(item) {
+<<<<<<< HEAD
     const card   = document.createElement("article");
+=======
+    const card    = document.createElement("article");
+>>>>>>> 24e029d (deduplicazione)
     card.className = "card" + (item.id === selectedId ? " selected" : "");
     card.dataset.id = item.id;
     const isVideo = item.media_kind === "video";
@@ -377,10 +396,24 @@
     const badgeHTML = isVideo
       ? `<span class="card-badge badge-video">VIDEO</span>`
       : `<span class="card-badge">${esc((item.extension || "").toUpperCase())}</span>`;
+<<<<<<< HEAD
     const folderHTML = state.showFolder && item.parent_folder
       ? `<div class="card-folder">📁 ${esc(item.parent_folder)}</div>` : "";
     card.innerHTML = `
       <div class="card-thumb-wrap">${thumbTag}${badgeHTML}</div>
+=======
+
+    // Badge duplicati: visibile solo se ci sono più copie fisiche
+    const dupesCount = item.file_count || 1;
+    const dupesBadge = dupesCount > 1
+      ? `<span class="card-badge badge-dupes" title="${dupesCount} copie identiche (stesso SHA256)">×${dupesCount}</span>`
+      : "";
+
+    const folderHTML = state.showFolder && item.parent_folder
+      ? `<div class="card-folder">📁 ${esc(item.parent_folder)}</div>` : "";
+    card.innerHTML = `
+      <div class="card-thumb-wrap">${thumbTag}${badgeHTML}${dupesBadge}</div>
+>>>>>>> 24e029d (deduplicazione)
       <div class="card-body">
         ${folderHTML}
         <div class="card-name" title="${esc(item.filename)}">${esc(item.filename)}</div>
@@ -406,9 +439,19 @@
     const badgeHTML = isVideo
       ? `<span class="card-badge badge-video">VIDEO</span>`
       : `<span class="card-badge">${esc((item.extension || "").toUpperCase())}</span>`;
+<<<<<<< HEAD
     tile.innerHTML = `
       <div class="group-album-cover">
         ${thumbTag}${badgeHTML}
+=======
+    const dupesCount = item.file_count || 1;
+    const dupesBadge = dupesCount > 1
+      ? `<span class="card-badge badge-dupes" title="${dupesCount} copie">×${dupesCount}</span>`
+      : "";
+    tile.innerHTML = `
+      <div class="group-album-cover">
+        ${thumbTag}${badgeHTML}${dupesBadge}
+>>>>>>> 24e029d (deduplicazione)
         <div class="group-album-overlay">
           <span class="group-album-name">${esc(item.filename)}</span>
         </div>
@@ -662,7 +705,11 @@
     try {
       const data = await api(buildUrl(page));
       if (token !== currentQueryToken) return;
+<<<<<<< HEAD
       const items = data.items || [];
+=======
+      const items       = data.items || [];
+>>>>>>> 24e029d (deduplicazione)
       currentPage       = data.page || page;
       currentTotal      = data.total || 0;
       currentTotalPages = data.total_pages || Math.max(1, Math.ceil(currentTotal / PAGE_LIMIT));
@@ -706,6 +753,7 @@
   /* ─── Detail panel content ──────────────────────────────── */
 
   async function openDetail(id) {
+<<<<<<< HEAD
     selectedId = id;
     updateSelectedCards();
     setDetailOpen(true);
@@ -744,11 +792,140 @@
         .filter(k => meta[k] != null && String(meta[k]).trim())
         .map(k => `<tr><th>${esc(k)}</th><td>${esc(String(meta[k]))}</td></tr>`)
         .join("");
+=======
+  selectedId = id;
+  updateSelectedCards();
+  setDetailOpen(true);
 
+  const detailToken = ++currentDetailToken;
+  detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento…</p></div>`;
+
+  try {
+    const d = await api(`/media/${id}`);
+    if (detailToken !== currentDetailToken) return;
+
+    const files = Array.isArray(d.files) && d.files.length ? d.files : [{
+      id: d.id,
+      filename: d.filename,
+      relative_path: d.relative_path,
+      parent_folder: d.parent_folder,
+      file_url: d.file_url,
+      thumb_url: d.thumb_url,
+      sha256: d.sha256,
+      size_bytes: d.size_bytes,
+      mtime: d.mtime,
+      extension: d.extension,
+      metadata: d.metadata || {},
+    }];
+
+    let activeIndex = 0;
+    let showDuplicates = false;
+
+    function buildFileInfoRows(file) {
+      return [
+        ["Nome", file.filename],
+        ["Estensione", file.extension],
+        ["Cartella", file.parent_folder],
+        ["Percorso", file.relative_path],
+        ["Peso", fmtSize(file.size_bytes)],
+        ["Data file", fmtTs(file.mtime)],
+        ["SHA256", file.sha256],
+      ].filter(r => r[1]).map(r => `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join("");
+    }
+
+    function buildFileExifRows(file) {
+      const meta = file.metadata || {};
+      const exifKeys = [
+        "Make","Model","CameraID","LensModel","CreateDate",
+        "DateTimeOriginal","ISO","FNumber","ExposureTime",
+        "ImageWidth","ImageHeight"
+      ];
+      return [...new Set([...exifKeys, ...Object.keys(meta)])]
+        .filter(k => meta[k] != null && String(meta[k]).trim())
+        .map(k => `<tr><th>${esc(k)}</th><td>${esc(String(meta[k]))}</td></tr>`)
+        .join("");
+    }
+
+    detailContent.innerHTML = `
+      <div class="d-media-block">
+        <div class="d-media"></div>
+
+        ${files.length > 1 ? `
+          <button type="button" class="d-dupes-toggle" aria-expanded="false">
+            <span class="d-dupes-toggle-text">Vedi duplicati</span>
+            <span class="d-dupes-toggle-arrows">⌄⌄</span>
+          </button>
+          <div class="d-dupes-panel hidden"></div>
+        ` : ""}
+
+        <div class="detail-swipe-hint">← Swipe per navigare →</div>
+      </div>
+
+      <div class="d-title"></div>
+      <div class="d-path"></div>
+      <div class="d-chips"></div>
+
+      ${d.description ? `<div class="d-section">Descrizione AI</div><p class="d-desc">${esc(d.description)}</p>` : ""}
+
+      <div class="d-section">Info file</div>
+      <table class="d-table d-table-file"><tbody></tbody></table>
+
+      <div class="d-section d-exif-title hidden">Metadati EXIF</div>
+      <table class="d-table d-table-exif hidden"><tbody></tbody></table>
+    `;
+
+    const mediaEl     = detailContent.querySelector(".d-media");
+    const titleEl     = detailContent.querySelector(".d-title");
+    const pathEl      = detailContent.querySelector(".d-path");
+    const chipsEl     = detailContent.querySelector(".d-chips");
+    const fileBodyEl  = detailContent.querySelector(".d-table-file tbody");
+    const exifTitleEl = detailContent.querySelector(".d-exif-title");
+    const exifTableEl = detailContent.querySelector(".d-table-exif");
+    const exifBodyEl  = detailContent.querySelector(".d-table-exif tbody");
+    const dupesToggle = detailContent.querySelector(".d-dupes-toggle");
+    const dupesPanel  = detailContent.querySelector(".d-dupes-panel");
+
+    function renderActiveFile() {
+      const f = files[activeIndex] || files[0];
       const mediaTag = d.media_kind === "video"
-        ? `<video src="${esc(d.file_url)}" controls preload="metadata" style="width:100%;height:100%;object-fit:contain;"></video>`
-        : `<img src="${esc(d.file_url)}" alt="${esc(d.filename)}" loading="eager" style="width:100%;height:100%;object-fit:contain;">`;
+        ? `<video src="${esc(f.file_url)}" controls preload="metadata" style="width:100%;height:100%;object-fit:contain;"></video>`
+        : `<img src="${esc(f.file_url)}" alt="${esc(f.filename)}" loading="eager" style="width:100%;height:100%;object-fit:contain;">`;
 
+      mediaEl.innerHTML = mediaTag;
+      titleEl.textContent = d.title || f.filename || d.filename || "";
+      pathEl.textContent = f.relative_path || "";
+      pathEl.classList.toggle("hidden", !f.relative_path);
+
+      const chips = [
+        d.media_kind && `Tipo: ${d.media_kind}`,
+        f.extension && `Ext: .${f.extension}`,
+        f.size_bytes != null && `Peso: ${fmtSize(f.size_bytes)}`,
+        f.mtime && `Data: ${fmtTs(f.mtime)}`,
+        d.model && `AI: ${d.model}`,
+        d.language && `Lingua: ${d.language}`,
+        files.length > 1 && `Duplicati: ${files.length}`,
+      ].filter(Boolean);
+
+      chipsEl.innerHTML = chips.map(c => `<span class="d-chip">${esc(c)}</span>`).join("");
+      fileBodyEl.innerHTML = buildFileInfoRows(f);
+
+      const exifRows = buildFileExifRows(f);
+      exifBodyEl.innerHTML = exifRows;
+      exifTitleEl.classList.toggle("hidden", !exifRows);
+      exifTableEl.classList.toggle("hidden", !exifRows);
+>>>>>>> 24e029d (deduplicazione)
+
+      const mediaZone = detailContent.querySelector(".d-media");
+      if (mediaZone && !mediaZone.dataset.swipeBound) {
+        mediaZone.dataset.swipeBound = "1";
+        let sx = 0, sy = 0;
+        mediaZone.addEventListener("touchstart", e => {
+          const t = e.changedTouches[0];
+          sx = t.clientX;
+          sy = t.clientY;
+        }, { passive: true });
+
+<<<<<<< HEAD
       detailContent.innerHTML = `
         <div class="d-media">${mediaTag}</div>
         <div class="detail-swipe-hint">← Swipe per navigare →</div>
@@ -777,8 +954,76 @@
     } catch (e) {
       if (detailToken !== currentDetailToken) return;
       detailContent.innerHTML = `<div class="detail-placeholder"><p>Errore: ${esc(e.message)}</p></div>`;
+=======
+        mediaZone.addEventListener("touchend", e => {
+          const t = e.changedTouches[0];
+          const dx = t.clientX - sx;
+          const dy = t.clientY - sy;
+          if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+          navigateDetail(dx < 0 ? 1 : -1);
+        }, { passive: true });
+      }
     }
+
+    function renderDuplicatesPanel() {
+      if (!dupesPanel) return;
+      dupesPanel.innerHTML = `
+        <div class="d-dupes-grid">
+          ${files.map((f, i) => {
+            const isVideo = d.media_kind === "video";
+            const thumb = f.thumb_url || f.file_url;
+            const thumbTag = isVideo
+              ? `<video class="d-dupe-thumb" src="${esc(thumb)}" preload="metadata" muted playsinline></video>`
+              : `<img class="d-dupe-thumb" src="${esc(thumb)}" alt="${esc(f.filename)}" loading="lazy" decoding="async">`;
+
+            const miniMeta = [
+              f.parent_folder ? `📁 ${f.parent_folder}` : "",
+              fmtSize(f.size_bytes),
+              fmtTs(f.mtime),
+              f.metadata?.Make || "",
+              f.metadata?.Model || "",
+              f.metadata?.LensModel || ""
+            ].filter(Boolean).join(" · ");
+
+            return `
+              <button type="button" class="d-dupe-card ${i === activeIndex ? "active" : ""}" data-file-index="${i}">
+                <div class="d-dupe-thumb-wrap">${thumbTag}</div>
+                <div class="d-dupe-name" title="${esc(f.filename)}">${esc(f.filename)}</div>
+                <div class="d-dupe-path" title="${esc(f.relative_path)}">${esc(f.relative_path)}</div>
+                <div class="d-dupe-meta">${esc(miniMeta)}</div>
+              </button>
+            `;
+          }).join("")}
+        </div>
+      `;
+
+      dupesPanel.querySelectorAll(".d-dupe-card").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeIndex = Number(btn.dataset.fileIndex || 0);
+          renderActiveFile();
+          renderDuplicatesPanel();
+        });
+      });
+>>>>>>> 24e029d (deduplicazione)
+    }
+
+    dupesToggle?.addEventListener("click", () => {
+      showDuplicates = !showDuplicates;
+      dupesPanel.classList.toggle("hidden", !showDuplicates);
+      dupesToggle.setAttribute("aria-expanded", String(showDuplicates));
+      dupesToggle.classList.toggle("open", showDuplicates);
+    });
+
+    renderActiveFile();
+    renderDuplicatesPanel();
+    updateNavButtons();
+  } catch (e) {
+    if (detailToken !== currentDetailToken) return;
+    detailContent.innerHTML = `<div class="detail-placeholder"><p>Errore: ${esc(e.message)}</p></div>`;
   }
+}
+
+  /* ─── Event listeners ───────────────────────────────────── */
 
   /* ─── Event listeners ───────────────────────────────────── */
 
@@ -864,4 +1109,8 @@
 
   init();
 
+<<<<<<< HEAD
 })();
+=======
+})();
+>>>>>>> 24e029d (deduplicazione)

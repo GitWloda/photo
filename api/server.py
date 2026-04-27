@@ -28,11 +28,11 @@ def load_env_file(path: str) -> None:
 
 load_env_file(ENV_FILE)
 
-DB_PATH = os.environ.get("DB_PATH", os.path.join(ROOT_DIR, "db", "gallery.db"))
+DB_PATH    = os.environ.get("DB_PATH",    os.path.join(ROOT_DIR, "db", "gallery.db"))
 PHOTO_ROOT = os.environ.get("PHOTO_ROOT", os.path.expanduser("~/Pictures"))
-THUMB_DIR = os.environ.get("THUMB_DIR", os.path.join(ROOT_DIR, "data", "thumbs"))
-HOST = os.environ.get("HOST", "127.0.0.1")
-PORT = int(os.environ.get("PORT", "8080"))
+THUMB_DIR  = os.environ.get("THUMB_DIR",  os.path.join(ROOT_DIR, "data", "thumbs"))
+HOST       = os.environ.get("HOST", "127.0.0.1")
+PORT       = int(os.environ.get("PORT", "8080"))
 
 if not os.path.isabs(DB_PATH):
     DB_PATH = os.path.abspath(os.path.join(ROOT_DIR, DB_PATH))
@@ -41,26 +41,19 @@ if not os.path.isabs(THUMB_DIR):
     THUMB_DIR = os.path.join(ROOT_DIR, THUMB_DIR)
 THUMB_DIR = os.path.abspath(THUMB_DIR)
 
-WHITE = "\033[97m"
+WHITE  = "\033[97m"
 YELLOW = "\033[33m"
-RED = "\033[31m"
-RESET = "\033[0m"
+RED    = "\033[31m"
+RESET  = "\033[0m"
 
 
 def _ts() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-def log_run(msg):
-    print(f"{WHITE}[{_ts()}] [RUN]  server: {msg}{RESET}", flush=True)
-
-
-def log_warn(msg):
-    print(f"{YELLOW}[{_ts()}] [WARN] server: {msg}{RESET}", flush=True)
-
-
-def log_err(msg):
-    print(f"{RED}[{_ts()}] [ERR]  server: {msg}{RESET}", file=sys.stderr, flush=True)
+def log_run(msg): print(f"{WHITE}[{_ts()}] [RUN]  server: {msg}{RESET}", flush=True)
+def log_warn(msg): print(f"{YELLOW}[{_ts()}] [WARN] server: {msg}{RESET}", flush=True)
+def log_err(msg): print(f"{RED}[{_ts()}] [ERR]  server: {msg}{RESET}", file=sys.stderr, flush=True)
 
 
 def get_db_connection():
@@ -102,12 +95,9 @@ class GalleryHandler(BaseHTTPRequestHandler):
             msg = "%s - - [%s] %s" % (
                 self.address_string(), self.log_date_time_string(), format % args
             )
-            if status and status >= 500:
-                log_err(msg)
-            elif status and status >= 400:
-                log_warn(msg)
-            else:
-                log_run(msg)
+            if status and status >= 500:   log_err(msg)
+            elif status and status >= 400: log_warn(msg)
+            else:                          log_run(msg)
         except Exception:
             log_warn(f"log_message fallback: {format % args}")
 
@@ -230,8 +220,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
-        path = parsed.path
-        query = urllib.parse.parse_qs(parsed.query)
+        path   = parsed.path
+        query  = urllib.parse.parse_qs(parsed.query)
         log_run(f"GET {self.path}")
 
         if path in ("/", "/index.html"):
@@ -250,7 +240,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 "text/css; charset=utf-8",
             )
         if path.startswith("/files/"):
-            rel = urllib.parse.unquote(path[len("/files/"):])
+            rel  = urllib.parse.unquote(path[len("/files/"):])
             full = _safe_path(PHOTO_ROOT, rel)
             if full is None:
                 log_warn(f"path traversal bloccato: {rel}")
@@ -261,7 +251,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 return
             return self._send_file(full)
         if path.startswith("/thumbs/"):
-            rel = urllib.parse.unquote(path[len("/thumbs/"):])
+            rel  = urllib.parse.unquote(path[len("/thumbs/"):])
             full = _safe_path(THUMB_DIR, rel)
             if full is None:
                 log_warn(f"path traversal bloccato (thumb): {rel}")
@@ -301,15 +291,21 @@ class GalleryHandler(BaseHTTPRequestHandler):
             rows = conn.execute(
                 """
                 SELECT
-                    asset_files.relative_path,
-                    asset_files.thumb_path,
-                    asset_files.mtime,
-                    assets.media_kind
-                FROM asset_files
-                JOIN assets ON assets.id = asset_files.asset_id
-                WHERE asset_files.relative_path IS NOT NULL
-                  AND asset_files.relative_path <> ''
-                ORDER BY asset_files.relative_path ASC, asset_files.mtime DESC
+                    af.relative_path,
+                    af.thumb_path,
+                    af.mtime,
+                    a.media_kind
+                FROM (
+                    SELECT asset_id,
+                           MIN(id) AS rep_id
+                    FROM asset_files
+                    GROUP BY asset_id
+                ) AS rep
+                JOIN asset_files af ON af.id = rep.rep_id
+                JOIN assets a ON a.id = af.asset_id
+                WHERE af.relative_path IS NOT NULL
+                  AND af.relative_path <> ''
+                ORDER BY af.relative_path ASC, af.mtime DESC
                 """
             ).fetchall()
         finally:
@@ -325,16 +321,16 @@ class GalleryHandler(BaseHTTPRequestHandler):
 
             if folder not in albums:
                 albums[folder] = {
-                    "folder": folder,
-                    "count": 0,
-                    "thumbs": [],
+                    "folder":     folder,
+                    "count":      0,
+                    "thumbs":     [],
                     "last_mtime": None,
                 }
 
             album = albums[folder]
             album["count"] += 1
 
-            rel_enc = urllib.parse.quote(rel, safe="/")
+            rel_enc  = urllib.parse.quote(rel, safe="/")
             file_url = f"/files/{rel_enc}"
             thumb_url = (
                 f"/thumbs/{urllib.parse.quote(r['thumb_path'], safe='/')}"
@@ -361,7 +357,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
             limit = int(query.get("limit", ["100"])[0])
         except ValueError:
             limit = 100
-        limit = max(1, min(limit, 500))
+        limit  = max(1, min(limit, 500))
         offset = (page - 1) * limit
 
         q          = (query.get("q",          [""])[0] or "").strip()
@@ -381,21 +377,21 @@ class GalleryHandler(BaseHTTPRequestHandler):
         if q:
             pattern = f"%{q}%"
             where_clauses.append(
-                "(asset_files.filename LIKE ? OR ai_descriptions.description LIKE ? OR asset_files.relative_path LIKE ?)"
+                "(rep_af.filename LIKE ? OR ai_descriptions.description LIKE ? OR rep_af.relative_path LIKE ?)"
             )
             params.extend([pattern, pattern, pattern])
 
         if make:
-            where_clauses.append(f"COALESCE({_json_extract_expr('Make')}, '') = ?")
+            where_clauses.append(f"COALESCE(json_extract(rep_af.metadata_json, '$.Make'), '') = ?")
             params.append(make)
         if model:
-            where_clauses.append(f"COALESCE({_json_extract_expr('Model')}, '') = ?")
+            where_clauses.append(f"COALESCE(json_extract(rep_af.metadata_json, '$.Model'), '') = ?")
             params.append(model)
         if camera_id:
-            where_clauses.append(f"COALESCE({_json_extract_expr('CameraID')}, '') = ?")
+            where_clauses.append(f"COALESCE(json_extract(rep_af.metadata_json, '$.CameraID'), '') = ?")
             params.append(camera_id)
         if lens_model:
-            where_clauses.append(f"COALESCE({_json_extract_expr('LensModel')}, '') = ?")
+            where_clauses.append(f"COALESCE(json_extract(rep_af.metadata_json, '$.LensModel'), '') = ?")
             params.append(lens_model)
         if ai_model:
             where_clauses.append("COALESCE(ai_descriptions.model, '') = ?")
@@ -404,10 +400,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
             where_clauses.append("LOWER(COALESCE(assets.media_kind, 'image')) = ?")
             params.append(media_kind)
         if ext:
-            where_clauses.append("LOWER(asset_files.filename) LIKE ?")
+            where_clauses.append("LOWER(rep_af.filename) LIKE ?")
             params.append(f"%.{ext}")
         if folder:
-            where_clauses.append("asset_files.relative_path LIKE ?")
+            where_clauses.append("rep_af.relative_path LIKE ?")
             params.append(f"{folder}%")
 
         where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
@@ -415,18 +411,27 @@ class GalleryHandler(BaseHTTPRequestHandler):
         order_map = {
             "created_desc": "assets.created_at DESC, assets.id DESC",
             "created_asc":  "assets.created_at ASC,  assets.id ASC",
-            "mtime_desc":   "asset_files.mtime DESC, assets.id DESC",
-            "mtime_asc":    "asset_files.mtime ASC,  assets.id ASC",
-            "size_desc":    "asset_files.size_bytes DESC, assets.id DESC",
-            "size_asc":     "asset_files.size_bytes ASC,  assets.id ASC",
-            "name_asc":     "asset_files.filename COLLATE NOCASE ASC,  assets.id ASC",
-            "name_desc":    "asset_files.filename COLLATE NOCASE DESC, assets.id DESC",
+            "mtime_desc":   "rep_af.mtime DESC, assets.id DESC",
+            "mtime_asc":    "rep_af.mtime ASC,  assets.id ASC",
+            "size_desc":    "rep_af.size_bytes DESC, assets.id DESC",
+            "size_asc":     "rep_af.size_bytes ASC,  assets.id ASC",
+            "name_asc":     "rep_af.filename COLLATE NOCASE ASC,  assets.id ASC",
+            "name_desc":    "rep_af.filename COLLATE NOCASE DESC, assets.id DESC",
         }
         order_sql = order_map.get(sort, order_map["created_desc"])
 
+        # rep_af = file "rappresentante" per ogni asset (il primo inserito)
         base_from = f"""
             FROM assets
-            JOIN asset_files ON asset_files.asset_id = assets.id
+            JOIN (
+                SELECT af.*
+                FROM asset_files af
+                JOIN (
+                    SELECT asset_id, MIN(id) AS min_id
+                    FROM asset_files
+                    GROUP BY asset_id
+                ) AS first ON first.asset_id = af.asset_id AND first.min_id = af.id
+            ) AS rep_af ON rep_af.asset_id = assets.id
             LEFT JOIN ai_descriptions ON ai_descriptions.id = assets.ai_description_id
             {where_sql}
         """
@@ -440,20 +445,21 @@ class GalleryHandler(BaseHTTPRequestHandler):
             total = conn.execute(f"SELECT COUNT(*) AS c {base_from}", params).fetchone()["c"]
             rows  = conn.execute(
                 f"""
-                SELECT assets.id AS asset_id,
+                SELECT assets.id        AS asset_id,
                        assets.title,
                        assets.media_kind,
                        assets.created_at,
                        assets.updated_at,
-                       asset_files.filename,
-                       asset_files.relative_path,
-                       asset_files.thumb_path,
-                       asset_files.metadata_json,
-                       asset_files.size_bytes,
-                       asset_files.mtime,
+                       rep_af.filename,
+                       rep_af.relative_path,
+                       rep_af.thumb_path,
+                       rep_af.metadata_json,
+                       rep_af.size_bytes,
+                       rep_af.mtime,
                        ai_descriptions.description,
                        ai_descriptions.model,
-                       ai_descriptions.language
+                       ai_descriptions.language,
+                       (SELECT COUNT(*) FROM asset_files WHERE asset_id = assets.id) AS file_count
                 {base_from}
                 ORDER BY {order_sql}
                 LIMIT ? OFFSET ?
@@ -467,13 +473,22 @@ class GalleryHandler(BaseHTTPRequestHandler):
         for r in rows:
             rel  = urllib.parse.quote(r["relative_path"], safe="/")
             furl = f"/files/{rel}"
-            turl = (f"/thumbs/{urllib.parse.quote(r['thumb_path'], safe='/')}" if r["thumb_path"] else furl)
+            turl = (
+                f"/thumbs/{urllib.parse.quote(r['thumb_path'], safe='/')}"
+                if r["thumb_path"] else furl
+            )
             try:
                 metadata = json.loads(r["metadata_json"]) if r["metadata_json"] else {}
             except Exception:
                 metadata = {}
-            parent_folder = r["relative_path"].rsplit("/", 1)[0] if r["relative_path"] and "/" in r["relative_path"] else ""
-            ext_value     = r["filename"].rsplit(".", 1)[-1].lower() if r["filename"] and "." in r["filename"] else ""
+            parent_folder = (
+                r["relative_path"].rsplit("/", 1)[0]
+                if r["relative_path"] and "/" in r["relative_path"] else ""
+            )
+            ext_value = (
+                r["filename"].rsplit(".", 1)[-1].lower()
+                if r["filename"] and "." in r["filename"] else ""
+            )
             items.append({
                 "id":            r["asset_id"],
                 "title":         r["title"],
@@ -491,6 +506,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 "updated_at":    r["updated_at"],
                 "mtime":         r["mtime"],
                 "extension":     ext_value,
+                "file_count":    r["file_count"],       # <-- NUOVO
                 "metadata": {
                     "Make":      metadata.get("Make"),
                     "Model":     metadata.get("Model"),
@@ -620,27 +636,47 @@ class GalleryHandler(BaseHTTPRequestHandler):
         try:
             row = conn.execute(
                 """
-                SELECT assets.id AS asset_id,
+                SELECT assets.id        AS asset_id,
                        assets.title,
                        assets.media_kind,
-                       asset_files.filename,
-                       asset_files.relative_path,
-                       asset_files.sha256,
-                       asset_files.metadata_json,
-                       asset_files.size_bytes,
-                       asset_files.mtime,
-                       asset_files.thumb_path,
+                       rep_af.filename,
+                       rep_af.relative_path,
+                       rep_af.sha256,
+                       rep_af.metadata_json,
+                       rep_af.size_bytes,
+                       rep_af.mtime,
+                       rep_af.thumb_path,
                        ai_descriptions.description,
                        ai_descriptions.model,
                        ai_descriptions.language,
                        ai_descriptions.created_at AS description_created_at
                 FROM assets
-                JOIN asset_files ON asset_files.asset_id = assets.id
+                JOIN (
+                    SELECT af.*
+                    FROM asset_files af
+                    JOIN (
+                        SELECT asset_id, MIN(id) AS min_id
+                        FROM asset_files
+                        GROUP BY asset_id
+                    ) AS first ON first.asset_id = af.asset_id AND first.min_id = af.id
+                ) AS rep_af ON rep_af.asset_id = assets.id
                 LEFT JOIN ai_descriptions ON ai_descriptions.id = assets.ai_description_id
                 WHERE assets.id = ?
                 """,
                 (asset_id,),
             ).fetchone()
+
+            # Tutti i file fisici collegati a questo asset
+            all_files = conn.execute(
+                """
+                SELECT id, filename, relative_path, absolute_path,
+                       sha256, size_bytes, mtime, thumb_path
+                FROM asset_files
+                WHERE asset_id = ?
+                ORDER BY id ASC
+                """,
+                (asset_id,),
+            ).fetchall()
         finally:
             conn.close()
 
@@ -653,15 +689,49 @@ class GalleryHandler(BaseHTTPRequestHandler):
 
         rel  = urllib.parse.quote(row["relative_path"], safe="/")
         furl = f"/files/{rel}"
-        turl = (f"/thumbs/{urllib.parse.quote(row['thumb_path'], safe='/')}" if row["thumb_path"] else furl)
+        turl = (
+            f"/thumbs/{urllib.parse.quote(row['thumb_path'], safe='/')}"
+            if row["thumb_path"] else furl
+        )
 
         try:
             metadata = json.loads(row["metadata_json"]) if row["metadata_json"] else {}
         except Exception:
             metadata = {}
 
-        parent_folder = row["relative_path"].rsplit("/", 1)[0] if row["relative_path"] and "/" in row["relative_path"] else ""
-        ext_value     = row["filename"].rsplit(".", 1)[-1].lower() if row["filename"] and "." in row["filename"] else ""
+        parent_folder = (
+            row["relative_path"].rsplit("/", 1)[0]
+            if row["relative_path"] and "/" in row["relative_path"] else ""
+        )
+        ext_value = (
+            row["filename"].rsplit(".", 1)[-1].lower()
+            if row["filename"] and "." in row["filename"] else ""
+        )
+
+        # Serializza tutti i file fisici
+        files_list = []
+        for f in all_files:
+            f_rel  = urllib.parse.quote(f["relative_path"] or "", safe="/")
+            f_furl = f"/files/{f_rel}" if f_rel else ""
+            f_turl = (
+                f"/thumbs/{urllib.parse.quote(f['thumb_path'], safe='/')}"
+                if f["thumb_path"] else f_furl
+            )
+            f_folder = (
+                f["relative_path"].rsplit("/", 1)[0]
+                if f["relative_path"] and "/" in f["relative_path"] else ""
+            )
+            files_list.append({
+                "id":            f["id"],
+                "filename":      f["filename"],
+                "relative_path": f["relative_path"],
+                "parent_folder": f_folder,
+                "file_url":      f_furl,
+                "thumb_url":     f_turl,
+                "sha256":        f["sha256"],
+                "size_bytes":    f["size_bytes"],
+                "mtime":         f["mtime"],
+            })
 
         self._send_json({
             "id":            row["asset_id"],
@@ -681,6 +751,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
             "model":         row["model"],
             "language":      row["language"],
             "description_created_at": row["description_created_at"],
+            "file_count":    len(files_list),       # <-- NUOVO
+            "files":         files_list,            # <-- NUOVO
         })
 
     # ------------------------------------------------------------------

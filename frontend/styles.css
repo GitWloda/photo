@@ -1261,3 +1261,201 @@ a { color: var(--primary); text-decoration: none; }
     scroll-behavior: auto !important;
   }
 }
+<<<<<<< HEAD
+=======
+/* ── Badge duplicati sulla card ───────────────────── */
+.card-badge.badge-dupes {
+  background: #7c3aed;
+  color: #fff;
+  bottom: auto;
+  top: 6px;
+  right: 36px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ── Sezione copie nel detail pane ────────────────── */
+.d-files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.d-file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--surface-2, rgba(255,255,255,.04));
+  border-radius: 7px;
+  font-size: 12px;
+}
+
+.d-file-idx {
+  flex-shrink: 0;
+  color: var(--text-muted, #888);
+  font-variant-numeric: tabular-nums;
+  min-width: 22px;
+}
+
+.d-file-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.d-file-link {
+  color: var(--accent, #6366f1);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.d-file-link:hover { text-decoration: underline; }
+
+.d-file-path {
+  color: var(--text-muted, #888);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.d-file-size {
+  flex-shrink: 0;
+  color: var(--text-muted, #888);
+  font-variant-numeric: tabular-nums;
+}
+
+.d-media-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.d-dupes-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  color: inherit;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+.d-dupes-toggle:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.d-dupes-toggle.open {
+  background: rgba(124,58,237,0.10);
+  border-color: rgba(124,58,237,0.35);
+}
+
+.d-dupes-toggle-text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+
+.d-dupes-toggle-arrows {
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: -2px;
+  transform: translateY(-1px);
+}
+
+.d-dupes-toggle.open .d-dupes-toggle-arrows {
+  transform: rotate(180deg);
+}
+
+.d-dupes-panel.hidden {
+  display: none;
+}
+
+.d-dupes-panel {
+  margin-top: 2px;
+}
+
+.d-dupes-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.d-dupe-card {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+  align-items: start;
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  color: inherit;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+.d-dupe-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.d-dupe-card.active {
+  border-color: rgba(124,58,237,0.45);
+  background: rgba(124,58,237,0.10);
+}
+
+.d-dupe-thumb-wrap {
+  width: 92px;
+  height: 92px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  grid-row: span 3;
+}
+
+.d-dupe-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.d-dupe-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.d-dupe-path {
+  font-size: 11px;
+  color: rgba(255,255,255,0.62);
+  word-break: break-word;
+}
+
+.d-dupe-meta {
+  font-size: 11px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.35;
+}
+
+.hidden {
+  display: none !important;
+}
+>>>>>>> 24e029d (deduplicazione)
