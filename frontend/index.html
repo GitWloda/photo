@@ -1,145 +1,162 @@
 <!DOCTYPE html>
-<html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Photo Gallery AI (Locale)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <header class="topbar">
-      <div class="topbar-title">
-        <h1>Photo Gallery AI (Locale)</h1>
-        <p class="topbar-subtitle">Ricerca · Filtri · Ordinamento · Paginazione</p>
+<html lang="it" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Gallery AI</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-row topbar-main">
+      <h1 class="logo">📷 Photo Gallery AI</h1>
+      <div class="search-wrap">
+        <form id="search-form">
+          <input id="search-input" type="text" placeholder="Cerca nome, percorso, descrizione…" autocomplete="off" />
+          <button type="submit" class="btn btn-primary">Cerca</button>
+          <button type="button" id="clear-btn" class="btn btn-ghost">Reset</button>
+        </form>
+      </div>
+      <button id="toggle-filters-btn" class="btn btn-ghost btn-icon" aria-expanded="false" aria-controls="filter-panel">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+        <span>Filtri</span>
+        <span id="filter-badge" class="filter-badge hidden">0</span>
+      </button>
+    </div>
+
+    <div id="filter-panel" class="filter-panel collapsed">
+      <div class="filter-grid">
+
+        <div class="field-group">
+          <label for="filter-media-kind">Tipo media</label>
+          <select id="filter-media-kind">
+            <option value="">Tutti</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="filter-ext">Estensione</label>
+          <select id="filter-ext">
+            <option value="">Tutte</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="filter-make">Make (Marca)</label>
+          <select id="filter-make">
+            <option value="">Tutte</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="filter-model">Model (Camera)</label>
+          <select id="filter-model">
+            <option value="">Tutti</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="filter-camera-id">CameraID</label>
+          <select id="filter-camera-id">
+            <option value="">Tutti</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="filter-lens-model">LensModel</label>
+          <select id="filter-lens-model">
+            <option value="">Tutti</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="filter-ai-model">Modello AI</label>
+          <select id="filter-ai-model">
+            <option value="">Tutti</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="filter-folder">Cartella</label>
+          <select id="filter-folder">
+            <option value="">Tutte</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="sort-select">Ordina per</label>
+          <select id="sort-select">
+            <option value="created_desc">Data inserimento ↓</option>
+            <option value="created_asc">Data inserimento ↑</option>
+            <option value="mtime_desc">Data file ↓</option>
+            <option value="mtime_asc">Data file ↑</option>
+            <option value="size_desc">Peso ↓</option>
+            <option value="size_asc">Peso ↑</option>
+            <option value="name_asc">Nome A→Z</option>
+            <option value="name_desc">Nome Z→A</option>
+          </select>
+        </div>
+
       </div>
 
-      <form id="search-form" class="search-form">
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Cerca per nome, percorso o descrizione..."
-          autocomplete="off"
-        />
-        <button type="submit">Cerca</button>
-        <button type="button" id="clear-search">Reset</button>
-      </form>
+      <div class="filter-toggles">
+        <label class="toggle-label">
+          <input type="checkbox" id="toggle-folder" />
+          <span>Mostra cartella</span>
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="toggle-compact" />
+          <span>Vista compatta</span>
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="toggle-group-folder" />
+          <span>Raggruppa per cartella</span>
+        </label>
+      </div>
 
-      <section class="filter-panel" aria-label="Filtri libreria">
-        <div class="filter-grid">
-          <label class="field">
-            <span>Tipo media</span>
-            <select id="filter-media-kind">
-              <option value="">Tutti</option>
-            </select>
-          </label>
+      <div id="active-chips" class="active-chips"></div>
+    </div>
+  </header>
 
-          <label class="field">
-            <span>Estensione</span>
-            <select id="filter-ext">
-              <option value="">Tutte</option>
-            </select>
-          </label>
+  <!-- MAIN LAYOUT -->
+  <main class="main-layout">
 
-          <label class="field">
-            <span>Make</span>
-            <select id="filter-make">
-              <option value="">Tutte</option>
-            </select>
-          </label>
+    <!-- GALLERY PANE -->
+    <section class="gallery-pane">
+      <div class="results-bar">
+        <span id="results-text">Caricamento…</span>
+        <span id="page-info">Pagina 1 / 1</span>
+      </div>
 
-          <label class="field">
-            <span>Model</span>
-            <select id="filter-model">
-              <option value="">Tutti</option>
-            </select>
-          </label>
+      <div id="gallery-container" class="gallery-container">
+        <div id="gallery" class="gallery-grid"></div>
+        <div id="empty-state" class="empty-state hidden">Nessun elemento trovato.</div>
+      </div>
 
-          <label class="field">
-            <span>CameraID</span>
-            <select id="filter-camera-id">
-              <option value="">Tutti</option>
-            </select>
-          </label>
+      <nav class="pagination" aria-label="Paginazione">
+        <button id="btn-first"  class="btn btn-ghost btn-sm" disabled>«</button>
+        <button id="btn-prev"   class="btn btn-ghost btn-sm" disabled>‹</button>
+        <span id="page-label"   class="page-label">1 / 1</span>
+        <button id="btn-next"   class="btn btn-ghost btn-sm" disabled>›</button>
+        <button id="btn-last"   class="btn btn-ghost btn-sm" disabled>»</button>
+      </nav>
+    </section>
 
-          <label class="field">
-            <span>LensModel</span>
-            <select id="filter-lens-model">
-              <option value="">Tutti</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Modello AI</span>
-            <select id="filter-ai-model">
-              <option value="">Tutti</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Cartella</span>
-            <select id="filter-folder">
-              <option value="">Tutte</option>
-            </select>
-          </label>
-
-          <label class="field">
-            <span>Ordina per</span>
-            <select id="sort-select">
-              <option value="created_desc">Data inserimento &#8595;</option>
-              <option value="created_asc">Data inserimento &#8593;</option>
-              <option value="mtime_desc">Data file &#8595;</option>
-              <option value="mtime_asc">Data file &#8593;</option>
-              <option value="size_desc">Peso &#8595;</option>
-              <option value="size_asc">Peso &#8593;</option>
-              <option value="name_asc">Nome A-Z</option>
-              <option value="name_desc">Nome Z-A</option>
-            </select>
-          </label>
+    <!-- DETAIL PANE -->
+    <aside id="detail-pane" class="detail-pane">
+      <div id="detail-content" class="detail-content">
+        <div class="detail-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m3 9 4-4 4 4 4-4 4 4"/><circle cx="8.5" cy="14.5" r="1.5"/></svg>
+          <p>Seleziona un elemento per vedere i dettagli</p>
         </div>
+      </div>
+      <button id="detail-close" class="detail-close btn btn-ghost btn-icon" aria-label="Chiudi dettagli">✕</button>
+    </aside>
 
-        <div class="toolbar-toggles">
-          <label class="toggle">
-            <input type="checkbox" id="toggle-show-folder" />
-            <span>Mostra cartella padre</span>
-          </label>
+  </main>
 
-          <label class="toggle">
-            <input type="checkbox" id="toggle-compact" />
-            <span>Vista compatta</span>
-          </label>
-        </div>
-      </section>
-    </header>
-
-    <main class="layout">
-      <section class="gallery-section">
-        <div class="results-bar">
-          <div id="results-summary" class="results-summary">Caricamento...</div>
-          <div id="active-filters" class="active-filters"></div>
-        </div>
-
-        <div id="gallery" class="grid"></div>
-
-        <div id="empty-state" class="empty-state hidden">
-          Nessun elemento trovato.
-        </div>
-
-        <div class="pagination-bar">
-          <button id="first-page" type="button">&laquo; Prima</button>
-          <button id="prev-page" type="button">&lsaquo; Prec</button>
-          <span id="page-info">Pagina 1 / 1</span>
-          <button id="next-page" type="button">Succ &rsaquo;</button>
-          <button id="last-page" type="button">Ultima &raquo;</button>
-        </div>
-      </section>
-
-      <aside id="detail-panel" class="detail-panel">
-        <div id="detail-content" class="detail-content">
-          <p class="placeholder">Seleziona una foto o un video per vedere i dettagli.</p>
-        </div>
-      </aside>
-    </main>
-
-    <script src="/app.js"></script>
-  </body>
+  <script src="/app.js"></script>
+</body>
 </html>

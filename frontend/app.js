@@ -1,431 +1,441 @@
+"use strict";
 (function () {
-  /* ---- elementi DOM ---- */
-  const galleryEl        = document.getElementById("gallery");
-  const emptyStateEl     = document.getElementById("empty-state");
-  const detailContentEl  = document.getElementById("detail-content");
 
-  const searchForm       = document.getElementById("search-form");
-  const searchInput      = document.getElementById("search-input");
-  const clearSearchBtn   = document.getElementById("clear-search");
+  /* ── DOM refs ─────────────────────────────────── */
+  const gallery        = document.getElementById("gallery");
+  const emptyState     = document.getElementById("empty-state");
+  const detailContent  = document.getElementById("detail-content");
+  const detailPane     = document.getElementById("detail-pane");
+  const detailClose    = document.getElementById("detail-close");
 
-  const filterMediaKindEl = document.getElementById("filter-media-kind");
-  const filterExtEl       = document.getElementById("filter-ext");
-  const filterMakeEl      = document.getElementById("filter-make");
-  const filterModelEl     = document.getElementById("filter-model");
-  const filterCameraIdEl  = document.getElementById("filter-camera-id");
-  const filterLensModelEl = document.getElementById("filter-lens-model");
-  const filterAiModelEl   = document.getElementById("filter-ai-model");
-  const filterFolderEl    = document.getElementById("filter-folder");
-  const sortSelectEl      = document.getElementById("sort-select");
+  const searchForm     = document.getElementById("search-form");
+  const searchInput    = document.getElementById("search-input");
+  const clearBtn       = document.getElementById("clear-btn");
 
-  const toggleShowFolderEl = document.getElementById("toggle-show-folder");
-  const toggleCompactEl    = document.getElementById("toggle-compact");
+  const toggleFiltersBtn = document.getElementById("toggle-filters-btn");
+  const filterPanel    = document.getElementById("filter-panel");
+  const filterBadge    = document.getElementById("filter-badge");
+  const activeChips    = document.getElementById("active-chips");
 
-  const resultsSummaryEl  = document.getElementById("results-summary");
-  const activeFiltersEl   = document.getElementById("active-filters");
+  const selMediaKind   = document.getElementById("filter-media-kind");
+  const selExt         = document.getElementById("filter-ext");
+  const selMake        = document.getElementById("filter-make");
+  const selModel       = document.getElementById("filter-model");
+  const selCameraId    = document.getElementById("filter-camera-id");
+  const selLensModel   = document.getElementById("filter-lens-model");
+  const selAiModel     = document.getElementById("filter-ai-model");
+  const selFolder      = document.getElementById("filter-folder");
+  const selSort        = document.getElementById("sort-select");
 
-  const firstPageBtn = document.getElementById("first-page");
-  const prevPageBtn  = document.getElementById("prev-page");
-  const nextPageBtn  = document.getElementById("next-page");
-  const lastPageBtn  = document.getElementById("last-page");
-  const pageInfoEl   = document.getElementById("page-info");
+  const chkFolder      = document.getElementById("toggle-folder");
+  const chkCompact     = document.getElementById("toggle-compact");
+  const chkGroupFolder = document.getElementById("toggle-group-folder");
 
-  /* ---- stato globale ---- */
+  const resultsText    = document.getElementById("results-text");
+  const pageInfo       = document.getElementById("page-info");
+  const pageLabel      = document.getElementById("page-label");
+
+  const btnFirst       = document.getElementById("btn-first");
+  const btnPrev        = document.getElementById("btn-prev");
+  const btnNext        = document.getElementById("btn-next");
+  const btnLast        = document.getElementById("btn-last");
+
+  /* ── State ────────────────────────────────────── */
   const PAGE_LIMIT = 100;
 
-  let currentItems      = [];
-  let currentPage       = 1;
-  let currentTotal      = 0;
-  let currentTotalPages = 1;
-  let currentSelectedId = null;
-
   const state = {
-    q: "", page: 1,
-    mediaKind: "", ext: "", make: "", model: "",
-    cameraId: "", lensModel: "", aiModel: "", folder: "",
-    sort: "created_desc",
+    q:          "",
+    page:       1,
+    mediaKind:  "",
+    ext:        "",
+    make:       "",
+    model:      "",
+    cameraId:   "",
+    lensModel:  "",
+    aiModel:    "",
+    folder:     "",
+    sort:       "created_desc",
     showFolder: false,
-    compact: false,
+    compact:    false,
+    groupFolder:false,
   };
 
-  /* ---- utilità ---- */
-  const esc = (s) =>
-    String(s ?? "")
-      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  let currentItems     = [];
+  let currentTotal     = 0;
+  let currentTotalPages = 1;
+  let currentPage      = 1;
+  let selectedId       = null;
 
-  async function fetchJSON(url) {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
+  /* ── Utils ────────────────────────────────────── */
+  const esc = s => String(s ?? "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+  function fmtSize(bytes) {
+    if (bytes == null || isNaN(+bytes)) return "";
+    const u = ["B","KB","MB","GB","TB"];
+    let v = +bytes, i = 0;
+    while (v >= 1024 && i < u.length - 1) { v /= 1024; i++; }
+    return `${v.toFixed(i ? 1 : 0)} ${u[i]}`;
   }
 
-  function formatSize(bytes) {
-    if (bytes == null || Number.isNaN(Number(bytes))) return "";
-    const units = ["B", "KB", "MB", "GB", "TB"];
-    let v = Number(bytes), u = 0;
-    while (v >= 1024 && u < units.length - 1) { v /= 1024; u++; }
-    return `${v.toFixed(u === 0 ? 0 : 1)} ${units[u]}`;
+  function fmtTs(ts) {
+    if (!ts) return "";
+    const d = new Date(+ts * 1000);
+    return isNaN(d) ? "" : d.toLocaleString("it-IT");
   }
 
-  function formatTimestamp(ts) {
-    if (ts == null || Number.isNaN(Number(ts))) return "";
-    const d = new Date(Number(ts) * 1000);
-    return Number.isNaN(d.getTime()) ? "" : d.toLocaleString("it-IT");
+  async function api(url) {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
   }
 
-  /* ---- URL costruzione ---- */
-  function buildMediaUrl() {
+  /* ── Filter panel toggle ──────────────────────── */
+  toggleFiltersBtn.addEventListener("click", () => {
+    const open = filterPanel.classList.toggle("open");
+    toggleFiltersBtn.setAttribute("aria-expanded", String(open));
+  });
+
+  /* ── Populate selects from /filters ──────────── */
+  function fillSelect(el, values, emptyLabel) {
+    const prev = el.value;
+    el.innerHTML = `<option value="">${emptyLabel}</option>`;
+    (values || []).forEach(v => {
+      const o = document.createElement("option");
+      o.value = v; o.textContent = v;
+      if (v === prev) o.selected = true;
+      el.appendChild(o);
+    });
+  }
+
+  async function loadFilters() {
+    try {
+      const d = await api("/filters");
+      fillSelect(selMediaKind, d.media_kind,  "Tutti");
+      fillSelect(selExt,       d.extension,   "Tutte");
+      fillSelect(selMake,      d.make,        "Tutte");
+      fillSelect(selModel,     d.model,       "Tutti");
+      fillSelect(selCameraId,  d.camera_id,   "Tutti");
+      fillSelect(selLensModel, d.lens_model,  "Tutti");
+      fillSelect(selAiModel,   d.ai_model,    "Tutti");
+      fillSelect(selFolder,    d.folder,      "Tutte");
+      if (Array.isArray(d.sort) && d.sort.length) {
+        const prev = selSort.value;
+        selSort.innerHTML = "";
+        d.sort.forEach(s => {
+          const o = document.createElement("option");
+          o.value = s.value; o.textContent = s.label;
+          if (s.value === prev || s.value === state.sort) o.selected = true;
+          selSort.appendChild(o);
+        });
+      }
+    } catch (e) {
+      console.warn("loadFilters error:", e);
+    }
+  }
+
+  /* ── Sync state ───────────────────────────────── */
+  function syncFromUI() {
+    state.q          = searchInput.value.trim();
+    state.mediaKind  = selMediaKind.value;
+    state.ext        = selExt.value;
+    state.make       = selMake.value;
+    state.model      = selModel.value;
+    state.cameraId   = selCameraId.value;
+    state.lensModel  = selLensModel.value;
+    state.aiModel    = selAiModel.value;
+    state.folder     = selFolder.value;
+    state.sort       = selSort.value;
+    state.showFolder = chkFolder.checked;
+    state.compact    = chkCompact.checked;
+    state.groupFolder= chkGroupFolder.checked;
+  }
+
+  function resetState() {
+    searchInput.value  = "";
+    selMediaKind.value = ""; selExt.value      = "";
+    selMake.value      = ""; selModel.value    = "";
+    selCameraId.value  = ""; selLensModel.value= "";
+    selAiModel.value   = ""; selFolder.value   = "";
+    selSort.value      = "created_desc";
+    chkFolder.checked  = false; chkCompact.checked = false; chkGroupFolder.checked = false;
+    syncFromUI();
+  }
+
+  /* ── Active chips & badge ─────────────────────── */
+  const FILTER_LABELS = {
+    q: "Testo", mediaKind: "Tipo", ext: "Ext", make: "Make",
+    model: "Model", cameraId: "CameraID", lensModel: "Lens",
+    aiModel: "AI", folder: "Cartella",
+  };
+
+  function renderChips() {
+    const keys = ["q","mediaKind","ext","make","model","cameraId","lensModel","aiModel","folder"];
+    const active = keys.filter(k => state[k]);
+    filterBadge.textContent = active.length;
+    filterBadge.classList.toggle("hidden", active.length === 0);
+
+    if (!active.length) {
+      activeChips.innerHTML = `<span class="chip chip-none">Nessun filtro attivo</span>`;
+      return;
+    }
+    activeChips.innerHTML = active.map(k =>
+      `<span class="chip">${esc(FILTER_LABELS[k])}: ${esc(state[k])}</span>`
+    ).join("");
+  }
+
+  /* ── Build URL ────────────────────────────────── */
+  function buildUrl() {
     const p = new URLSearchParams();
     p.set("page",  String(state.page));
     p.set("limit", String(PAGE_LIMIT));
     p.set("sort",  state.sort);
-    if (state.q)         p.set("q",          state.q);
-    if (state.mediaKind) p.set("media_kind", state.mediaKind);
-    if (state.ext)       p.set("ext",        state.ext);
-    if (state.make)      p.set("make",       state.make);
-    if (state.model)     p.set("model",      state.model);
-    if (state.cameraId)  p.set("camera_id",  state.cameraId);
-    if (state.lensModel) p.set("lens_model", state.lensModel);
-    if (state.aiModel)   p.set("ai_model",   state.aiModel);
-    if (state.folder)    p.set("folder",     state.folder);
-    return `/media?${p.toString()}`;
+    if (state.q)          p.set("q",           state.q);
+    if (state.mediaKind)  p.set("media_kind",  state.mediaKind);
+    if (state.ext)        p.set("ext",         state.ext);
+    if (state.make)       p.set("make",        state.make);
+    if (state.model)      p.set("model",       state.model);
+    if (state.cameraId)   p.set("camera_id",   state.cameraId);
+    if (state.lensModel)  p.set("lens_model",  state.lensModel);
+    if (state.aiModel)    p.set("ai_model",    state.aiModel);
+    if (state.folder)     p.set("folder",      state.folder);
+    return `/media?${p}`;
   }
 
-  /* ---- paginazione UI ---- */
-  function updatePaginationUI() {
-    pageInfoEl.textContent = `Pagina ${currentPage} / ${currentTotalPages}`;
-    firstPageBtn.disabled = currentPage <= 1;
-    prevPageBtn.disabled  = currentPage <= 1;
-    nextPageBtn.disabled  = currentPage >= currentTotalPages;
-    lastPageBtn.disabled  = currentPage >= currentTotalPages;
+  /* ── Render card ──────────────────────────────── */
+  function makeCard(item) {
+    const card = document.createElement("article");
+    card.className = "card" + (item.id === selectedId ? " selected" : "");
+    card.dataset.id = item.id;
+
+    const isVideo = item.media_kind === "video";
+    const thumb   = item.thumb_url || item.file_url;
+
+    let thumbTag;
+    if (isVideo) {
+      thumbTag = `<video class="card-thumb" src="${esc(thumb)}" preload="metadata" muted playsinline></video>`;
+    } else {
+      thumbTag = `<img class="card-thumb" src="${esc(thumb)}" alt="${esc(item.filename)}" loading="lazy" decoding="async">`;
+    }
+
+    const badgeHTML = isVideo
+      ? `<span class="card-badge badge-video">VIDEO</span>`
+      : `<span class="card-badge">${esc(item.extension || "").toUpperCase()}</span>`;
+
+    const folderHTML = state.showFolder && item.parent_folder
+      ? `<div class="card-folder">📁 ${esc(item.parent_folder)}</div>`
+      : "";
+
+    card.innerHTML = `
+      <div class="card-thumb-wrap">
+        ${thumbTag}
+        ${badgeHTML}
+      </div>
+      <div class="card-body">
+        ${folderHTML}
+        <div class="card-name" title="${esc(item.filename)}">${esc(item.filename)}</div>
+        <div class="card-meta">
+          <span>${esc(item.media_kind || "")}</span>
+          <span>${esc(fmtSize(item.size_bytes))}</span>
+        </div>
+        ${item.description ? `<div class="card-desc">${esc(item.description)}</div>` : ""}
+      </div>`;
+
+    card.addEventListener("click", () => openDetail(item.id));
+    return card;
   }
 
-  /* ---- riepilogo risultati ---- */
-  function renderResultsSummary() {
-    const from = currentTotal === 0 ? 0 : (currentPage - 1) * PAGE_LIMIT + 1;
-    const to   = Math.min(currentPage * PAGE_LIMIT, currentTotal);
-    resultsSummaryEl.textContent =
-      `${currentTotal} elementi — visualizzati ${from}–${to}`;
-  }
-
-  /* ---- chip filtri attivi ---- */
-  function renderActiveFilters() {
-    const chips = [];
-    if (state.q)         chips.push(`Testo: ${state.q}`);
-    if (state.mediaKind) chips.push(`Tipo: ${state.mediaKind}`);
-    if (state.ext)       chips.push(`Ext: .${state.ext}`);
-    if (state.make)      chips.push(`Make: ${state.make}`);
-    if (state.model)     chips.push(`Model: ${state.model}`);
-    if (state.cameraId)  chips.push(`CameraID: ${state.cameraId}`);
-    if (state.lensModel) chips.push(`Lens: ${state.lensModel}`);
-    if (state.aiModel)   chips.push(`AI: ${state.aiModel}`);
-    if (state.folder)    chips.push(`Cartella: ${state.folder}`);
-    activeFiltersEl.innerHTML = chips.length
-      ? chips.map((c) => `<span class="filter-chip">${esc(c)}</span>`).join("")
-      : `<span class="filter-chip filter-chip-muted">Nessun filtro attivo</span>`;
-  }
-
-  /* ---- vista compatta ---- */
-  function applyViewMode() {
-    galleryEl.classList.toggle("grid-compact", state.compact);
-  }
-
-  /* ---- tabella metadati nel pannello dettaglio ---- */
-  function renderMetadataTable(metadata) {
-    if (!metadata || typeof metadata !== "object") return "";
-    const allKeys = Object.keys(metadata).filter(
-      (k) => metadata[k] !== null && metadata[k] !== undefined && String(metadata[k]).trim() !== ""
-    );
-    if (!allKeys.length) return "";
-    const primary = [
-      "Make", "Model", "CameraID", "LensModel",
-      "CreateDate", "DateTimeOriginal",
-      "ISO", "FNumber", "ExposureTime",
-      "Duration", "ImageWidth", "ImageHeight",
-      "FileType", "MIMEType",
-    ];
-    const sorted = [
-      ...primary.filter((k) => Object.prototype.hasOwnProperty.call(metadata, k)),
-      ...allKeys.filter((k) => !primary.includes(k)).sort((a, b) => a.localeCompare(b)),
-    ];
-    const rows = sorted.map(
-      (k) => `<tr><th>${esc(k)}</th><td>${esc(String(metadata[k]))}</td></tr>`
-    );
-    return `<table class="meta-table"><tbody>${rows.join("")}</tbody></table>`;
-  }
-
-  /* ---- galleria ---- */
+  /* ── Render gallery ───────────────────────────── */
   function renderGallery(items) {
-    currentItems = items || [];
-    galleryEl.innerHTML = "";
-    applyViewMode();
+    gallery.innerHTML = "";
+    gallery.className = "gallery-grid" + (state.compact ? " compact" : "");
+    emptyState.classList.toggle("hidden", items.length > 0);
 
-    if (!currentItems.length) {
-      emptyStateEl.classList.remove("hidden");
+    if (!items.length) {
+      gallery.appendChild(emptyState);
       return;
     }
-    emptyStateEl.classList.add("hidden");
 
-    const fragment = document.createDocumentFragment();
-    currentItems.forEach((item) => {
-      const card = document.createElement("article");
-      card.className = "card";
-      card.dataset.id = item.id;
-      if (item.id === currentSelectedId) card.classList.add("card-selected");
+    if (state.groupFolder) {
+      const groups = new Map();
+      items.forEach(item => {
+        const g = item.parent_folder || "(radice)";
+        if (!groups.has(g)) groups.set(g, []);
+        groups.get(g).push(item);
+      });
 
-      let thumb;
-      if (item.media_kind === "video") {
-        thumb = document.createElement("video");
-        thumb.className    = "card-thumb";
-        thumb.preload      = "metadata";
-        thumb.muted        = true;
-        thumb.playsInline  = true;
-        thumb.src          = item.thumb_url || item.file_url;
-      } else {
-        thumb = document.createElement("img");
-        thumb.className = "card-thumb";
-        thumb.loading   = "lazy";
-        thumb.decoding  = "async";
-        thumb.src       = item.thumb_url || item.file_url;
-        thumb.alt       = item.filename || "Media";
-      }
-
-      const body = document.createElement("div");
-      body.className = "card-body";
-
-      if (state.showFolder) {
-        const folder = item.parent_folder ||
-          (item.relative_path && item.relative_path.includes("/")
-            ? item.relative_path.split("/").slice(0, -1).join("/")
-            : "");
-        if (folder) {
-          const folderEl = document.createElement("div");
-          folderEl.className   = "card-folder";
-          folderEl.textContent = folder;
-          body.appendChild(folderEl);
-        }
-      }
-
-      const title = document.createElement("h2");
-      title.className   = "card-title";
-      title.textContent = item.filename || "Senza nome";
-
-      const metaRow = document.createElement("div");
-      metaRow.className = "card-meta-row";
-      const left  = [item.media_kind, item.extension ? `.${item.extension}` : ""].filter(Boolean).join(" · ");
-      const right = item.size_bytes != null ? formatSize(item.size_bytes) : "";
-      metaRow.innerHTML = `<span>${esc(left)}</span><span>${esc(right)}</span>`;
-
-      const desc = document.createElement("p");
-      desc.className   = "card-desc";
-      desc.textContent = item.description || "";
-
-      body.appendChild(title);
-      body.appendChild(metaRow);
-      body.appendChild(desc);
-      card.appendChild(thumb);
-      card.appendChild(body);
-
-      card.addEventListener("click", () => openDetail(item.id));
-      fragment.appendChild(card);
-    });
-    galleryEl.appendChild(fragment);
-  }
-
-  /* ---- pannello dettaglio ---- */
-  async function openDetail(id) {
-    currentSelectedId = id;
-    galleryEl.querySelectorAll(".card").forEach(
-      (c) => c.classList.toggle("card-selected", Number(c.dataset.id) === Number(id))
-    );
-    detailContentEl.innerHTML = `<p class="placeholder">Caricamento...</p>`;
-
-    try {
-      const data = await fetchJSON(`/media/${id}`);
-
-      const chips = [];
-      if (data.model)       chips.push(`Modello AI: ${esc(data.model)}`);
-      if (data.language)    chips.push(`Lingua: ${esc(data.language)}`);
-      if (data.media_kind)  chips.push(`Tipo: ${esc(data.media_kind)}`);
-      if (data.extension)   chips.push(`Ext: .${esc(data.extension)}`);
-      if (data.size_bytes != null) chips.push(`Peso: ${esc(formatSize(data.size_bytes))}`);
-      if (data.mtime)       chips.push(`Data file: ${esc(formatTimestamp(data.mtime))}`);
-      if (data.parent_folder) chips.push(`Cartella: ${esc(data.parent_folder)}`);
-
-      const metaTable = renderMetadataTable(data.metadata);
-
-      const mediaTag = data.media_kind === "video"
-        ? `<video class="detail-image" src="${esc(data.file_url)}" controls preload="metadata"></video>`
-        : `<img class="detail-image" src="${esc(data.file_url)}" alt="${esc(data.filename || "Media")}" loading="eager" />`;
-
-      detailContentEl.innerHTML = `
-        ${mediaTag}
-        <h2 class="detail-title">${esc(data.title || data.filename || "Dettaglio")}</h2>
-        ${data.relative_path ? `<p class="detail-path">${esc(data.relative_path)}</p>` : ""}
-        ${chips.length ? `<div class="chip-row">${chips.map((c) => `<span class="chip">${c}</span>`).join("")}</div>` : ""}
-        <h3 class="detail-section-title">Descrizione AI</h3>
-        <p class="detail-description">${esc(data.description || "Nessuna descrizione disponibile.")}</p>
-        <h3 class="detail-section-title">Info file</h3>
-        <table class="meta-table"><tbody>
-          <tr><th>Nome</th><td>${esc(data.filename || "")}</td></tr>
-          <tr><th>Estensione</th><td>${esc(data.extension || "")}</td></tr>
-          <tr><th>Cartella padre</th><td>${esc(data.parent_folder || "")}</td></tr>
-          <tr><th>Percorso relativo</th><td>${esc(data.relative_path || "")}</td></tr>
-          <tr><th>Peso</th><td>${esc(formatSize(data.size_bytes) || "")}</td></tr>
-          <tr><th>Data file</th><td>${esc(formatTimestamp(data.mtime) || "")}</td></tr>
-          <tr><th>SHA256</th><td class="sha256-cell">${esc(data.sha256 || "")}</td></tr>
-        </tbody></table>
-        ${metaTable ? `<h3 class="detail-section-title">Metadati EXIF</h3>${metaTable}` : ""}
-      `;
-    } catch (err) {
-      console.error(err);
-      detailContentEl.innerHTML = `<p class="placeholder">Errore nel caricamento dei dettagli.</p>`;
+      groups.forEach((groupItems, folderName) => {
+        const section = document.createElement("div");
+        section.className = "folder-group";
+        section.innerHTML = `
+          <div class="folder-group-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+            ${esc(folderName)} <span style="color:var(--text-faint);font-weight:400;">(${groupItems.length})</span>
+          </div>
+          <div class="folder-group-grid"></div>`;
+        const grid = section.querySelector(".folder-group-grid");
+        groupItems.forEach(item => grid.appendChild(makeCard(item)));
+        gallery.appendChild(section);
+      });
+    } else {
+      const frag = document.createDocumentFragment();
+      items.forEach(item => frag.appendChild(makeCard(item)));
+      gallery.appendChild(frag);
     }
   }
 
-  /* ---- caricamento select filtri ---- */
-  async function loadFilterOptions() {
-    try {
-      const payload = await fetchJSON("/filters");
+  /* ── Pagination UI ────────────────────────────── */
+  function updatePagination() {
+    const tp = currentTotalPages;
+    const cp = currentPage;
+    const from = currentTotal === 0 ? 0 : (cp - 1) * PAGE_LIMIT + 1;
+    const to   = Math.min(cp * PAGE_LIMIT, currentTotal);
 
-      function fillSelect(el, values, emptyLabel) {
-        const cur = el.value;
-        el.innerHTML = "";
-        const opt0 = document.createElement("option");
-        opt0.value = ""; opt0.textContent = emptyLabel;
-        el.appendChild(opt0);
-        (values || []).forEach((v) => {
-          const opt = document.createElement("option");
-          opt.value = v; opt.textContent = v;
-          if (v === cur) opt.selected = true;
-          el.appendChild(opt);
-        });
-      }
+    resultsText.textContent = `${currentTotal} elementi — ${from}-${to}`;
+    pageInfo.textContent    = `Pagina ${cp} / ${tp}`;
+    pageLabel.textContent   = `${cp} / ${tp}`;
 
-      fillSelect(filterMediaKindEl, payload.media_kind, "Tutti");
-      fillSelect(filterExtEl,       payload.extension,  "Tutte");
-      fillSelect(filterMakeEl,      payload.make,       "Tutte");
-      fillSelect(filterModelEl,     payload.model,      "Tutti");
-      fillSelect(filterCameraIdEl,  payload.camera_id,  "Tutti");
-      fillSelect(filterLensModelEl, payload.lens_model, "Tutti");
-      fillSelect(filterAiModelEl,   payload.ai_model,   "Tutti");
-      fillSelect(filterFolderEl,    payload.folder,     "Tutte");
-
-      if (Array.isArray(payload.sort) && payload.sort.length) {
-        const cur = state.sort;
-        sortSelectEl.innerHTML = "";
-        payload.sort.forEach((item) => {
-          const opt = document.createElement("option");
-          opt.value = item.value; opt.textContent = item.label;
-          if (item.value === cur) opt.selected = true;
-          sortSelectEl.appendChild(opt);
-        });
-      }
-    } catch (err) {
-      console.error("Errore caricamento filtri:", err);
-    }
+    btnFirst.disabled = cp <= 1;
+    btnPrev.disabled  = cp <= 1;
+    btnNext.disabled  = cp >= tp;
+    btnLast.disabled  = cp >= tp;
   }
 
-  /* ---- caricamento media ---- */
+  /* ── Load media ───────────────────────────────── */
   async function loadMedia(page = 1) {
     state.page = page;
+    renderChips();
+
     try {
-      const payload = await fetchJSON(buildMediaUrl());
-      const items = payload.items || [];
+      const data = await api(buildUrl());
+      currentItems      = data.items || [];
+      currentPage       = data.page  || page;
+      currentTotal      = data.total || 0;
+      currentTotalPages = data.total_pages || Math.max(1, Math.ceil(currentTotal / PAGE_LIMIT));
 
-      currentItems      = items;
-      currentPage       = payload.page || page;
-      currentTotal      = payload.total || 0;
-      currentTotalPages = payload.total_pages || Math.max(1, Math.ceil(currentTotal / PAGE_LIMIT));
+      renderGallery(currentItems);
+      updatePagination();
 
-      renderGallery(items);
-      renderResultsSummary();
-      renderActiveFilters();
-      updatePaginationUI();
-
-      if (items.length > 0) {
-        const keepId = currentSelectedId && items.some((x) => x.id === currentSelectedId)
-          ? currentSelectedId
-          : items[0].id;
-        openDetail(keepId);
+      if (currentItems.length) {
+        const keep = selectedId && currentItems.some(x => x.id === selectedId);
+        openDetail(keep ? selectedId : currentItems[0].id);
       } else {
-        currentSelectedId = null;
-        detailContentEl.innerHTML =
-          `<p class="placeholder">Nessun elemento con i filtri correnti.</p>`;
+        selectedId = null;
+        detailContent.innerHTML = `<div class="detail-placeholder"><p>Nessun elemento trovato.</p></div>`;
       }
     } catch (err) {
       console.error(err);
-      emptyStateEl.classList.remove("hidden");
-      emptyStateEl.textContent =
-        "Errore di caricamento. Verifica che il backend sia in esecuzione.";
-      resultsSummaryEl.textContent = "Errore";
-      pageInfoEl.textContent = "– / –";
+      resultsText.textContent = "Errore di caricamento";
+      detailContent.innerHTML = `<div class="detail-placeholder"><p>Errore: ${esc(err.message)}</p></div>`;
     }
   }
 
-  /* ---- sync stato dai controlli ---- */
-  function syncState() {
-    state.q         = searchInput.value.trim();
-    state.mediaKind = filterMediaKindEl.value;
-    state.ext       = filterExtEl.value;
-    state.make      = filterMakeEl.value;
-    state.model     = filterModelEl.value;
-    state.cameraId  = filterCameraIdEl.value;
-    state.lensModel = filterLensModelEl.value;
-    state.aiModel   = filterAiModelEl.value;
-    state.folder    = filterFolderEl.value;
-    state.sort      = sortSelectEl.value;
-    state.showFolder = toggleShowFolderEl.checked;
-    state.compact    = toggleCompactEl.checked;
+  /* ── Open detail ──────────────────────────────── */
+  async function openDetail(id) {
+    selectedId = id;
+    // highlight
+    document.querySelectorAll(".card").forEach(c => {
+      c.classList.toggle("selected", +c.dataset.id === +id);
+    });
+
+    // mobile: show panel
+    detailPane.classList.add("open");
+
+    detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento…</p></div>`;
+
+    try {
+      const d = await api(`/media/${id}`);
+
+      const chips = [
+        d.media_kind && `Tipo: ${d.media_kind}`,
+        d.extension  && `Ext: .${d.extension}`,
+        d.size_bytes != null && `Peso: ${fmtSize(d.size_bytes)}`,
+        d.mtime      && `Data: ${fmtTs(d.mtime)}`,
+        d.model      && `AI: ${d.model}`,
+        d.language   && `Lingua: ${d.language}`,
+        d.parent_folder && `📁 ${d.parent_folder}`,
+      ].filter(Boolean);
+
+      const metaRows = [
+        ["Nome",       d.filename],
+        ["Estensione", d.extension],
+        ["Cartella",   d.parent_folder],
+        ["Percorso",   d.relative_path],
+        ["Peso",       fmtSize(d.size_bytes)],
+        ["Data file",  fmtTs(d.mtime)],
+        ["SHA256",     d.sha256],
+      ].filter(r => r[1]).map(r =>
+        `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`
+      ).join("");
+
+      const exifKeys = ["Make","Model","CameraID","LensModel","CreateDate","DateTimeOriginal",
+                        "ISO","FNumber","ExposureTime","ImageWidth","ImageHeight"];
+      const meta = d.metadata || {};
+      const allMetaKeys = [...new Set([...exifKeys, ...Object.keys(meta)])].filter(k => meta[k] != null && String(meta[k]).trim());
+      const metaExifRows = allMetaKeys.map(k =>
+        `<tr><th>${esc(k)}</th><td>${esc(String(meta[k]))}</td></tr>`
+      ).join("");
+
+      const mediaTag = d.media_kind === "video"
+        ? `<video src="${esc(d.file_url)}" controls preload="metadata" style="width:100%;height:100%;object-fit:contain;"></video>`
+        : `<img src="${esc(d.file_url)}" alt="${esc(d.filename)}" loading="eager" style="width:100%;height:100%;object-fit:contain;">`;
+
+      detailContent.innerHTML = `
+        <div class="d-media">${mediaTag}</div>
+        <div class="d-title">${esc(d.title || d.filename)}</div>
+        ${d.relative_path ? `<div class="d-path">${esc(d.relative_path)}</div>` : ""}
+        <div class="d-chips">${chips.map(c => `<span class="d-chip">${esc(c)}</span>`).join("")}</div>
+        ${d.description ? `
+          <div class="d-section">Descrizione AI</div>
+          <p class="d-desc">${esc(d.description)}</p>` : ""}
+        <div class="d-section">Info file</div>
+        <table class="d-table"><tbody>${metaRows}</tbody></table>
+        ${metaExifRows ? `
+          <div class="d-section">Metadati EXIF</div>
+          <table class="d-table"><tbody>${metaExifRows}</tbody></table>` : ""}
+      `;
+    } catch (e) {
+      detailContent.innerHTML = `<div class="detail-placeholder"><p>Errore: ${esc(e.message)}</p></div>`;
+    }
   }
 
-  function resetControls() {
-    searchInput.value = "";
-    filterMediaKindEl.value = "";
-    filterExtEl.value       = "";
-    filterMakeEl.value      = "";
-    filterModelEl.value     = "";
-    filterCameraIdEl.value  = "";
-    filterLensModelEl.value = "";
-    filterAiModelEl.value   = "";
-    filterFolderEl.value    = "";
-    sortSelectEl.value      = "created_desc";
-    toggleShowFolderEl.checked = false;
-    toggleCompactEl.checked    = false;
-    syncState();
-  }
-
-  /* ---- eventi ---- */
-  searchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    syncState();
-    loadMedia(1);
+  /* ── Events ───────────────────────────────────── */
+  searchForm.addEventListener("submit", e => {
+    e.preventDefault(); syncFromUI(); loadMedia(1);
   });
 
-  clearSearchBtn.addEventListener("click", () => {
-    resetControls();
-    loadMedia(1);
+  clearBtn.addEventListener("click", () => { resetState(); loadMedia(1); });
+
+  [selMediaKind, selExt, selMake, selModel, selCameraId,
+   selLensModel, selAiModel, selFolder, selSort].forEach(el => {
+    el.addEventListener("change", () => { syncFromUI(); loadMedia(1); });
   });
 
-  [
-    filterMediaKindEl, filterExtEl, filterMakeEl,
-    filterModelEl, filterCameraIdEl, filterLensModelEl,
-    filterAiModelEl, filterFolderEl, sortSelectEl,
-  ].forEach((el) => el.addEventListener("change", () => { syncState(); loadMedia(1); }));
+  [chkFolder, chkCompact, chkGroupFolder].forEach(el => {
+    el.addEventListener("change", () => {
+      syncFromUI();
+      renderGallery(currentItems);
+    });
+  });
 
-  toggleShowFolderEl.addEventListener("change", () => { syncState(); renderGallery(currentItems); });
-  toggleCompactEl.addEventListener("change",    () => { syncState(); applyViewMode(); renderGallery(currentItems); });
+  btnFirst.addEventListener("click", () => loadMedia(1));
+  btnPrev.addEventListener("click",  () => loadMedia(currentPage - 1));
+  btnNext.addEventListener("click",  () => loadMedia(currentPage + 1));
+  btnLast.addEventListener("click",  () => loadMedia(currentTotalPages));
 
-  firstPageBtn.addEventListener("click", () => { if (currentPage > 1) loadMedia(1); });
-  prevPageBtn.addEventListener("click",  () => { if (currentPage > 1) loadMedia(currentPage - 1); });
-  nextPageBtn.addEventListener("click",  () => { if (currentPage < currentTotalPages) loadMedia(currentPage + 1); });
-  lastPageBtn.addEventListener("click",  () => { if (currentPage < currentTotalPages) loadMedia(currentTotalPages); });
+  detailClose.addEventListener("click", () => {
+    detailPane.classList.remove("open");
+  });
 
-  /* ---- init ---- */
-  (async function init() {
-    await loadFilterOptions();
-    syncState();
+  /* ── Init ─────────────────────────────────────── */
+  async function init() {
+    await loadFilters();
+    syncFromUI();
     await loadMedia(1);
-  })();
+  }
+
+  init();
+
 })();
