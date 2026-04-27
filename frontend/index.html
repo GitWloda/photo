@@ -8,31 +8,134 @@
   </head>
   <body>
     <header class="topbar">
-      <h1>Photo Gallery AI (Locale)</h1>
+      <div class="topbar-title">
+        <h1>Photo Gallery AI (Locale)</h1>
+        <p class="topbar-subtitle">Ricerca · Filtri · Ordinamento · Paginazione</p>
+      </div>
+
       <form id="search-form" class="search-form">
         <input
           type="text"
           id="search-input"
-          placeholder="Cerca per nome o descrizione..."
+          placeholder="Cerca per nome, percorso o descrizione..."
           autocomplete="off"
         />
         <button type="submit">Cerca</button>
         <button type="button" id="clear-search">Reset</button>
       </form>
+
+      <section class="filter-panel" aria-label="Filtri libreria">
+        <div class="filter-grid">
+          <label class="field">
+            <span>Tipo media</span>
+            <select id="filter-media-kind">
+              <option value="">Tutti</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Estensione</span>
+            <select id="filter-ext">
+              <option value="">Tutte</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Make</span>
+            <select id="filter-make">
+              <option value="">Tutte</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Model</span>
+            <select id="filter-model">
+              <option value="">Tutti</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>CameraID</span>
+            <select id="filter-camera-id">
+              <option value="">Tutti</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>LensModel</span>
+            <select id="filter-lens-model">
+              <option value="">Tutti</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Modello AI</span>
+            <select id="filter-ai-model">
+              <option value="">Tutti</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Cartella</span>
+            <select id="filter-folder">
+              <option value="">Tutte</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Ordina per</span>
+            <select id="sort-select">
+              <option value="created_desc">Data inserimento &#8595;</option>
+              <option value="created_asc">Data inserimento &#8593;</option>
+              <option value="mtime_desc">Data file &#8595;</option>
+              <option value="mtime_asc">Data file &#8593;</option>
+              <option value="size_desc">Peso &#8595;</option>
+              <option value="size_asc">Peso &#8593;</option>
+              <option value="name_asc">Nome A-Z</option>
+              <option value="name_desc">Nome Z-A</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="toolbar-toggles">
+          <label class="toggle">
+            <input type="checkbox" id="toggle-show-folder" />
+            <span>Mostra cartella padre</span>
+          </label>
+
+          <label class="toggle">
+            <input type="checkbox" id="toggle-compact" />
+            <span>Vista compatta</span>
+          </label>
+        </div>
+      </section>
     </header>
 
     <main class="layout">
       <section class="gallery-section">
+        <div class="results-bar">
+          <div id="results-summary" class="results-summary">Caricamento...</div>
+          <div id="active-filters" class="active-filters"></div>
+        </div>
+
         <div id="gallery" class="grid"></div>
+
         <div id="empty-state" class="empty-state hidden">
-          Nessuna immagine indicizzata.
+          Nessun elemento trovato.
+        </div>
+
+        <div class="pagination-bar">
+          <button id="first-page" type="button">&laquo; Prima</button>
+          <button id="prev-page" type="button">&lsaquo; Prec</button>
+          <span id="page-info">Pagina 1 / 1</span>
+          <button id="next-page" type="button">Succ &rsaquo;</button>
+          <button id="last-page" type="button">Ultima &raquo;</button>
         </div>
       </section>
+
       <aside id="detail-panel" class="detail-panel">
         <div id="detail-content" class="detail-content">
-          <p class="placeholder">
-            Seleziona una foto per vedere i dettagli.
-          </p>
+          <p class="placeholder">Seleziona una foto o un video per vedere i dettagli.</p>
         </div>
       </aside>
     </main>
