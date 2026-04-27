@@ -1,0 +1,159 @@
+[2026-04-27 14:25:29] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-27 14:25:29] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-27 14:25:29] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-27 14:25:29] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-27 14:25:29] cleanup_deleted: Pulizia completata.
+[2026-04-27 14:25:29] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 14:25:29] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226647544.jpg
+[2026-04-27 14:25:30] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1007687184.jpg
+[2026-04-27 14:25:30] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1071076192.jpg
+[2026-04-27 14:25:30] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1097023336.mp4
+[2026-04-27 14:25:30] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1072954928.jpg
+[2026-04-27 14:25:30] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226662464.jpg
+[2026-04-27 14:25:31] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1227196424.jpg
+[2026-04-27 14:25:31] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789302704.png
+[2026-04-27 14:25:31] [OK]   Nuovo file: /home/wloda/Downloads/foto/PXL_20250812_122658490.TS.mp4
+[2026-04-27 14:25:32] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1074886376.jpg
+[2026-04-27 14:25:34] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096895688.jpg
+[2026-04-27 14:25:34] [OK]   Nuovo file: /home/wloda/Downloads/foto/Pinched.mp4
+[2026-04-27 14:25:34] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1094403952.jpg
+[2026-04-27 14:25:34] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096897184.jpg
+[2026-04-27 14:25:35] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096897912.jpg
+[2026-04-27 14:25:35] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226657600.jpg
+[2026-04-27 14:25:35] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1057778632.jpg
+[2026-04-27 14:25:35] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226485016.jpg
+[2026-04-27 14:25:35] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226665448.jpg
+[2026-04-27 14:25:36] [OK]   Nuovo file: /home/wloda/Downloads/foto/PXL_20250812_122658490.TS - Copia.mp4
+[2026-04-27 14:25:36] [OK]   Nuovo file: /home/wloda/Downloads/foto/asd/f1057820192.jpg
+[2026-04-27 14:25:36] [OK]   Nuovo file: /home/wloda/Downloads/foto/asd/f94636360.jpg
+[2026-04-27 14:25:36] [OK]   Nuovo file: /home/wloda/Downloads/foto/asd/f1007606640.jpg
+[2026-04-27 14:25:37] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1060674568.jpg
+[2026-04-27 14:25:37] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1060024744.jpg
+[2026-04-27 14:25:37] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226478536.jpg
+[2026-04-27 14:25:37] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226483464.jpg
+[2026-04-27 14:25:37] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1097023112.jpg
+[2026-04-27 14:25:37] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226509928.jpg
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1099709992.jpg
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1092277792.jpg
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1071076688.jpg
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226662064.jpg
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096965312.jpg
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226287648.png
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789303248.png
+[2026-04-27 14:25:38] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789266456.png
+[2026-04-27 14:25:39] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789313360.png
+[2026-04-27 14:25:39] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789227752.png
+[2026-04-27 14:25:39] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226679184.jpg
+[2026-04-27 14:25:39] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1071076016.jpg
+[2026-04-27 14:25:39] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226287792.png
+[2026-04-27 14:25:39] [OK]   Nuovo file: /home/wloda/Downloads/foto/f113901536.png
+[2026-04-27 14:25:39] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1092277528.jpg
+[2026-04-27 14:25:40] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1092277736.jpg
+[2026-04-27 14:25:40] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226675672.jpg
+[2026-04-27 14:25:40] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1092278008.jpg
+[2026-04-27 14:25:40] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1097017016.mp4
+[2026-04-27 14:25:40] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1099717424.jpg
+[2026-04-27 14:25:40] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1222568872.jpg
+[2026-04-27 14:25:41] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1092277424.jpg
+[2026-04-27 14:25:41] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1227052264.jpg
+[2026-04-27 14:25:41] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1074606360.jpg
+[2026-04-27 14:25:41] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096972424.jpg
+[2026-04-27 14:25:41] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789244024.png
+[2026-04-27 14:25:41] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226520944.jpg
+[2026-04-27 14:25:42] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1094439904.jpg
+[2026-04-27 14:25:42] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096897328.jpg
+[2026-04-27 14:25:42] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1074603296.webp
+[2026-04-27 14:25:42] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1069084360.jpg
+[2026-04-27 14:25:42] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1074868256.jpg
+[2026-04-27 14:25:42] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1071386712.jpg
+[2026-04-27 14:25:43] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1064043320.jpg
+[2026-04-27 14:25:43] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096977288.jpg
+[2026-04-27 14:25:43] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1072956632.jpg
+[2026-04-27 14:25:43] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1072882144.jpg
+[2026-04-27 14:25:43] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1094487032.png
+[2026-04-27 14:25:43] [OK]   Nuovo file: /home/wloda/Downloads/foto/PXL_20250812_122658490.TS - Copia (3).mp4
+[2026-04-27 14:25:44] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1225890304.jpg
+[2026-04-27 14:25:44] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1227377936.jpg
+[2026-04-27 14:25:44] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226636240.jpg
+[2026-04-27 14:25:44] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1041233248.png
+[2026-04-27 14:25:44] [OK]   Nuovo file: /home/wloda/Downloads/foto/f525109000.png
+[2026-04-27 14:25:44] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1094402432.jpg
+[2026-04-27 14:25:45] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226676680.jpg
+[2026-04-27 14:25:45] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789260632.png
+[2026-04-27 14:25:45] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226661872.jpg
+[2026-04-27 14:25:45] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1225900032.jpg
+[2026-04-27 14:25:45] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1094402152.jpg
+[2026-04-27 14:25:45] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1060907352.jpg
+[2026-04-27 14:25:46] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096979576.jpg
+[2026-04-27 14:25:46] [OK]   Nuovo file: /home/wloda/Downloads/foto/f525119232.png
+[2026-04-27 14:25:46] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226505776.jpg
+[2026-04-27 14:25:46] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789271200.png
+[2026-04-27 14:25:46] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226663328.jpg
+[2026-04-27 14:25:46] [OK]   Nuovo file: /home/wloda/Downloads/foto/PXL_20250812_122658490.TS - Copia (2).mp4
+[2026-04-27 14:25:47] [OK]   Nuovo file: /home/wloda/Downloads/foto/f525120824.jpg
+[2026-04-27 14:25:47] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226512832.jpg
+[2026-04-27 14:25:47] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1225890616.jpg
+[2026-04-27 14:25:47] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789285816.png
+[2026-04-27 14:25:47] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096976888.jpg
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1094403440.jpg
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1071076784.jpg
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1226507288.jpg
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1097000584.jpg
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789277752.png
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1096898392.jpg
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f789242088.png
+[2026-04-27 14:25:48] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1222571552.jpg
+[2026-04-27 14:25:49] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/PXL_20250812_122658490.TS.mp4
+[2026-04-27 14:25:49] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270030.JPG
+[2026-04-27 14:25:49] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270003.JPG
+[2026-04-27 14:25:50] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270041.JPG
+[2026-04-27 14:25:50] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270002.JPG
+[2026-04-27 14:25:50] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270018.JPG
+[2026-04-27 14:25:51] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270031.JPG
+[2026-04-27 14:25:51] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270037.JPG
+[2026-04-27 14:25:51] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270017.JPG
+[2026-04-27 14:25:52] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270024.JPG
+[2026-04-27 14:25:52] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270025.JPG
+[2026-04-27 14:25:52] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270001.JPG
+[2026-04-27 14:25:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270014.JPG
+[2026-04-27 14:25:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270026.JPG
+[2026-04-27 14:25:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270004.JPG
+[2026-04-27 14:25:53] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270047.JPG
+[2026-04-27 14:25:54] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270042.JPG
+[2026-04-27 14:25:54] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270046.JPG
+[2026-04-27 14:25:54] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270010.JPG
+[2026-04-27 14:25:55] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270027.JPG
+[2026-04-27 14:25:55] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270008.JPG
+[2026-04-27 14:25:55] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270006.JPG
+[2026-04-27 14:25:56] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270040.JPG
+[2026-04-27 14:25:56] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270021.JPG
+[2026-04-27 14:25:56] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270049.JPG
+[2026-04-27 14:25:57] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270035.JPG
+[2026-04-27 14:25:57] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270045.JPG
+[2026-04-27 14:25:57] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270009.JPG
+[2026-04-27 14:25:58] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Napoli pranzo laurea Salvo Simo e Orly/PC270023.JPG
+[2026-04-27 14:25:58] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270059.JPG
+[2026-04-27 14:25:58] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270058.JPG
+[2026-04-27 14:25:59] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270057.JPG
+[2026-04-27 14:25:59] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280062.JPG
+[2026-04-27 14:25:59] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280063.JPG
+[2026-04-27 14:26:00] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270051.JPG
+[2026-04-27 14:26:00] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC270060.JPG
+[2026-04-27 14:26:00] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/Concerto Requiem Acerra (cugino Guido)/PC280064.JPG
+[2026-04-27 14:26:00] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/dahab/P2180067.JPG
+[2026-04-27 14:26:01] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/dahab/P2180066.JPG
+[2026-04-27 14:26:01] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/dahab/P2180061.JPG
+[2026-04-27 14:26:01] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/dahab/P2180065.JPG
+[2026-04-27 14:26:02] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/dahab/P2180063.JPG
+[2026-04-27 14:26:02] [OK]   Nuovo file: /home/wloda/Downloads/foto/Camera Olympus/dahab/P2180064.JPG
+[2026-04-27 14:26:02] [OK]   Nuovo file: /home/wloda/Downloads/foto/f1225883368.jpg
+[2026-04-27 14:26:02] [OK]   Scansione filesystem completata.
+[2026-04-27 14:26:02] [RUN]  Avvio 8 worker IA su 143 asset...
+[2026-04-27 14:53:20] init_db: database pronto in /home/wloda/photo/db/gallery.db
+[2026-04-27 14:53:20] cleanup_deleted: Pulizia file mancanti dal filesystem...
+[2026-04-27 14:53:20] cleanup_deleted: Nessun file mancante trovato.
+[2026-04-27 14:53:20] cleanup_deleted: Nessun asset orfano trovato.
+[2026-04-27 14:53:20] cleanup_deleted: Pulizia completata.
+[2026-04-27 14:53:20] [RUN]  Scansione libreria in /home/wloda/Downloads/foto
+[2026-04-27 14:53:36] [OK]   Scansione filesystem completata.
+[2026-04-27 14:53:36] [RUN]  Avvio 8 worker IA su 133 asset...

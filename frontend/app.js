@@ -43,9 +43,18 @@
   const btnViewAlbums  = document.getElementById("btn-view-albums");
   const btnViewAll     = document.getElementById("btn-view-all");
   const albumBreadcrumb = document.getElementById("album-breadcrumb");
+<<<<<<< HEAD
+=======
+  const albumBreadcrumbLabel = document.getElementById("album-breadcrumb-label");
+  const btnAlbumBack   = document.getElementById("btn-album-back");
+  const paginationEl   = document.querySelector(".pagination");
+>>>>>>> b8c28f3 (Aggiorna album)
 
   /* ── State ────────────────────────────────────── */
   const PAGE_LIMIT = 100;
+  const ALBUM_ROTATE_MS = 3500;
+
+  let viewMode = "all";
 
   // viewMode: "all" | "albums" | "album-detail"
   let viewMode = "all";
@@ -67,11 +76,13 @@
     groupFolder:false,
   };
 
-  let currentItems     = [];
-  let currentTotal     = 0;
+  let currentItems      = [];
+  let currentTotal      = 0;
   let currentTotalPages = 1;
-  let currentPage      = 1;
-  let selectedId       = null;
+  let currentPage       = 1;
+  let selectedId        = null;
+
+  const albumRotationTimers = new Set();
 
   /* ── Utils ────────────────────────────────────── */
   const esc = s => String(s ?? "")
@@ -97,13 +108,22 @@
     return r.json();
   }
 
+<<<<<<< HEAD
   /* ── View mode helpers ────────────────────────── */
+=======
+  function clearAlbumRotations() {
+    for (const timer of albumRotationTimers) clearInterval(timer);
+    albumRotationTimers.clear();
+  }
+
+>>>>>>> b8c28f3 (Aggiorna album)
   function setViewMode(mode) {
     viewMode = mode;
     const isAlbums = mode === "albums";
     const isAlbumDetail = mode === "album-detail";
     const isAll = mode === "all";
 
+<<<<<<< HEAD
     // Toggle button states
     btnViewAlbums.classList.toggle("active", isAlbums || isAlbumDetail);
     btnViewAll.classList.toggle("active", isAll);
@@ -121,6 +141,23 @@
 
     // Detail pane: hide in albums mode
     detailPane.classList.toggle("albums-hidden", isAlbums);
+=======
+    btnViewAlbums.classList.toggle("active", isAlbums || isAlbumDetail);
+    btnViewAlbums.setAttribute("aria-pressed", String(isAlbums || isAlbumDetail));
+
+    btnViewAll.classList.toggle("active", isAll);
+    btnViewAll.setAttribute("aria-pressed", String(isAll));
+
+    albumBreadcrumb.classList.toggle("hidden", !isAlbumDetail);
+
+    document.querySelector(".search-wrap").style.display = isAlbums ? "none" : "";
+    toggleFiltersBtn.style.display = isAlbums ? "none" : "";
+
+    paginationEl.classList.toggle("hidden", isAlbums);
+    detailPane.classList.toggle("albums-hidden", isAlbums);
+
+    if (!isAlbums) clearAlbumRotations();
+>>>>>>> b8c28f3 (Aggiorna album)
   }
 
   /* ── Filter panel toggle ──────────────────────── */
@@ -235,7 +272,7 @@
     return `/media?${p}`;
   }
 
-  /* ── Render card ──────────────────────────────── */
+  /* ── Render media card ───────────────────────── */
   function makeCard(item) {
     const card = document.createElement("article");
     card.className = "card" + (item.id === selectedId ? " selected" : "");
@@ -278,6 +315,43 @@
     return card;
   }
 
+<<<<<<< HEAD
+=======
+  /* ── Album rotation ───────────────────────────── */
+  function startAlbumRotation(card, thumbs) {
+    if (!Array.isArray(thumbs) || thumbs.length <= 1) return;
+
+    const img = card.querySelector(".album-rotating-thumb");
+    if (!img) return;
+
+    let idx = 0;
+
+    const timer = setInterval(() => {
+      if (!document.body.contains(card)) {
+        clearInterval(timer);
+        albumRotationTimers.delete(timer);
+        return;
+      }
+
+      const nextIdx = (idx + 1) % thumbs.length;
+      const nextUrl = thumbs[nextIdx];
+
+      const preload = new Image();
+      preload.onload = () => {
+        img.classList.add("is-fading");
+        setTimeout(() => {
+          img.src = nextUrl;
+          img.classList.remove("is-fading");
+          idx = nextIdx;
+        }, 180);
+      };
+      preload.src = nextUrl;
+    }, ALBUM_ROTATE_MS + Math.floor(Math.random() * 1200));
+
+    albumRotationTimers.add(timer);
+  }
+
+>>>>>>> b8c28f3 (Aggiorna album)
   /* ── Render album card ────────────────────────── */
   function makeAlbumCard(album) {
     const card = document.createElement("article");
@@ -285,7 +359,12 @@
 
     const folderName = album.folder === "(radice)" ? "/ (radice)" : album.folder.split("/").pop();
     const folderPath = album.folder === "(radice)" ? "" : album.folder;
+<<<<<<< HEAD
     const coverUrl   = album.cover_thumb || "";
+=======
+    const thumbs     = Array.isArray(album.thumbs) ? album.thumbs.filter(Boolean) : [];
+    const firstThumb = thumbs[0] || "";
+>>>>>>> b8c28f3 (Aggiorna album)
     const dateStr    = album.last_mtime ? fmtTs(album.last_mtime) : "";
     const subfolderParts = album.folder.split("/");
     const parentPath = subfolderParts.length > 1
@@ -294,8 +373,13 @@
 
     card.innerHTML = `
       <div class="album-cover">
+<<<<<<< HEAD
         ${coverUrl
           ? `<img src="${esc(coverUrl)}" alt="${esc(folderName)}" loading="lazy" decoding="async">`
+=======
+        ${firstThumb
+          ? `<img class="album-rotating-thumb" src="${esc(firstThumb)}" alt="${esc(folderName)}" loading="lazy" decoding="async">`
+>>>>>>> b8c28f3 (Aggiorna album)
           : `<div class="album-cover-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>`
         }
         <div class="album-overlay">
@@ -309,6 +393,7 @@
       </div>`;
 
     card.addEventListener("click", () => openAlbum(folderPath, folderName));
+<<<<<<< HEAD
     return card;
   }
 
@@ -321,6 +406,17 @@
     const label = document.getElementById("album-breadcrumb-label");
     if (label) label.textContent = folderName || folderPath || "radice";
 
+=======
+    startAlbumRotation(card, thumbs);
+    return card;
+  }
+
+  /* ── Open album ───────────────────────────────── */
+  function openAlbum(folderPath, folderName) {
+    state.folder = folderPath;
+    if (selFolder) selFolder.value = folderPath;
+    if (albumBreadcrumbLabel) albumBreadcrumbLabel.textContent = folderName || folderPath || "radice";
+>>>>>>> b8c28f3 (Aggiorna album)
     setViewMode("album-detail");
     syncFromUI();
     loadMedia(1);
@@ -328,13 +424,21 @@
 
   /* ── Load albums view ─────────────────────────── */
   async function loadAlbums() {
+<<<<<<< HEAD
+=======
+    clearAlbumRotations();
+>>>>>>> b8c28f3 (Aggiorna album)
     setViewMode("albums");
     gallery.innerHTML = "";
     gallery.className = "albums-grid";
     emptyState.classList.add("hidden");
+<<<<<<< HEAD
     resultsText.textContent = "Caricamento album\u2026";
 
     // Hide detail pane
+=======
+    resultsText.textContent = "Caricamento album…";
+>>>>>>> b8c28f3 (Aggiorna album)
     detailPane.classList.remove("open");
 
     try {
@@ -417,6 +521,7 @@
 
   /* ── Load media ───────────────────────────────── */
   async function loadMedia(page = 1) {
+    clearAlbumRotations();
     state.page = page;
     renderChips();
 
@@ -452,8 +557,12 @@
     });
 
     detailPane.classList.add("open");
+<<<<<<< HEAD
 
     detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento\u2026</p></div>`;
+=======
+    detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento…</p></div>`;
+>>>>>>> b8c28f3 (Aggiorna album)
 
     try {
       const d = await api(`/media/${id}`);
@@ -516,14 +625,27 @@
     e.preventDefault();
     if (viewMode === "albums") return;
     if (viewMode === "album-detail") setViewMode("all");
+<<<<<<< HEAD
     syncFromUI(); loadMedia(1);
+=======
+    syncFromUI();
+    loadMedia(1);
+>>>>>>> b8c28f3 (Aggiorna album)
   });
 
-  clearBtn.addEventListener("click", () => { resetState(); loadMedia(1); });
+  clearBtn.addEventListener("click", () => {
+    resetState();
+    if (viewMode === "albums") return;
+    loadMedia(1);
+  });
 
   [selMediaKind, selExt, selMake, selModel, selCameraId,
    selLensModel, selAiModel, selFolder, selSort].forEach(el => {
-    el.addEventListener("change", () => { syncFromUI(); loadMedia(1); });
+    el.addEventListener("change", () => {
+      if (viewMode === "albums") return;
+      syncFromUI();
+      loadMedia(1);
+    });
   });
 
   [chkFolder, chkCompact, chkGroupFolder].forEach(el => {
@@ -542,7 +664,10 @@
     detailPane.classList.remove("open");
   });
 
+<<<<<<< HEAD
   // View toggle buttons
+=======
+>>>>>>> b8c28f3 (Aggiorna album)
   btnViewAlbums.addEventListener("click", () => {
     loadAlbums();
   });
@@ -555,8 +680,11 @@
     loadMedia(1);
   });
 
+<<<<<<< HEAD
   // Breadcrumb back button
   const btnAlbumBack = document.getElementById("btn-album-back");
+=======
+>>>>>>> b8c28f3 (Aggiorna album)
   if (btnAlbumBack) {
     btnAlbumBack.addEventListener("click", () => {
       loadAlbums();

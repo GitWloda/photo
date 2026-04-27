@@ -465,3 +465,113 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
+
+/* ─── VIEW TOGGLE ────────────────────────────────────────── */
+.view-toggle {
+  display: flex; gap: 4px;
+  background: var(--bg3); border-radius: var(--radius-sm);
+  padding: 3px; flex-shrink: 0;
+}
+.view-toggle .btn { border: none; border-radius: calc(var(--radius-sm) - 2px); }
+.view-toggle .btn.active {
+  background: var(--bg2); color: var(--primary);
+  box-shadow: 0 1px 4px rgba(1,4,9,.4);
+}
+
+/* ─── ALBUM BREADCRUMB ───────────────────────────────────── */
+.album-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 14px; font-size: 12px;
+  color: var(--text-muted); font-weight: 500;
+  border-top: 1px solid var(--border);
+}
+.album-breadcrumb svg { color: var(--text-faint); flex-shrink: 0; }
+#album-breadcrumb-label { color: var(--text); font-weight: 600; }
+.hidden { display: none !important; }
+
+/* ─── ALBUMS GRID ────────────────────────────────────────── */
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 4px;
+}
+
+/* ─── ALBUM CARD ─────────────────────────────────────────── */
+.album-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  display: flex; flex-direction: column;
+}
+.album-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: rgba(56,139,253,.4);
+}
+
+.album-cover {
+  position: relative;
+  width: 100%; aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--bg3);
+}
+.album-cover img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .3s ease;
+}
+.album-card:hover .album-cover img { transform: scale(1.05); }
+
+.album-cover-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-faint);
+}
+
+.album-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 20px 10px 8px;
+  background: linear-gradient(transparent, rgba(1,4,9,.7));
+  display: flex; align-items: flex-end; justify-content: flex-end;
+}
+.album-count {
+  font-size: 11px; font-weight: 600; color: #ffffffcc;
+  background: rgba(1,4,9,.5); padding: 2px 7px;
+  border-radius: 999px; backdrop-filter: blur(4px);
+}
+
+.album-body {
+  padding: 10px 12px 12px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.album-name {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.album-path {
+  font-size: 10px; color: #79c0ff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.album-date { font-size: 10px; color: var(--text-faint); }
+
+/* ─── PAGINATION HIDDEN IN ALBUM VIEW ───────────────────── */
+.pagination.hidden { display: none !important; }
+.albums-hidden { display: none !important; }
+
+.album-rotating-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 1;
+  transition: opacity 180ms ease, transform .3s ease;
+  will-change: opacity;
+}
+
+.album-rotating-thumb.is-fading {
+  opacity: 0.18;
+}
