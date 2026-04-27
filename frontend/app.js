@@ -70,6 +70,10 @@
     groupFolder:false,
   };
 
+  // Persistent per-folder UI state: collapsed/expanded + album view
+  // Key: folderName (string), Value: { collapsed: bool, albumView: bool }
+  const folderGroupStates = new Map();
+
   let currentItems      = [];
   let currentTotal      = 0;
   let currentTotalPages = 1;
@@ -285,6 +289,36 @@
     return card;
   }
 
+  /* ── Render album-style tile for folder group ── */
+  function makeGroupAlbumTile(item) {
+    const tile = document.createElement("article");
+    tile.className = "group-album-tile" + (item.id === selectedId ? " selected" : "");
+    tile.dataset.id = item.id;
+
+    const isVideo = item.media_kind === "video";
+    const thumb   = item.thumb_url || item.file_url;
+
+    const thumbTag = isVideo
+      ? `<video class="group-album-thumb" src="${esc(thumb)}" preload="metadata" muted playsinline></video>`
+      : `<img class="group-album-thumb" src="${esc(thumb)}" alt="${esc(item.filename)}" loading="lazy" decoding="async">`;
+
+    const badgeHTML = isVideo
+      ? `<span class="card-badge badge-video">VIDEO</span>`
+      : `<span class="card-badge">${esc(item.extension || "").toUpperCase()}</span>`;
+
+    tile.innerHTML = `
+      <div class="group-album-cover">
+        ${thumbTag}
+        ${badgeHTML}
+        <div class="group-album-overlay">
+          <span class="group-album-name">${esc(item.filename)}</span>
+        </div>
+      </div>`;
+
+    tile.addEventListener("click", () => openDetail(item.id));
+    return tile;
+  }
+
   /* ── Album rotation ───────────────────────────── */
   function startAlbumRotation(card, thumbs) {
     if (!Array.isArray(thumbs) || thumbs.length <= 1) return;
@@ -372,7 +406,7 @@
     gallery.innerHTML = "";
     gallery.className = "albums-grid";
     emptyState.classList.add("hidden");
-    resultsText.textContent = "Caricamento album…";
+    resultsText.textContent = "Caricamento album\u2026";
     detailPane.classList.remove("open");
 
     try {
@@ -395,6 +429,14 @@
     }
   }
 
+  /* ── Get or init per-folder state ────────────── */
+  function getFolderState(folderName) {
+    if (!folderGroupStates.has(folderName)) {
+      folderGroupStates.set(folderName, { collapsed: false, albumView: false });
+    }
+    return folderGroupStates.get(folderName);
+  }
+
   /* ── Render gallery ───────────────────────────── */
   function renderGallery(items) {
     gallery.innerHTML = "";
@@ -415,18 +457,88 @@
       });
 
       groups.forEach((groupItems, folderName) => {
+        const fs = getFolderState(folderName);
+
         const section = document.createElement("div");
         section.className = "folder-group";
-        section.innerHTML = `
-          <div class="folder-group-header">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+
+        // ── Header
+        const header = document.createElement("div");
+        header.className = "folder-group-header" + (fs.collapsed ? " collapsed" : "");
+        header.innerHTML = `
+          <button class="folder-group-toggle" aria-label="${fs.collapsed ? "Espandi" : "Comprimi"} cartella ${esc(folderName)}">
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"/>
             </svg>
-            ${esc(folderName)} <span style="color:var(--text-faint);font-weight:400;">(${groupItems.length})</span>
-          </div>
-          <div class="folder-group-grid"></div>`;
-        const grid = section.querySelector(".folder-group-grid");
-        groupItems.forEach(item => grid.appendChild(makeCard(item)));
+          </button>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span class="folder-group-name">${esc(folderName)}</span>
+          <span class="folder-group-count">(${groupItems.length})</span>
+          <div class="folder-group-actions">
+            <button class="btn btn-sm btn-ghost folder-album-toggle ${fs.albumView ? "active" : ""}"
+              title="${fs.albumView ? "Vista griglia" : "Vista album"}"
+              aria-pressed="${fs.albumView}">
+              ${fs.albumView
+                ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Griglia`
+                : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="m2 9 4-4 4 4 4-4 4 4"/><circle cx="7.5" cy="15.5" r="1.5"/></svg> Album`
+              }
+            </button>
+          </div>`;
+
+        // ── Content area
+        const content = document.createElement("div");
+        content.className = "folder-group-content" + (fs.collapsed ? " collapsed" : "");
+
+        const grid = document.createElement("div");
+        if (fs.albumView) {
+          grid.className = "folder-group-album-grid";
+          groupItems.forEach(item => grid.appendChild(makeGroupAlbumTile(item)));
+        } else {
+          grid.className = "folder-group-grid";
+          groupItems.forEach(item => grid.appendChild(makeCard(item)));
+        }
+
+        content.appendChild(grid);
+        section.appendChild(header);
+        section.appendChild(content);
+
+        // ── Toggle collapse on header (but not on buttons)
+        header.addEventListener("click", e => {
+          if (e.target.closest(".folder-group-actions")) return;
+          fs.collapsed = !fs.collapsed;
+          header.classList.toggle("collapsed", fs.collapsed);
+          content.classList.toggle("collapsed", fs.collapsed);
+          const toggleBtn = header.querySelector(".folder-group-toggle");
+          toggleBtn.setAttribute("aria-label", `${fs.collapsed ? "Espandi" : "Comprimi"} cartella ${folderName}`);
+        });
+
+        // ── Toggle album view
+        const albumToggleBtn = header.querySelector(".folder-album-toggle");
+        albumToggleBtn.addEventListener("click", e => {
+          e.stopPropagation();
+          fs.albumView = !fs.albumView;
+          // Re-render only this group's grid
+          grid.remove();
+          const newGrid = document.createElement("div");
+          if (fs.albumView) {
+            newGrid.className = "folder-group-album-grid";
+            groupItems.forEach(item => newGrid.appendChild(makeGroupAlbumTile(item)));
+          } else {
+            newGrid.className = "folder-group-grid";
+            groupItems.forEach(item => newGrid.appendChild(makeCard(item)));
+          }
+          content.appendChild(newGrid);
+
+          albumToggleBtn.classList.toggle("active", fs.albumView);
+          albumToggleBtn.setAttribute("aria-pressed", String(fs.albumView));
+          albumToggleBtn.setAttribute("title", fs.albumView ? "Vista griglia" : "Vista album");
+          albumToggleBtn.innerHTML = fs.albumView
+            ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Griglia`
+            : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="m2 9 4-4 4 4 4-4 4 4"/><circle cx="7.5" cy="15.5" r="1.5"/></svg> Album`;
+        });
+
         gallery.appendChild(section);
       });
     } else {
@@ -443,7 +555,7 @@
     const from = currentTotal === 0 ? 0 : (cp - 1) * PAGE_LIMIT + 1;
     const to   = Math.min(cp * PAGE_LIMIT, currentTotal);
 
-    resultsText.textContent = `${currentTotal} elementi — ${from}-${to}`;
+    resultsText.textContent = `${currentTotal} elementi \u2014 ${from}-${to}`;
     pageInfo.textContent    = `Pagina ${cp} / ${tp}`;
     pageLabel.textContent   = `${cp} / ${tp}`;
 
@@ -486,12 +598,12 @@
   /* ── Open detail ──────────────────────────────── */
   async function openDetail(id) {
     selectedId = id;
-    document.querySelectorAll(".card").forEach(c => {
+    document.querySelectorAll(".card, .group-album-tile").forEach(c => {
       c.classList.toggle("selected", +c.dataset.id === +id);
     });
 
     detailPane.classList.add("open");
-    detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento…</p></div>`;
+    detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento\u2026</p></div>`;
 
     try {
       const d = await api(`/media/${id}`);
@@ -503,7 +615,7 @@
         d.mtime      && `Data: ${fmtTs(d.mtime)}`,
         d.model      && `AI: ${d.model}`,
         d.language   && `Lingua: ${d.language}`,
-        d.parent_folder && `📁 ${d.parent_folder}`,
+        d.parent_folder && `\uD83D\uDCC1 ${d.parent_folder}`,
       ].filter(Boolean);
 
       const metaRows = [
