@@ -12,6 +12,19 @@
   <header class="topbar">
     <div class="topbar-row topbar-main">
       <h1 class="logo">📷 Photo Gallery AI</h1>
+
+      <!-- VIEW MODE TOGGLE -->
+      <div class="view-toggle" role="group" aria-label="Modalità visualizzazione">
+        <button id="btn-view-all" class="btn btn-ghost btn-sm active" aria-pressed="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Tutto
+        </button>
+        <button id="btn-view-albums" class="btn btn-ghost btn-sm" aria-pressed="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          Album
+        </button>
+      </div>
+
       <div class="search-wrap">
         <form id="search-form">
           <input id="search-input" type="text" placeholder="Cerca nome, percorso, descrizione…" autocomplete="off" />
@@ -24,6 +37,16 @@
         <span>Filtri</span>
         <span id="filter-badge" class="filter-badge hidden">0</span>
       </button>
+    </div>
+
+    <!-- ALBUM BREADCRUMB (shown when inside an album) -->
+    <div id="album-breadcrumb" class="album-breadcrumb hidden">
+      <button id="btn-album-back" class="btn btn-ghost btn-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Album
+      </button>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      <span id="album-breadcrumb-label"></span>
     </div>
 
     <div id="filter-panel" class="filter-panel collapsed">
