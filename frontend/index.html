@@ -11,8 +11,10 @@
 </head>
 <body>
 
+  <!-- ═══════════════════ TOPBAR ═══════════════════ -->
   <header class="topbar">
     <div class="topbar-main">
+
       <a href="#" class="topbar-logo" aria-label="Photo Gallery AI">
         <div class="topbar-logo-icon">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -32,10 +34,8 @@
       <div class="view-tabs" role="group" aria-label="Modalità visualizzazione">
         <button id="btn-view-all" class="view-tab active" aria-pressed="true">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
           </svg>
           <span>Tutto</span>
         </button>
@@ -49,7 +49,7 @@
 
       <div class="topbar-sep"></div>
 
-      <div class="search-wrap topbar-search-wrap">
+      <div class="topbar-search-wrap">
         <form id="search-form" class="topbar-search-form" role="search">
           <span class="search-icon" aria-hidden="true">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -57,18 +57,20 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </span>
-          <input id="search-input" class="topbar-search-input" type="search" placeholder="Cerca nome, percorso, descrizione…" autocomplete="off" aria-label="Cerca foto e video" />
+          <input id="search-input" class="topbar-search-input" type="search"
+            placeholder="Cerca nome, percorso, descrizione…"
+            autocomplete="off" aria-label="Cerca foto e video" />
           <button type="button" id="clear-btn" class="search-clear" aria-label="Cancella ricerca">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
             </svg>
           </button>
         </form>
       </div>
 
       <div class="topbar-actions">
-        <button id="toggle-filters-btn" class="tbtn tbtn-filter" aria-expanded="false" aria-controls="filter-panel">
+        <button id="toggle-filters-btn" class="tbtn tbtn-filter"
+          aria-expanded="false" aria-controls="filter-panel">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="4" y1="6" x2="20" y2="6"/>
             <line x1="8" y1="12" x2="16" y2="12"/>
@@ -80,6 +82,7 @@
       </div>
     </div>
 
+    <!-- breadcrumb album -->
     <div id="album-breadcrumb" class="topbar-breadcrumb hidden">
       <button id="btn-album-back" class="bc-back">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -95,6 +98,7 @@
       <span id="album-breadcrumb-label" class="bc-label"></span>
     </div>
 
+    <!-- filter panel -->
     <div id="filter-panel" class="filter-panel">
       <div class="filter-panel-inner">
         <div class="filter-panel-body">
@@ -174,11 +178,14 @@
     </div>
   </header>
 
-  <main class="main-layout has-left-detail">
-    <aside id="detail-pane" class="detail-pane detail-pane-left">
+  <!-- ═══════════════════ MAIN ═══════════════════ -->
+  <main class="main-layout">
+
+    <!-- Detail pane (desktop: colonna sinistra sticky; mobile: popup) -->
+    <aside id="detail-pane" class="detail-pane">
       <div class="detail-pane-toolbar">
-        <button id="detail-prev" class="btn btn-ghost btn-icon" aria-label="Contenuto precedente">←</button>
-        <button id="detail-next" class="btn btn-ghost btn-icon" aria-label="Contenuto successivo">→</button>
+        <button id="detail-prev" class="btn btn-ghost btn-icon" aria-label="Elemento precedente">←</button>
+        <button id="detail-next" class="btn btn-ghost btn-icon" aria-label="Elemento successivo">→</button>
         <button id="detail-close" class="detail-close btn btn-ghost btn-icon" aria-label="Chiudi dettagli">✕</button>
       </div>
       <div id="detail-content" class="detail-content">
@@ -193,7 +200,8 @@
       </div>
     </aside>
 
-    <section class="gallery-pane gallery-pane-main">
+    <!-- Gallery pane -->
+    <section class="gallery-pane">
       <div class="results-bar">
         <span id="results-text">Caricamento…</span>
         <span id="page-info"></span>
@@ -204,16 +212,18 @@
         <div id="empty-state" class="empty-state hidden">Nessun elemento trovato.</div>
       </div>
 
-      <nav class="pagination" aria-label="Paginazione">
-        <button id="btn-first"  class="btn btn-ghost btn-sm" disabled>«</button>
-        <button id="btn-prev"   class="btn btn-ghost btn-sm" disabled>‹</button>
-        <span id="page-label"   class="page-label"></span>
-        <button id="btn-next"   class="btn btn-ghost btn-sm" disabled>›</button>
-        <button id="btn-last"   class="btn btn-ghost btn-sm" disabled>»</button>
+      <!-- paginazione (nascosta di default; usata solo in modalità paginated) -->
+      <nav class="pagination hidden" aria-label="Paginazione">
+        <button id="btn-first" class="btn btn-ghost btn-sm" disabled>«</button>
+        <button id="btn-prev"  class="btn btn-ghost btn-sm" disabled>‹</button>
+        <span   id="page-label" class="page-label"></span>
+        <button id="btn-next"  class="btn btn-ghost btn-sm" disabled>›</button>
+        <button id="btn-last"  class="btn btn-ghost btn-sm" disabled>»</button>
       </nav>
     </section>
   </main>
 
+  <!-- Mobile backdrop -->
   <div id="detail-backdrop" class="detail-backdrop"></div>
 
   <script src="/app.js"></script>
