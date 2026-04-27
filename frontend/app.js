@@ -40,8 +40,15 @@
   const btnNext        = document.getElementById("btn-next");
   const btnLast        = document.getElementById("btn-last");
 
+  const btnViewAlbums  = document.getElementById("btn-view-albums");
+  const btnViewAll     = document.getElementById("btn-view-all");
+  const albumBreadcrumb = document.getElementById("album-breadcrumb");
+
   /* ── State ────────────────────────────────────── */
   const PAGE_LIMIT = 100;
+
+  // viewMode: "all" | "albums" | "album-detail"
+  let viewMode = "all";
 
   const state = {
     q:          "",
@@ -88,6 +95,32 @@
     const r = await fetch(url);
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     return r.json();
+  }
+
+  /* ── View mode helpers ────────────────────────── */
+  function setViewMode(mode) {
+    viewMode = mode;
+    const isAlbums = mode === "albums";
+    const isAlbumDetail = mode === "album-detail";
+    const isAll = mode === "all";
+
+    // Toggle button states
+    btnViewAlbums.classList.toggle("active", isAlbums || isAlbumDetail);
+    btnViewAll.classList.toggle("active", isAll);
+
+    // Breadcrumb bar
+    albumBreadcrumb.classList.toggle("hidden", !isAlbumDetail);
+
+    // Filter panel and search: hide when in albums mode
+    const hideControls = isAlbums;
+    document.querySelector(".search-wrap").classList.toggle("hidden-xs", hideControls);
+    toggleFiltersBtn.classList.toggle("hidden-xs", hideControls);
+
+    // Pagination: hide in albums mode
+    document.querySelector(".pagination").classList.toggle("hidden", isAlbums);
+
+    // Detail pane: hide in albums mode
+    detailPane.classList.toggle("albums-hidden", isAlbums);
   }
 
   /* ── Filter panel toggle ──────────────────────── */
@@ -223,7 +256,7 @@
       : `<span class="card-badge">${esc(item.extension || "").toUpperCase()}</span>`;
 
     const folderHTML = state.showFolder && item.parent_folder
-      ? `<div class="card-folder">📁 ${esc(item.parent_folder)}</div>`
+      ? `<div class="card-folder">\uD83D\uDCC1 ${esc(item.parent_folder)}</div>`
       : "";
 
     card.innerHTML = `
@@ -243,6 +276,85 @@
 
     card.addEventListener("click", () => openDetail(item.id));
     return card;
+  }
+
+  /* ── Render album card ────────────────────────── */
+  function makeAlbumCard(album) {
+    const card = document.createElement("article");
+    card.className = "album-card";
+
+    const folderName = album.folder === "(radice)" ? "/ (radice)" : album.folder.split("/").pop();
+    const folderPath = album.folder === "(radice)" ? "" : album.folder;
+    const coverUrl   = album.cover_thumb || "";
+    const dateStr    = album.last_mtime ? fmtTs(album.last_mtime) : "";
+    const subfolderParts = album.folder.split("/");
+    const parentPath = subfolderParts.length > 1
+      ? subfolderParts.slice(0, -1).join(" / ")
+      : "";
+
+    card.innerHTML = `
+      <div class="album-cover">
+        ${coverUrl
+          ? `<img src="${esc(coverUrl)}" alt="${esc(folderName)}" loading="lazy" decoding="async">`
+          : `<div class="album-cover-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>`
+        }
+        <div class="album-overlay">
+          <span class="album-count">${album.count} elementi</span>
+        </div>
+      </div>
+      <div class="album-body">
+        <div class="album-name" title="${esc(album.folder)}">${esc(folderName)}</div>
+        ${parentPath ? `<div class="album-path">${esc(parentPath)}</div>` : ""}
+        ${dateStr ? `<div class="album-date">${esc(dateStr)}</div>` : ""}
+      </div>`;
+
+    card.addEventListener("click", () => openAlbum(folderPath, folderName));
+    return card;
+  }
+
+  /* ── Open album (drill into folder) ──────────── */
+  function openAlbum(folderPath, folderName) {
+    state.folder = folderPath;
+    if (selFolder) selFolder.value = folderPath;
+
+    // Update breadcrumb
+    const label = document.getElementById("album-breadcrumb-label");
+    if (label) label.textContent = folderName || folderPath || "radice";
+
+    setViewMode("album-detail");
+    syncFromUI();
+    loadMedia(1);
+  }
+
+  /* ── Load albums view ─────────────────────────── */
+  async function loadAlbums() {
+    setViewMode("albums");
+    gallery.innerHTML = "";
+    gallery.className = "albums-grid";
+    emptyState.classList.add("hidden");
+    resultsText.textContent = "Caricamento album\u2026";
+
+    // Hide detail pane
+    detailPane.classList.remove("open");
+
+    try {
+      const albums = await api("/albums");
+      resultsText.textContent = `${albums.length} album`;
+
+      if (!albums.length) {
+        emptyState.classList.remove("hidden");
+        emptyState.textContent = "Nessun album trovato.";
+        gallery.appendChild(emptyState);
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      albums.forEach(a => frag.appendChild(makeAlbumCard(a)));
+      gallery.appendChild(frag);
+    } catch (err) {
+      console.error(err);
+      resultsText.textContent = "Errore caricamento album";
+    }
   }
 
   /* ── Render gallery ───────────────────────────── */
@@ -293,7 +405,7 @@
     const from = currentTotal === 0 ? 0 : (cp - 1) * PAGE_LIMIT + 1;
     const to   = Math.min(cp * PAGE_LIMIT, currentTotal);
 
-    resultsText.textContent = `${currentTotal} elementi — ${from}-${to}`;
+    resultsText.textContent = `${currentTotal} elementi \u2014 ${from}-${to}`;
     pageInfo.textContent    = `Pagina ${cp} / ${tp}`;
     pageLabel.textContent   = `${cp} / ${tp}`;
 
@@ -335,15 +447,13 @@
   /* ── Open detail ──────────────────────────────── */
   async function openDetail(id) {
     selectedId = id;
-    // highlight
     document.querySelectorAll(".card").forEach(c => {
       c.classList.toggle("selected", +c.dataset.id === +id);
     });
 
-    // mobile: show panel
     detailPane.classList.add("open");
 
-    detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento…</p></div>`;
+    detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento\u2026</p></div>`;
 
     try {
       const d = await api(`/media/${id}`);
@@ -355,7 +465,7 @@
         d.mtime      && `Data: ${fmtTs(d.mtime)}`,
         d.model      && `AI: ${d.model}`,
         d.language   && `Lingua: ${d.language}`,
-        d.parent_folder && `📁 ${d.parent_folder}`,
+        d.parent_folder && `\uD83D\uDCC1 ${d.parent_folder}`,
       ].filter(Boolean);
 
       const metaRows = [
@@ -403,7 +513,10 @@
 
   /* ── Events ───────────────────────────────────── */
   searchForm.addEventListener("submit", e => {
-    e.preventDefault(); syncFromUI(); loadMedia(1);
+    e.preventDefault();
+    if (viewMode === "albums") return;
+    if (viewMode === "album-detail") setViewMode("all");
+    syncFromUI(); loadMedia(1);
   });
 
   clearBtn.addEventListener("click", () => { resetState(); loadMedia(1); });
@@ -416,7 +529,7 @@
   [chkFolder, chkCompact, chkGroupFolder].forEach(el => {
     el.addEventListener("change", () => {
       syncFromUI();
-      renderGallery(currentItems);
+      if (viewMode !== "albums") renderGallery(currentItems);
     });
   });
 
@@ -428,6 +541,27 @@
   detailClose.addEventListener("click", () => {
     detailPane.classList.remove("open");
   });
+
+  // View toggle buttons
+  btnViewAlbums.addEventListener("click", () => {
+    loadAlbums();
+  });
+
+  btnViewAll.addEventListener("click", () => {
+    state.folder = "";
+    if (selFolder) selFolder.value = "";
+    setViewMode("all");
+    syncFromUI();
+    loadMedia(1);
+  });
+
+  // Breadcrumb back button
+  const btnAlbumBack = document.getElementById("btn-album-back");
+  if (btnAlbumBack) {
+    btnAlbumBack.addEventListener("click", () => {
+      loadAlbums();
+    });
+  }
 
   /* ── Init ─────────────────────────────────────── */
   async function init() {
