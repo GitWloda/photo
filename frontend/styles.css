@@ -1261,8 +1261,6 @@ a { color: var(--primary); text-decoration: none; }
     scroll-behavior: auto !important;
   }
 }
-<<<<<<< HEAD
-=======
 /* ── Badge duplicati sulla card ───────────────────── */
 .card-badge.badge-dupes {
   background: #7c3aed;
@@ -1458,4 +1456,3 @@ a { color: var(--primary); text-decoration: none; }
 .hidden {
   display: none !important;
 }
->>>>>>> 24e029d (deduplicazione)

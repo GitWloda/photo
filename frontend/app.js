@@ -119,10 +119,6 @@
       document.body.classList.remove("detail-open-mobile");
       detailBackdropEl?.classList.remove("open");
     }
-<<<<<<< HEAD
-    // aggiorna stato pulsanti prev/next nella toolbar
-=======
->>>>>>> 24e029d (deduplicazione)
     updateNavButtons();
   }
 
@@ -131,19 +127,11 @@
     if (clearSel) { selectedId = null; updateSelectedCards(); }
   }
 
-<<<<<<< HEAD
-  /* ─── Nav buttons (toolbar del detail pane) ─────────────── */
-
-  function updateNavButtons() {
-    if (!detailPrev || !detailNext) return;
-    const idx = getSelectedIndex();
-=======
   /* ─── Nav buttons ────────────────────────────────────────── */
 
   function updateNavButtons() {
     if (!detailPrev || !detailNext) return;
     const idx  = getSelectedIndex();
->>>>>>> 24e029d (deduplicazione)
     const open = detailPane.classList.contains("open");
     detailPrev.disabled = !open || idx <= 0;
     detailNext.disabled = !open || (idx >= currentItems.length - 1 && !hasMore);
@@ -361,11 +349,7 @@
     const p = new URLSearchParams();
     p.set("page",  String(page));
     p.set("limit", String(PAGE_LIMIT));
-<<<<<<< HEAD
-    p.set("sort", state.sort);
-=======
     p.set("sort",  state.sort);
->>>>>>> 24e029d (deduplicazione)
     if (state.q)          p.set("q",          state.q);
     if (state.mediaKind)  p.set("media_kind",  state.mediaKind);
     if (state.ext)        p.set("ext",         state.ext);
@@ -381,11 +365,7 @@
   /* ─── Card / tile factories ─────────────────────────────── */
 
   function makeCard(item) {
-<<<<<<< HEAD
-    const card   = document.createElement("article");
-=======
     const card    = document.createElement("article");
->>>>>>> 24e029d (deduplicazione)
     card.className = "card" + (item.id === selectedId ? " selected" : "");
     card.dataset.id = item.id;
     const isVideo = item.media_kind === "video";
@@ -396,12 +376,6 @@
     const badgeHTML = isVideo
       ? `<span class="card-badge badge-video">VIDEO</span>`
       : `<span class="card-badge">${esc((item.extension || "").toUpperCase())}</span>`;
-<<<<<<< HEAD
-    const folderHTML = state.showFolder && item.parent_folder
-      ? `<div class="card-folder">📁 ${esc(item.parent_folder)}</div>` : "";
-    card.innerHTML = `
-      <div class="card-thumb-wrap">${thumbTag}${badgeHTML}</div>
-=======
 
     // Badge duplicati: visibile solo se ci sono più copie fisiche
     const dupesCount = item.file_count || 1;
@@ -413,7 +387,6 @@
       ? `<div class="card-folder">📁 ${esc(item.parent_folder)}</div>` : "";
     card.innerHTML = `
       <div class="card-thumb-wrap">${thumbTag}${badgeHTML}${dupesBadge}</div>
->>>>>>> 24e029d (deduplicazione)
       <div class="card-body">
         ${folderHTML}
         <div class="card-name" title="${esc(item.filename)}">${esc(item.filename)}</div>
@@ -439,11 +412,6 @@
     const badgeHTML = isVideo
       ? `<span class="card-badge badge-video">VIDEO</span>`
       : `<span class="card-badge">${esc((item.extension || "").toUpperCase())}</span>`;
-<<<<<<< HEAD
-    tile.innerHTML = `
-      <div class="group-album-cover">
-        ${thumbTag}${badgeHTML}
-=======
     const dupesCount = item.file_count || 1;
     const dupesBadge = dupesCount > 1
       ? `<span class="card-badge badge-dupes" title="${dupesCount} copie">×${dupesCount}</span>`
@@ -451,7 +419,6 @@
     tile.innerHTML = `
       <div class="group-album-cover">
         ${thumbTag}${badgeHTML}${dupesBadge}
->>>>>>> 24e029d (deduplicazione)
         <div class="group-album-overlay">
           <span class="group-album-name">${esc(item.filename)}</span>
         </div>
@@ -705,11 +672,7 @@
     try {
       const data = await api(buildUrl(page));
       if (token !== currentQueryToken) return;
-<<<<<<< HEAD
-      const items = data.items || [];
-=======
       const items       = data.items || [];
->>>>>>> 24e029d (deduplicazione)
       currentPage       = data.page || page;
       currentTotal      = data.total || 0;
       currentTotalPages = data.total_pages || Math.max(1, Math.ceil(currentTotal / PAGE_LIMIT));
@@ -753,46 +716,6 @@
   /* ─── Detail panel content ──────────────────────────────── */
 
   async function openDetail(id) {
-<<<<<<< HEAD
-    selectedId = id;
-    updateSelectedCards();
-    setDetailOpen(true);
-    const detailToken = ++currentDetailToken;
-    detailContent.innerHTML = `<div class="detail-placeholder"><p>Caricamento…</p></div>`;
-    try {
-      const d = await api(`/media/${id}`);
-      if (detailToken !== currentDetailToken) return;
-
-      const chips = [
-        d.media_kind && `Tipo: ${d.media_kind}`,
-        d.extension  && `Ext: .${d.extension}`,
-        d.size_bytes != null && `Peso: ${fmtSize(d.size_bytes)}`,
-        d.mtime      && `Data: ${fmtTs(d.mtime)}`,
-        d.model      && `AI: ${d.model}`,
-        d.language   && `Lingua: ${d.language}`,
-        d.parent_folder && `📁 ${d.parent_folder}`,
-      ].filter(Boolean);
-
-      const metaRows = [
-        ["Nome",       d.filename],
-        ["Estensione", d.extension],
-        ["Cartella",   d.parent_folder],
-        ["Percorso",   d.relative_path],
-        ["Peso",       fmtSize(d.size_bytes)],
-        ["Data file",  fmtTs(d.mtime)],
-        ["SHA256",     d.sha256],
-      ].filter(r => r[1]).map(r =>
-        `<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`
-      ).join("");
-
-      const exifKeys = ["Make","Model","CameraID","LensModel","CreateDate",
-        "DateTimeOriginal","ISO","FNumber","ExposureTime","ImageWidth","ImageHeight"];
-      const meta     = d.metadata || {};
-      const exifRows = [...new Set([...exifKeys, ...Object.keys(meta)])]
-        .filter(k => meta[k] != null && String(meta[k]).trim())
-        .map(k => `<tr><th>${esc(k)}</th><td>${esc(String(meta[k]))}</td></tr>`)
-        .join("");
-=======
   selectedId = id;
   updateSelectedCards();
   setDetailOpen(true);
@@ -913,7 +836,6 @@
       exifBodyEl.innerHTML = exifRows;
       exifTitleEl.classList.toggle("hidden", !exifRows);
       exifTableEl.classList.toggle("hidden", !exifRows);
->>>>>>> 24e029d (deduplicazione)
 
       const mediaZone = detailContent.querySelector(".d-media");
       if (mediaZone && !mediaZone.dataset.swipeBound) {
@@ -925,36 +847,6 @@
           sy = t.clientY;
         }, { passive: true });
 
-<<<<<<< HEAD
-      detailContent.innerHTML = `
-        <div class="d-media">${mediaTag}</div>
-        <div class="detail-swipe-hint">← Swipe per navigare →</div>
-        <div class="d-title">${esc(d.title || d.filename)}</div>
-        ${d.relative_path ? `<div class="d-path">${esc(d.relative_path)}</div>` : ""}
-        <div class="d-chips">${chips.map(c => `<span class="d-chip">${esc(c)}</span>`).join("")}</div>
-        ${d.description ? `<div class="d-section">Descrizione AI</div><p class="d-desc">${esc(d.description)}</p>` : ""}
-        <div class="d-section">Info file</div>
-        <table class="d-table"><tbody>${metaRows}</tbody></table>
-        ${exifRows ? `<div class="d-section">Metadati EXIF</div><table class="d-table"><tbody>${exifRows}</tbody></table>` : ""}
-      `;
-
-      // touch swipe sul media
-      const mediaZone = detailContent.querySelector(".d-media");
-      if (mediaZone) {
-        let sx = 0, sy = 0;
-        mediaZone.addEventListener("touchstart", e => { const t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
-        mediaZone.addEventListener("touchend",   e => {
-          const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
-          if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
-          navigateDetail(dx < 0 ? 1 : -1);
-        }, { passive: true });
-      }
-
-      updateNavButtons();
-    } catch (e) {
-      if (detailToken !== currentDetailToken) return;
-      detailContent.innerHTML = `<div class="detail-placeholder"><p>Errore: ${esc(e.message)}</p></div>`;
-=======
         mediaZone.addEventListener("touchend", e => {
           const t = e.changedTouches[0];
           const dx = t.clientX - sx;
@@ -1004,7 +896,6 @@
           renderDuplicatesPanel();
         });
       });
->>>>>>> 24e029d (deduplicazione)
     }
 
     dupesToggle?.addEventListener("click", () => {
@@ -1022,8 +913,6 @@
     detailContent.innerHTML = `<div class="detail-placeholder"><p>Errore: ${esc(e.message)}</p></div>`;
   }
 }
-
-  /* ─── Event listeners ───────────────────────────────────── */
 
   /* ─── Event listeners ───────────────────────────────────── */
 
@@ -1109,8 +998,4 @@
 
   init();
 
-<<<<<<< HEAD
 })();
-=======
-})();
->>>>>>> 24e029d (deduplicazione)
