@@ -3,6 +3,7 @@ import json
 import mimetypes
 import os
 import re
+import shutil
 import sqlite3
 import sys
 import urllib.parse
@@ -31,6 +32,7 @@ load_env_file(ENV_FILE)
 DB_PATH    = os.environ.get("DB_PATH",    os.path.join(ROOT_DIR, "db", "gallery.db"))
 PHOTO_ROOT = os.environ.get("PHOTO_ROOT", os.path.expanduser("~/Pictures"))
 THUMB_DIR  = os.environ.get("THUMB_DIR",  os.path.join(ROOT_DIR, "data", "thumbs"))
+TRASH_DIR  = os.environ.get("TRASH_DIR",  os.path.join(PHOTO_ROOT, ".trash"))
 HOST       = os.environ.get("HOST", "127.0.0.1")
 PORT       = int(os.environ.get("PORT", "8080"))
 
@@ -40,6 +42,7 @@ PHOTO_ROOT = os.path.abspath(PHOTO_ROOT)
 if not os.path.isabs(THUMB_DIR):
     THUMB_DIR = os.path.join(ROOT_DIR, THUMB_DIR)
 THUMB_DIR = os.path.abspath(THUMB_DIR)
+TRASH_DIR = os.path.abspath(TRASH_DIR)
 
 WHITE  = "\033[97m"
 YELLOW = "\033[33m"
@@ -267,6 +270,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self.handle_filters()
         if path == "/albums":
             return self.handle_albums()
+        if path == "/trash":
+            return self.handle_trash_list(query)
         if path.startswith("/media/"):
             parts = path.strip("/").split("/")
             if len(parts) == 2:
@@ -275,6 +280,31 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self.handle_search(query.get("q", [""])[0])
 
         log_warn(f"route non trovata: {path}")
+        try:
+            self.send_error(404, "Not found")
+        except (BrokenPipeError, ConnectionResetError, OSError):
+            pass
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path   = parsed.path
+        log_run(f"POST {self.path}")
+
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+            body   = self.rfile.read(length)
+            data   = json.loads(body) if body else {}
+        except Exception:
+            data = {}
+
+        if path == "/trash":
+            return self.handle_trash_move(data)
+        if path == "/trash/restore":
+            return self.handle_trash_restore(data)
+        if path == "/trash/delete":
+            return self.handle_trash_delete(data)
+
+        log_warn(f"POST route non trovata: {path}")
         try:
             self.send_error(404, "Not found")
         except (BrokenPipeError, ConnectionResetError, OSError):
@@ -420,7 +450,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
         }
         order_sql = order_map.get(sort, order_map["created_desc"])
 
-        # rep_af = file "rappresentante" per ogni asset (il primo inserito)
         base_from = f"""
             FROM assets
             JOIN (
@@ -450,6 +479,7 @@ class GalleryHandler(BaseHTTPRequestHandler):
                        assets.media_kind,
                        assets.created_at,
                        assets.updated_at,
+                       rep_af.id        AS rep_file_id,
                        rep_af.filename,
                        rep_af.relative_path,
                        rep_af.thumb_path,
@@ -506,7 +536,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 "updated_at":    r["updated_at"],
                 "mtime":         r["mtime"],
                 "extension":     ext_value,
-                "file_count":    r["file_count"],       # <-- NUOVO
+                "file_count":    r["file_count"],
+                "rep_file_id":   r["rep_file_id"],
                 "metadata": {
                     "Make":      metadata.get("Make"),
                     "Model":     metadata.get("Model"),
@@ -666,11 +697,10 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 (asset_id,),
             ).fetchone()
 
-            # Tutti i file fisici collegati a questo asset
             all_files = conn.execute(
                 """
                 SELECT id, filename, relative_path, absolute_path,
-                       sha256, size_bytes, mtime, thumb_path
+                       sha256, size_bytes, mtime, thumb_path, metadata_json
                 FROM asset_files
                 WHERE asset_id = ?
                 ORDER BY id ASC
@@ -708,7 +738,6 @@ class GalleryHandler(BaseHTTPRequestHandler):
             if row["filename"] and "." in row["filename"] else ""
         )
 
-        # Serializza tutti i file fisici
         files_list = []
         for f in all_files:
             f_rel  = urllib.parse.quote(f["relative_path"] or "", safe="/")
@@ -721,6 +750,16 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 f["relative_path"].rsplit("/", 1)[0]
                 if f["relative_path"] and "/" in f["relative_path"] else ""
             )
+            try:
+                f_metadata = json.loads(f["metadata_json"]) if f["metadata_json"] else {}
+            except Exception:
+                f_metadata = {}
+
+            f_ext = (
+                f["filename"].rsplit(".", 1)[-1].lower()
+                if f["filename"] and "." in f["filename"] else ""
+            )
+
             files_list.append({
                 "id":            f["id"],
                 "filename":      f["filename"],
@@ -731,6 +770,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
                 "sha256":        f["sha256"],
                 "size_bytes":    f["size_bytes"],
                 "mtime":         f["mtime"],
+                "extension":     f_ext,
+                "metadata":      f_metadata,
             })
 
         self._send_json({
@@ -751,8 +792,8 @@ class GalleryHandler(BaseHTTPRequestHandler):
             "model":         row["model"],
             "language":      row["language"],
             "description_created_at": row["description_created_at"],
-            "file_count":    len(files_list),       # <-- NUOVO
-            "files":         files_list,            # <-- NUOVO
+            "file_count":    len(files_list),
+            "files":         files_list,
         })
 
     # ------------------------------------------------------------------
@@ -762,12 +803,312 @@ class GalleryHandler(BaseHTTPRequestHandler):
             return self._send_json({"query": "", "items": []})
         return self.handle_media_list({"q": [q], "page": ["1"], "limit": ["100"]})
 
+    # ------------------------------------------------------------------
+    def handle_trash_list(self, query):
+        try:
+            page = max(1, int(query.get("page", ["1"])[0]))
+        except ValueError:
+            page = 1
+        try:
+            limit = max(1, min(int(query.get("limit", ["100"])[0]), 500))
+        except ValueError:
+            limit = 100
+        offset = (page - 1) * limit
+
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
+        try:
+            total = conn.execute("SELECT COUNT(*) AS c FROM trash").fetchone()["c"]
+            rows  = conn.execute(
+                "SELECT * FROM trash ORDER BY trashed_at DESC LIMIT ? OFFSET ?",
+                (limit, offset),
+            ).fetchall()
+        finally:
+            conn.close()
+
+        items = []
+        for r in rows:
+            thumb_url = ""
+            if r["thumb_path"]:
+                thumb_url = f"/thumbs/{urllib.parse.quote(r['thumb_path'], safe='/')}"
+
+            items.append({
+                "id":                     r["id"],
+                "filename":               r["filename"],
+                "original_relative_path": r["original_relative_path"],
+                "sha256":                 r["sha256"],
+                "size_bytes":             r["size_bytes"],
+                "mtime":                  r["mtime"],
+                "media_kind":             r["media_kind"] or "image",
+                "thumb_url":              thumb_url,
+                "trashed_at":             r["trashed_at"],
+                "asset_title":            r["asset_title"] or "",
+            })
+
+        total_pages = max(1, (total + limit - 1) // limit)
+        self._send_json({
+            "page":        page,
+            "limit":       limit,
+            "total":       total,
+            "total_pages": total_pages,
+            "items":       items,
+        })
+
+    # ------------------------------------------------------------------
+    def handle_trash_move(self, data):
+        file_ids = data.get("file_ids", [])
+        if not file_ids or not isinstance(file_ids, list):
+            return self._send_json({"error": "file_ids mancanti o non validi"}, status=400)
+
+        os.makedirs(TRASH_DIR, exist_ok=True)
+
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
+        moved, errors = [], []
+        now = int(datetime.now().timestamp())
+
+        try:
+            for fid in file_ids:
+                try:
+                    row = conn.execute(
+                        """
+                        SELECT af.*, a.title AS asset_title, a.media_kind AS asset_media_kind
+                        FROM asset_files af
+                        JOIN assets a ON a.id = af.asset_id
+                        WHERE af.id = ?
+                        """,
+                        (fid,),
+                    ).fetchone()
+                    if row is None:
+                        errors.append({"file_id": fid, "error": "non trovato"})
+                        continue
+
+                    src_path = row["absolute_path"]
+                    if not os.path.isfile(src_path):
+                        errors.append({"file_id": fid, "error": "file fisico non trovato"})
+                        conn.execute("DELETE FROM asset_files WHERE id = ?", (fid,))
+                        continue
+
+                    rel_path = row["relative_path"]
+                    dst_path = os.path.join(TRASH_DIR, rel_path)
+                    os.makedirs(os.path.dirname(dst_path), exist_ok=True)
+
+                    rel_for_trash = rel_path
+                    if os.path.exists(dst_path):
+                        base, ext = os.path.splitext(rel_path)
+                        rel_for_trash = f"{base}_{fid}{ext}"
+                        dst_path = os.path.join(TRASH_DIR, rel_for_trash)
+
+                    shutil.move(src_path, dst_path)
+
+                    conn.execute(
+                        """
+                        INSERT INTO trash (
+                            original_asset_id,
+                            original_asset_file_id,
+                            asset_title,
+                            filename,
+                            original_absolute_path,
+                            original_relative_path,
+                            trash_relative_path,
+                            sha256,
+                            size_bytes,
+                            mtime,
+                            thumb_path,
+                            metadata_json,
+                            media_kind,
+                            trashed_at
+                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                        """,
+                        (
+                            row["asset_id"],
+                            fid,
+                            row["asset_title"],
+                            row["filename"],
+                            row["absolute_path"],
+                            row["relative_path"],
+                            rel_for_trash,
+                            row["sha256"],
+                            row["size_bytes"],
+                            row["mtime"],
+                            row["thumb_path"],
+                            row["metadata_json"],
+                            row["asset_media_kind"] or "image",
+                            now,
+                        ),
+                    )
+
+                    conn.execute("DELETE FROM asset_files WHERE id = ?", (fid,))
+                    count = conn.execute(
+                        "SELECT COUNT(*) AS c FROM asset_files WHERE asset_id = ?",
+                        (row["asset_id"],),
+                    ).fetchone()["c"]
+                    if count == 0:
+                        conn.execute("DELETE FROM assets WHERE id = ?", (row["asset_id"],))
+
+                    conn.commit()
+                    moved.append(fid)
+
+                except Exception as e:
+                    log_err(f"Errore trash file {fid}: {e}")
+                    errors.append({"file_id": fid, "error": str(e)})
+        finally:
+            conn.close()
+
+        self._send_json({"moved": moved, "errors": errors})
+
+    # ------------------------------------------------------------------
+    def handle_trash_restore(self, data):
+        trash_ids = data.get("trash_ids", [])
+        if not trash_ids or not isinstance(trash_ids, list):
+            return self._send_json({"error": "trash_ids mancanti"}, status=400)
+
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
+        restored, errors = [], []
+        now = int(datetime.now().timestamp())
+
+        try:
+            for tid in trash_ids:
+                try:
+                    row = conn.execute(
+                        "SELECT * FROM trash WHERE id = ?",
+                        (tid,),
+                    ).fetchone()
+                    if row is None:
+                        errors.append({"trash_id": tid, "error": "non trovato"})
+                        continue
+
+                    trash_abs = os.path.join(TRASH_DIR, row["trash_relative_path"])
+                    dst_abs   = row["original_absolute_path"]
+
+                    if not os.path.isfile(trash_abs):
+                        errors.append({"trash_id": tid, "error": "file nel cestino non trovato"})
+                        continue
+
+                    os.makedirs(os.path.dirname(dst_abs), exist_ok=True)
+
+                    if os.path.exists(dst_abs):
+                        base, ext = os.path.splitext(dst_abs)
+                        dst_abs = f"{base}_restored_{tid}{ext}"
+
+                    shutil.move(trash_abs, dst_abs)
+
+                    asset_id = row["original_asset_id"]
+                    existing_asset = conn.execute(
+                        "SELECT id FROM assets WHERE id = ?",
+                        (asset_id,),
+                    ).fetchone()
+
+                    if not existing_asset:
+                        asset_id = conn.execute(
+                            "INSERT INTO assets (title, created_at, updated_at) VALUES (?,?,?)",
+                            (row["asset_title"] or row["filename"], now, now),
+                        ).lastrowid
+
+                    rel_path = os.path.relpath(dst_abs, PHOTO_ROOT).replace("\\", "/")
+
+                    conn.execute(
+                        """
+                        INSERT INTO asset_files (
+                            asset_id,
+                            absolute_path,
+                            relative_path,
+                            filename,
+                            sha256,
+                            metadata_json,
+                            size_bytes,
+                            mtime,
+                            thumb_path,
+                            created_at,
+                            updated_at
+                        ) VALUES (?,?,?,?,?,?,?,?,?,?,?)
+                        """,
+                        (
+                            asset_id,
+                            dst_abs,
+                            rel_path,
+                            row["filename"],
+                            row["sha256"],
+                            row["metadata_json"],
+                            row["size_bytes"],
+                            row["mtime"],
+                            row["thumb_path"],
+                            now,
+                            now,
+                        ),
+                    )
+
+                    conn.execute("DELETE FROM trash WHERE id = ?", (tid,))
+                    conn.commit()
+                    restored.append(tid)
+
+                except Exception as e:
+                    log_err(f"Errore restore trash {tid}: {e}")
+                    errors.append({"trash_id": tid, "error": str(e)})
+        finally:
+            conn.close()
+
+        self._send_json({"restored": restored, "errors": errors})
+
+    # ------------------------------------------------------------------
+    def handle_trash_delete(self, data):
+        trash_ids = data.get("trash_ids", [])
+        if not trash_ids or not isinstance(trash_ids, list):
+            return self._send_json({"error": "trash_ids mancanti"}, status=400)
+
+        try:
+            conn = get_db_connection()
+        except sqlite3.OperationalError as exc:
+            return self._handle_db_error(exc)
+
+        deleted, errors = [], []
+        try:
+            for tid in trash_ids:
+                try:
+                    row = conn.execute(
+                        "SELECT * FROM trash WHERE id = ?",
+                        (tid,),
+                    ).fetchone()
+                    if row is None:
+                        errors.append({"trash_id": tid, "error": "non trovato"})
+                        continue
+
+                    trash_abs = os.path.join(TRASH_DIR, row["trash_relative_path"])
+                    if os.path.isfile(trash_abs):
+                        try:
+                            os.remove(trash_abs)
+                        except OSError as e:
+                            log_warn(f"Impossibile rimuovere {trash_abs}: {e}")
+
+                    conn.execute("DELETE FROM trash WHERE id = ?", (tid,))
+                    conn.commit()
+                    deleted.append(tid)
+
+                except Exception as e:
+                    log_err(f"Errore delete trash {tid}: {e}")
+                    errors.append({"trash_id": tid, "error": str(e)})
+        finally:
+            conn.close()
+
+        self._send_json({"deleted": deleted, "errors": errors})
+
 
 def main():
     log_run(f"ROOT_DIR={ROOT_DIR}")
     log_run(f"DB_PATH={DB_PATH} exists={os.path.exists(DB_PATH)}")
     log_run(f"PHOTO_ROOT={PHOTO_ROOT}")
     log_run(f"THUMB_DIR={THUMB_DIR}")
+    log_run(f"TRASH_DIR={TRASH_DIR}")
 
     server = ThreadedHTTPServer((HOST, PORT), GalleryHandler)
     log_run(f"Server in ascolto su http://{HOST}:{PORT}")

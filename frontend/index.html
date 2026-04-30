@@ -69,6 +69,13 @@
       </div>
 
       <div class="topbar-actions">
+        <button id="btn-view-trash" class="tbtn"
+          aria-pressed="false" type="button">
+          🗑️
+          <span>Cestino</span>
+          <span id="trash-count" class="filter-badge hidden">0</span>
+        </button>
+
         <button id="toggle-filters-btn" class="tbtn tbtn-filter"
           aria-expanded="false" aria-controls="filter-panel">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -210,6 +217,31 @@
       <div id="gallery-container" class="gallery-container">
         <div id="gallery" class="gallery-grid"></div>
         <div id="empty-state" class="empty-state hidden">Nessun elemento trovato.</div>
+      </div>
+
+      <div id="trash-view" class="trash-view hidden">
+        <div class="trash-toolbar">
+          <h2 class="trash-title">Cestino</h2>
+
+          <div class="trash-actions" id="trash-bulk-actions" style="display:none">
+            <button class="btn btn-sm btn-primary" type="button" id="trash-restore-selected">
+              ↩ Ripristina selezionati
+            </button>
+            <button class="btn btn-sm btn-danger" type="button" id="trash-delete-selected">
+              ✕ Elimina definitivamente
+            </button>
+          </div>
+
+          <div class="trash-toggle-select">
+            <label class="f-toggle">
+              <input type="checkbox" id="trash-select-all" />
+              <span>Seleziona tutto</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="trash-grid" class="gallery-grid"></div>
+        <div id="trash-empty" class="empty-state hidden">Il cestino è vuoto.</div>
       </div>
 
       <!-- paginazione (nascosta di default; usata solo in modalità paginated) -->
