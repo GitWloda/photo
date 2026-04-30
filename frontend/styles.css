@@ -40,6 +40,10 @@ body {
   overflow-x: hidden;
 }
 
+body.detail-open-mobile {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -288,9 +292,14 @@ button {
 /* ─── FILTER PANEL ───────────────────────────────────────── */
 
 .filter-panel {
+  display: none;
   border-top: 1px solid rgba(255,255,255,.03);
   border-bottom: 1px solid var(--border);
   background: rgba(17,22,29,.92);
+}
+
+.filter-panel.open {
+  display: block;
 }
 
 .filter-panel-inner {
@@ -380,6 +389,43 @@ button {
   gap: 8px;
 }
 
+/* chip (usato da renderChips in app.js) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(78,161,255,.14);
+  border: 1px solid rgba(78,161,255,.2);
+  color: #dcecff;
+  font-size: 12px;
+}
+
+.chip-x {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  color: inherit;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.chip-x:hover {
+  background: rgba(255,255,255,.22);
+}
+
+.chip-empty {
+  color: var(--muted);
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+/* alias per retrocompatibilità */
 .active-chip {
   display: inline-flex;
   align-items: center;
@@ -484,6 +530,11 @@ button {
   gap: var(--grid-gap);
 }
 
+.gallery-grid.compact {
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
 .empty-state {
   min-height: 240px;
   display: grid;
@@ -560,6 +611,293 @@ button {
   gap: 8px;
   color: var(--muted);
   font-size: 11px;
+}
+
+.card-desc {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ─── CARD BADGES ────────────────────────────────────────── */
+
+.card-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(0,0,0,.65);
+  color: rgba(255,255,255,.9);
+  z-index: 2;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+.badge-video {
+  background: rgba(78,161,255,.82);
+  color: #fff;
+}
+
+.badge-dupes {
+  right: auto;
+  left: 6px;
+  background: rgba(63,185,80,.78);
+  color: #fff;
+}
+
+/* ─── GROUP ALBUM TILE ───────────────────────────────────── */
+
+.group-album-cover {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #0d1218;
+}
+
+.group-album-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.group-album-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 8px 8px;
+  background: linear-gradient(transparent, rgba(0,0,0,.72));
+}
+
+.group-album-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── FOLDER GROUPING ────────────────────────────────────── */
+
+.folder-group {
+  margin-bottom: 20px;
+}
+
+.folder-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.02);
+  margin-bottom: 8px;
+  user-select: none;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.folder-group-header:hover {
+  background: rgba(255,255,255,.045);
+  border-color: var(--border-2);
+}
+
+.folder-group-toggle {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.chevron-icon {
+  transition: transform 200ms ease;
+}
+
+.folder-group-header.collapsed .chevron-icon {
+  transform: rotate(-90deg);
+}
+
+.folder-group-name {
+  font-size: 13px;
+  font-weight: 600;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folder-group-count {
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.folder-group-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.folder-group-content {
+  display: block;
+}
+
+.folder-group-content.collapsed {
+  display: none;
+}
+
+.folder-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--grid-gap);
+}
+
+.folder-group-album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--grid-gap);
+}
+
+/* ─── INFINITE SCROLL ────────────────────────────────────── */
+
+.infinite-scroll-sentinel {
+  margin-top: 16px;
+  padding: 12px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.loading-more-text {
+  display: inline;
+}
+
+.infinite-scroll-sentinel.is-loading::after {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,.18);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── ALBUMS GRID ────────────────────────────────────────── */
+
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--grid-gap);
+}
+
+.album-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.album-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-2);
+  box-shadow: 0 20px 44px rgba(0,0,0,.4);
+}
+
+.album-cover {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #0d1218;
+  overflow: hidden;
+}
+
+.album-rotating-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 180ms ease;
+}
+
+.album-rotating-thumb.is-fading {
+  opacity: 0;
+}
+
+.album-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: rgba(255,255,255,.18);
+}
+
+.album-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 10px 8px;
+  background: linear-gradient(transparent, rgba(0,0,0,.68));
+}
+
+.album-count {
+  font-size: 11px;
+  color: rgba(255,255,255,.88);
+  font-weight: 600;
+}
+
+.album-body {
+  padding: 10px 12px 12px;
+}
+
+.album-name {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.album-path {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.album-date {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
 }
 
 /* ─── DETAIL ─────────────────────────────────────────────── */
@@ -669,15 +1007,31 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  width: 100%;
   min-height: 40px;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: rgba(255,255,255,.03);
   color: var(--text);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.d-dupes-toggle:hover {
+  background: rgba(255,255,255,.06);
 }
 
 .d-dupes-toggle.open {
   border-color: rgba(78,161,255,.35);
+  background: rgba(78,161,255,.06);
+}
+
+.d-dupes-toggle-arrows {
+  font-size: 12px;
+  transition: transform 200ms ease;
+}
+
+.d-dupes-toggle.open .d-dupes-toggle-arrows {
+  transform: rotate(180deg);
 }
 
 .d-dupes-panel {
@@ -689,7 +1043,7 @@ button {
 
 .d-dupes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 10px;
 }
 
@@ -700,6 +1054,12 @@ button {
   background: rgba(255,255,255,.03);
   color: var(--text);
   padding: 8px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+}
+
+.d-dupe-card:hover {
+  border-color: var(--border-2);
 }
 
 .d-dupe-card.active {
@@ -727,6 +1087,9 @@ button {
 .d-dupe-meta {
   font-size: 11px;
   line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .d-dupe-name {
@@ -737,6 +1100,14 @@ button {
 .d-dupe-path,
 .d-dupe-meta {
   color: var(--muted);
+}
+
+.d-dupe-meta {
+  margin-top: 2px;
+  white-space: normal;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }
 
 .detail-swipe-hint {
@@ -836,7 +1207,7 @@ button {
   font-size: 13px;
 }
 
-/* ─── ALBUMS ─────────────────────────────────────────────── */
+/* ─── OLD ALBUM TILE (retrocompat.) ──────────────────────── */
 
 .group-album-tile .album-stack {
   position: relative;
@@ -918,6 +1289,11 @@ button {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 
+  .gallery-grid.compact {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 6px;
+  }
+
   .topbar-main {
     flex-wrap: wrap;
   }
@@ -943,6 +1319,14 @@ button {
 
   .trash-actions {
     margin-left: 0;
+  }
+
+  .albums-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .d-dupes-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
